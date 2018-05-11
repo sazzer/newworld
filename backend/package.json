@@ -4,10 +4,17 @@
   "author": "Graham Cox <graham@grahamcox.co.uk>",
   "license": "MIT",
   "scripts": {
-      "start": "babel-node src/index.js"
+    "start": "babel-node src/index.js",
+    "lint": "eslint src"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-eslint": "^8.2.3",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0"
   }
 }
