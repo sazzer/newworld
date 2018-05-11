@@ -1,6 +1,10 @@
 // @flow
+import bristol from 'bristol';
 import config from './config';
+
+bristol.addTarget('console')
+    .withFormatter('human');
 
 const msg: string = config.get('env');
 
-console.log(msg);
+bristol.warn('Starting', { msg });

@@ -21,6 +21,7 @@
     "jest": "^22.4.3"
   },
   "dependencies": {
+    "bristol": "^0.4.0",
     "convict": "^4.2.0"
   }
 }

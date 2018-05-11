@@ -916,6 +916,13 @@ braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
+bristol@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/bristol/-/bristol-0.4.0.tgz#a696201fb72ba5c8f0d26e0ee933a7d740383666"
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    moment "^2.21.0"
+
 browser-process-hrtime@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-0.1.2.tgz#425d68a58d3447f02a04aa894187fce8af8b7b8e"
@@ -2696,7 +2703,7 @@ json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -2950,6 +2957,10 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
 moment@2.19.3:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+
+moment@^2.21.0:
+  version "2.22.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.1.tgz#529a2e9bf973f259c9643d237fda84de3a26e8ad"
 
 ms@2.0.0:
   version "2.0.0"
