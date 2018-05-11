@@ -5,7 +5,10 @@
   "license": "MIT",
   "scripts": {
     "start": "babel-node src/index.js",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "flow": "flow",
+    "check": "yarn lint && yarn flow",
+    "test": "jest"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
