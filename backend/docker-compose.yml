@@ -1,0 +1,22 @@
+version: '3'
+services:
+    worlds-postgres:
+        image: postgres
+        ports:
+            - "127.0.0.1:5432:5432"
+        environment:
+            POSTGRES_DB: worlds
+            POSTGRES_USER: worlds
+            POSTGRES_PASSWORD: worlds
+    worlds-backend:
+        build: .
+        ports:
+            - "127.0.0.1:3000:3000"
+        environment:
+            PORT: 3000
+            NODE_ENV: production
+            POSTGRES_HOST: worlds-postgres
+            POSTGRES_PORT: 5432
+            POSTGRES_DB: worlds
+            POSTGRES_USER: worlds
+            POSTGRES_PASSWORD: worlds
