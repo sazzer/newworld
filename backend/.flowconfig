@@ -1,4 +1,5 @@
 [ignore]
+<PROJECT_ROOT>/node_modules/vision/test/templates/invalid/helpers/bad1.json
 
 [include]
 

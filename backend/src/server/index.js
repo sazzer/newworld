@@ -23,7 +23,6 @@ export default async function createServer() {
         engines: {
             html: {
                 compile: (src, options) => {
-
                     const template = Nunjucks.compile(src, options.environment);
 
                     return context => template.render(context);
@@ -33,8 +32,8 @@ export default async function createServer() {
                     options.compileOptions.environment = // eslint-disable-line no-param-reassign
                         Nunjucks.configure(options.path, { watch: false });
                     return next();
-                }
-            }
+                },
+            },
         },
         relativeTo: path.join(__dirname, '..', '..'),
         path: 'templates',
