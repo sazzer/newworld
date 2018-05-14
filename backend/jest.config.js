@@ -8,6 +8,7 @@ module.exports = {
         '!src/index.js',
         '!src/config/*.js',
         '!src/server/index.js',
+        '!src/db/migrate.js',
     ],
     clearMocks: true,
     roots: [
