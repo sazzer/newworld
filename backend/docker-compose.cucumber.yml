@@ -1,0 +1,29 @@
+version: '3'
+services:
+    worlds-e2e-postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: worlds-e2e
+            POSTGRES_USER: worlds-e2e
+            POSTGRES_PASSWORD: worlds-e2e
+    worlds-e2e-backend:
+        build: .
+        environment:
+            PORT: 3000
+            NODE_ENV: production
+            POSTGRES_HOST: worlds-e2e-postgres
+            POSTGRES_PORT: 5432
+            POSTGRES_DB: worlds-e2e
+            POSTGRES_USER: worlds-e2e
+            POSTGRES_PASSWORD: worlds-e2e
+    worlds-e2e-cucumber:
+        build: .
+        command: dockerize -wait tcp://worlds-e2e-backend:3000 yarn cucumber
+        environment:
+            NODE_ENV: production
+            POSTGRES_HOST: worlds-e2e-postgres
+            POSTGRES_PORT: 5432
+            POSTGRES_DB: worlds-e2e
+            POSTGRES_USER: worlds-e2e
+            POSTGRES_PASSWORD: worlds-e2e
+            API_URL: http://worlds-e2e-backend:3000

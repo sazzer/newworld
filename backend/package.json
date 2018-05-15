@@ -8,26 +8,32 @@
     "lint": "eslint src",
     "flow": "flow",
     "check": "yarn lint && yarn flow",
-    "test": "jest"
+    "test": "jest",
+    "cucumber": "cucumber-js --require-module babel-core/register --require-module babel-polyfill -f node_modules/cucumber-pretty -r cucumber cucumber"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
+    "cucumber-pretty": "^1.4.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-flowtype": "^2.46.3",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jest": "^21.15.1",
     "flow-bin": "^0.72.0",
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "unexpected": "^10.37.7"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "blipp": "^3.0.0",
     "boom": "^7.2.0",
     "bristol": "^0.4.0",
     "convict": "^4.2.0",
+    "cucumber": "^4.2.1",
     "glue": "^5.0.0",
     "hapi": "^17.4.0",
     "hapi-alive": "^2.0.0",
