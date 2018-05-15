@@ -1,10 +1,12 @@
 import path from 'path';
+import routeParsePlugin from './routeParse';
 
 export default [
     'blipp',
     'hapi-response-time',
     'inert',
     'vision',
+    routeParsePlugin,
     {
         plugin: 'hapi-alive',
         options: {
