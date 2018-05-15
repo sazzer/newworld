@@ -34,6 +34,7 @@
     "bristol": "^0.4.0",
     "convict": "^4.2.0",
     "cucumber": "^4.2.1",
+    "dotenv": "^5.0.1",
     "glue": "^5.0.0",
     "hapi": "^17.4.0",
     "hapi-alive": "^2.0.0",

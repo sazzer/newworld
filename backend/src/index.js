@@ -1,4 +1,5 @@
 // @flow
+import 'dotenv/config';
 import bristol from 'bristol';
 import promiseRetry from 'promise-retry';
 import createServer from './server';
