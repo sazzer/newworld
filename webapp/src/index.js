@@ -10,6 +10,7 @@ import { store, history } from './redux'
 import App from './App';
 import i18n from './i18n';
 import registerServiceWorker from './registerServiceWorker';
+import request from './rest';
 
 /**
  * The contents of the app, wrapped in the translations layer
@@ -32,3 +33,8 @@ const AppWrapper = () => (
 
 ReactDOM.render(<AppWrapper />, document.getElementById('root'));
 registerServiceWorker();
+
+request({
+    method: 'GET',
+    url: '/health'
+});

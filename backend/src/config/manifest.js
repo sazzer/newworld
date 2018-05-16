@@ -9,7 +9,7 @@ export default {
         port: {
             doc: 'The port to listen on',
             format: 'port',
-            default: 3000,
+            default: 4000,
             env: 'PORT',
         },
     },
