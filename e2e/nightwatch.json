@@ -1,0 +1,31 @@
+{
+    "src_folders": [
+        "src/tests"
+    ],
+    "custom_commands_path": "src/commands",
+    "page_objects_path": "src/pages",
+    "custom_assertions_path": "",
+    "globals_path": "",
+    "output_folder": "target/reports",
+    "test_workers": false,
+    "live_output": false,
+    "test_settings": {
+        "default": {
+            "selenium_host": "localhost",
+            "selenium_port": 4444,
+            "silent": true,
+            "screenshots": {
+                "enabled": true,
+                "on_failure": true,
+                "on_error": true,
+                "path": "target/reports"
+            },
+            "desiredCapabilities": {
+                "browserName": "chrome"
+            }
+        },
+        "local": {
+            "launch_url": "http://localhost:3000"
+        }
+    }
+}

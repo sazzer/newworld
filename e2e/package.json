@@ -1,0 +1,11 @@
+{
+  "name": "newworld-e2e",
+  "version": "1.0.0",
+  "author": "Graham Cox <graham@grahamcox.co.uk>",
+  "license": "MIT",
+  "scripts": {},
+  "devDependencies": {},
+  "dependencies": {
+    "nightwatch": "^0.9.21"
+  }
+}
