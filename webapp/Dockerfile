@@ -12,3 +12,6 @@ RUN yarn build
 FROM nginx:1.13.12-alpine
 COPY --from=0 /prod/newworld/webapp/build /usr/share/nginx/html
 
+ENV API_URI=
+CMD echo "window.API_URL_BASE = '$API_URI';" > /usr/share/nginx/html/api.js && nginx -g 'daemon off;'
+
