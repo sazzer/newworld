@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "author": "Graham Cox <graham@grahamcox.co.uk>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nightwatch"
+  },
   "devDependencies": {},
   "dependencies": {
     "nightwatch": "^0.9.21"

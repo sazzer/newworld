@@ -1,29 +1,29 @@
 version: '3'
 services:
-    worlds-e2e-postgres:
+    worlds-cucumber-postgres:
         image: postgres
         environment:
-            POSTGRES_DB: worlds-e2e
-            POSTGRES_USER: worlds-e2e
-            POSTGRES_PASSWORD: worlds-e2e
-    worlds-e2e-backend:
+            POSTGRES_DB: worlds-cucumber
+            POSTGRES_USER: worlds-cucumber
+            POSTGRES_PASSWORD: worlds-cucumber
+    worlds-cucumber-backend:
         build: .
         environment:
             PORT: 3000
             NODE_ENV: production
-            POSTGRES_HOST: worlds-e2e-postgres
+            POSTGRES_HOST: worlds-cucumber-postgres
             POSTGRES_PORT: 5432
-            POSTGRES_DB: worlds-e2e
-            POSTGRES_USER: worlds-e2e
-            POSTGRES_PASSWORD: worlds-e2e
-    worlds-e2e-cucumber:
+            POSTGRES_DB: worlds-cucumber
+            POSTGRES_USER: worlds-cucumber
+            POSTGRES_PASSWORD: worlds-cucumber
+    worlds-cucumber-cucumber:
         build: .
-        command: dockerize -wait tcp://worlds-e2e-backend:3000 yarn cucumber
+        command: dockerize -wait tcp://worlds-cucumber-backend:3000 yarn cucumber
         environment:
             NODE_ENV: production
-            POSTGRES_HOST: worlds-e2e-postgres
+            POSTGRES_HOST: worlds-cucumber-postgres
             POSTGRES_PORT: 5432
-            POSTGRES_DB: worlds-e2e
-            POSTGRES_USER: worlds-e2e
-            POSTGRES_PASSWORD: worlds-e2e
-            API_URL: http://worlds-e2e-backend:3000
+            POSTGRES_DB: worlds-cucumber
+            POSTGRES_USER: worlds-cucumber
+            POSTGRES_PASSWORD: worlds-cucumber
+            API_URL: http://worlds-cucumber-backend:3000

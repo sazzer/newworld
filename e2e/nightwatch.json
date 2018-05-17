@@ -22,10 +22,12 @@
             },
             "desiredCapabilities": {
                 "browserName": "chrome"
-            }
-        },
-        "local": {
+            },
             "launch_url": "http://localhost:3000"
+        },
+        "docker": {
+            "selenium_host": "worlds-e2e-selenium-chrome",
+            "launch_url": "http://worlds-e2e-webapp"
         }
     }
 }

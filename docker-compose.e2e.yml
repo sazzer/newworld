@@ -1,0 +1,28 @@
+version: '3'
+services:
+    worlds-e2e-postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: worlds-e2e
+            POSTGRES_USER: worlds-e2e
+            POSTGRES_PASSWORD: worlds-e2e
+    worlds-e2e-selenium-chrome:
+        image: selenium/standalone-chrome
+    worlds-e2e-backend:
+        build: backend
+        environment:
+            PORT: 80
+            NODE_ENV: production
+            POSTGRES_HOST: worlds-e2e-postgres
+            POSTGRES_PORT: 5432
+            POSTGRES_DB: worlds-e2e
+            POSTGRES_USER: worlds-e2e
+            POSTGRES_PASSWORD: worlds-e2e
+    worlds-e2e-webapp:
+        build: webapp
+        environment:
+            API_URI: http://worlds-e2e-backend
+    worlds-e2e-tests:
+        build: e2e
+        volumes:
+            - ./target:/prod/newworld/e2e/target
