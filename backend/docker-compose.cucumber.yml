@@ -16,9 +16,9 @@ services:
             POSTGRES_DB: worlds-cucumber
             POSTGRES_USER: worlds-cucumber
             POSTGRES_PASSWORD: worlds-cucumber
-    worlds-cucumber-cucumber:
+    worlds-cucumber-tests:
         build: .
-        command: dockerize -wait tcp://worlds-cucumber-backend:3000 yarn cucumber
+        command: dockerize -wait tcp://worlds-cucumber-backend:3000 -timeout 30s yarn cucumber
         environment:
             NODE_ENV: production
             POSTGRES_HOST: worlds-cucumber-postgres

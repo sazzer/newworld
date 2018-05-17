@@ -11,4 +11,4 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 RUN yarn install
-CMD dockerize -wait tcp://worlds-e2e-backend:80 -wait tcp://worlds-e2e-webapp:80 yarn start -e docker
+CMD dockerize -wait tcp://worlds-e2e-backend:80 -wait tcp://worlds-e2e-webapp:80 -timeout 30s yarn start -e docker

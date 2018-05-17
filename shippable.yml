@@ -1,0 +1,30 @@
+language: node_js
+
+node_js:
+  - 10.1.0
+
+build:
+    cache: true
+    cache_dir_list:
+        - $SHIPPABLE_BUILD_DIR/backend/node_modules
+        - $SHIPPABLE_BUILD_DIR/webapp/node_modules
+    ci:
+        # Ensure Docker Compose is available
+        - curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+        - chmod +x /usr/local/bin/docker-compose
+        # Install the latest Yarn
+        - npm install --global yarn
+        # Build the Backend
+        - cd $SHIPPABLE_BUILD_DIR/backend
+        - yarn install
+        - yarn check
+        - yarn test
+        - docker-compose -f docker-compose.cucumber.yml up --build --exit-code-from worlds-cucumber-tests
+        # Build the Webapp
+        - cd $SHIPPABLE_BUILD_DIR/webapp
+        - yarn install
+        - yarn flow
+        - yarn test
+        # Run the E2E Tests
+        - cd $SHIPPABLE_BUILD_DIR
+        - docker-compose -f docker-compose.e2e.yml up --exit-code-from worlds-e2e-tests

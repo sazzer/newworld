@@ -12,4 +12,4 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 RUN yarn install
 RUN yarn test
-CMD dockerize -wait tcp://$POSTGRES_HOST:$POSTGRES_PORT yarn start
+CMD dockerize -wait tcp://$POSTGRES_HOST:$POSTGRES_PORT -timeout 30s yarn start
