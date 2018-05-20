@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>uk.co.grahamcox.worlds</groupId>
+    <artifactId>worlds</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<kotlin.version>1.2.41</kotlin.version>
+	</properties>
+
+    <packaging>pom</packaging>
+    <name>Worlds</name>
+    <inceptionYear>2018</inceptionYear>
+    <developers>
+        <developer>
+            <id>graham</id>
+            <name>Graham Cox</name>
+            <email>graham@grahamcox.co.uk</email>
+        </developer>
+    </developers>
+    <prerequisites>
+        <maven>${version.maven}</maven>
+    </prerequisites>
+    <modules>
+        <module>worlds-service</module>
+    </modules>
+</project>
