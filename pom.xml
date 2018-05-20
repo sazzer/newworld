@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>2.0.2.RELEASE</version>
+        <relativePath></relativePath>
+        <!-- lookup parent from repository -->
+    </parent>
     <groupId>uk.co.grahamcox.worlds</groupId>
     <artifactId>worlds</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<kotlin.version>1.2.41</kotlin.version>
-	</properties>
-
     <packaging>pom</packaging>
     <name>Worlds</name>
     <inceptionYear>2018</inceptionYear>
@@ -30,9 +22,50 @@
         </developer>
     </developers>
     <prerequisites>
-        <maven>${version.maven}</maven>
+        <maven>3.5.0</maven>
     </prerequisites>
     <modules>
         <module>worlds-service</module>
     </modules>
+    <properties>
+        <java.version>1.8</java.version>
+        <kotlin.version>1.2.41</kotlin.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.ekryd.sortpom</groupId>
+                    <artifactId>sortpom-maven-plugin</artifactId>
+                    <version>2.8.0</version>
+                    <configuration>
+                        <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                        <sortPlugins>groupId,artifactId</sortPlugins>
+                        <sortProperties>true</sortProperties>
+                        <nrOfIndentSpace>4</nrOfIndentSpace>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>com.github.ekryd.sortpom</groupId>
+                <artifactId>sortpom-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>verify-order</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <verifyFail>Stop</verifyFail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
