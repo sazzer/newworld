@@ -1,4 +1,4 @@
-package uk.co.grahamcox.worlds.worlds
+package uk.co.grahamcox.worlds.service
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
