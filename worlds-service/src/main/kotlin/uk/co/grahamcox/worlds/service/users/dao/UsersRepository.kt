@@ -1,4 +1,4 @@
-package uk.co.grahamcox.worlds.service.users
+package uk.co.grahamcox.worlds.service.users.dao
 
 import org.springframework.data.repository.CrudRepository
 

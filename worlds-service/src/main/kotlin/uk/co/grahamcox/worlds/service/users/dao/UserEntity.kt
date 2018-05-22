@@ -1,4 +1,4 @@
-package uk.co.grahamcox.worlds.service.users
+package uk.co.grahamcox.worlds.service.users.dao
 
 import java.time.Instant
 import javax.persistence.Column
