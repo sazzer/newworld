@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.service.users.dao
 
 import java.time.Instant
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -14,9 +15,9 @@ import javax.persistence.Table
 data class UserEntity(
         @Id
         @Column(name = "user_id")
-        val id: String,
+        val id: UUID,
 
-        val version: String,
+        val version: UUID,
 
         val created: Instant,
 

@@ -23,13 +23,13 @@ class UserServiceImpl(private val dao: UsersRepository) : UserRetriever {
      * @return the user
      */
     override fun getById(id: UserId): Resource<UserId, UserData> {
-        val userEntity = dao.findById(id.id)
+        val userEntity = dao.findById(UUID.fromString(id.id))
 
         val user = userEntity.map {
             Resource(
                     identity = Identity(
-                            id = UserId(it.id),
-                            version = it.version,
+                            id = UserId(it.id.toString()),
+                            version = it.version.toString(),
                             created = it.created,
                             updated = it.updated
                     ),

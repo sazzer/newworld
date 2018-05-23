@@ -4,7 +4,6 @@
     "type": "object",
     "required": [
         "display_name",
-        "username",
         "email",
         "password"
     ],
@@ -13,9 +12,6 @@
             "$ref": "#/definitions/id"
         },
         "display_name": {
-            "type": "string"
-        },
-        "username": {
             "type": "string"
         },
         "email": {

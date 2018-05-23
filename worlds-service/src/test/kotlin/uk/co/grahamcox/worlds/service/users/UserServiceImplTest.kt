@@ -30,20 +30,20 @@ internal class UserServiceImplTest {
      */
     @Test
     fun getUnknownUser() {
-        every { dao.findById(USER_ID) } returns Optional.empty()
+        every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.empty()
 
         Assertions.assertThrows(UserNotFoundException::class.java) {
             testSubject.getById(UserId(USER_ID))
         }
 
-        verify { dao.findById(USER_ID) }
+        verify { dao.findById(UUID.fromString(USER_ID)) }
     }
 
     @Test
     fun getKnownUser() {
         val userEntity = UserEntity(
-                id = USER_ID,
-                version = "00000000-0000-0000-0000-000000000002",
+                id = UUID.fromString(USER_ID),
+                version = UUID.fromString("00000000-0000-0000-0000-000000000002"),
                 created = Instant.parse("2018-05-22T18:53:00Z"),
                 updated = Instant.parse("2018-05-22T18:54:00Z"),
                 displayName = "Test User",
@@ -52,7 +52,7 @@ internal class UserServiceImplTest {
                 paswordSalt = Base64.getEncoder().encodeToString("salt".toByteArray())
         )
 
-        every { dao.findById(USER_ID) } returns Optional.of(userEntity)
+        every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.of(userEntity)
 
         val user = testSubject.getById(UserId(USER_ID))
 
@@ -67,6 +67,6 @@ internal class UserServiceImplTest {
                 Executable { Assertions.assertArrayEquals("password".toByteArray(), user.data.password.hash) },
                 Executable { Assertions.assertArrayEquals("salt".toByteArray(), user.data.password.salt) }
         )
-        verify { dao.findById(USER_ID) }
+        verify { dao.findById(UUID.fromString(USER_ID)) }
     }
 }
