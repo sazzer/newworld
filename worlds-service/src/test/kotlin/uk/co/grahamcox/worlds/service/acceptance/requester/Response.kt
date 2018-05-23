@@ -1,5 +1,6 @@
 package uk.co.grahamcox.worlds.service.acceptance.requester
 
+import org.apache.commons.jxpath.JXPathContext
 import org.springframework.http.ResponseEntity
 
 /**
@@ -11,4 +12,7 @@ data class Response(
 ) {
     /** The HTTP Status Code returned */
     val statusCode = response.statusCode
+
+    /** The JXPath Context for interrogating the response */
+    val context = JXPathContext.newContext(response)
 }
