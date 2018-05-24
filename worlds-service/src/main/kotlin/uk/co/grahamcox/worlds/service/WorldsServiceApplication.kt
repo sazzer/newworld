@@ -1,18 +1,19 @@
 package uk.co.grahamcox.worlds.service
 
-import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.SpringBootConfiguration
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Import
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import java.time.Clock
+import uk.co.grahamcox.worlds.service.spring.WorldsConfiguration
 
-@SpringBootApplication
+@SpringBootConfiguration
+@EnableAutoConfiguration
 @EnableJpaRepositories
-class WorldsServiceApplication {
-    /** The clock to use */
-    @Bean
-    fun clock() = Clock.systemUTC()
-}
+@Import(
+        WorldsConfiguration::class
+)
+class WorldsServiceApplication
 
 fun main(args: Array<String>) {
     runApplication<WorldsServiceApplication>(*args)

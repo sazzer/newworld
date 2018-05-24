@@ -1,7 +1,6 @@
 package uk.co.grahamcox.worlds.service.users
 
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 import uk.co.grahamcox.worlds.service.model.Identity
 import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.users.dao.UsersRepository
@@ -10,7 +9,6 @@ import java.util.*
 /**
  * Standard implementation of the User Retriever in terms of the data base
  */
-@Component
 class UserServiceImpl(private val dao: UsersRepository) : UserRetriever {
     companion object {
         /** The logger to use */

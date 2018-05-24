@@ -6,13 +6,11 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Component
 
 /**
  * The mechanism to make HTTP requests to the server under test
  * @property restTemplate The REST Template to use
  */
-@Component
 class Requester(
         private val restTemplate: TestRestTemplate
 ) {

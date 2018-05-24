@@ -3,7 +3,6 @@ package uk.co.grahamcox.worlds.service.acceptance.database
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.support.JdbcUtils
-import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.sql.DataSource
 
@@ -12,7 +11,7 @@ import javax.sql.DataSource
  * DO NOT USE IN A REAL SITUATION
  * @property dataSource the data source to clean
  */
-@Component
+@Transactional
 class DatabaseCleaner(
         private val dataSource: DataSource
 ) {
