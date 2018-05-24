@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity
  * @property response The actual response
  */
 data class Response(
-        val response: ResponseEntity<Map<String, Any?>>
+        val response: ResponseEntity<out Any>
 ) {
     /** The HTTP Status Code returned */
     val statusCode = response.statusCode

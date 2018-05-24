@@ -20,10 +20,7 @@ class Requester(
     }
 
     /** The last response from the server */
-    private var lastResponseEntity: ResponseEntity<Map<String, Any?>>? = null
-
-    /** Whether the last response was a GraphQL request or not */
-    private var isGraphql: Boolean = false
+    private var lastResponseEntity: ResponseEntity<out Any>? = null
 
     /** The Access Token to use from the server */
     var accessToken: String? = null
@@ -39,7 +36,6 @@ class Requester(
     fun reset() {
         lastResponseEntity = null
         accessToken = null
-        isGraphql = false
     }
 
     /**
@@ -78,12 +74,12 @@ class Requester(
      * @param method The HTTP Method to use for the request
      * @param body The body to send, if any
      */
-    fun makeRequest(uri: String, method: HttpMethod, body: Any?): Response {
+    fun makeRequest(uri: String, method: HttpMethod, body: Any?, expectedResponseType: Class<*> = Map::class.java): Response {
         lastResponseEntity = restTemplate.exchange(
                 uri,
                 method,
                 HttpEntity(body, buildHeaders()),
-                Map::class.java) as ResponseEntity<Map<String, Any?>>
+                expectedResponseType)
 
         LOG.debug("Request to {} {} with payload {} returned response {}",
                 method, uri, body, lastResponseEntity)
