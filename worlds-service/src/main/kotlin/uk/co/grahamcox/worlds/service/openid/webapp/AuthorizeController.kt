@@ -74,7 +74,9 @@ class AuthorizeController {
         )
 
         return if (missingParams.isEmpty()) {
-            ModelAndView("/openid/start")
+            ModelAndView("/openid/start", mapOf(
+                    "parameters" to command
+            ))
         } else {
             ModelAndView("/openid/badResponseType", mapOf(
                     "missing_parameters" to missingParams
