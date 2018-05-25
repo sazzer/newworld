@@ -6,7 +6,7 @@
 <head>
     <title><@spring.message "openid.title" /></title>
 
-    <link rel="stylesheet" type="text/css" href="/semantic-ui/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<@spring.url "/semantic-ui/semantic.min.css" />"/>
 </head>
 <body>
 <div class="ui fluid container">

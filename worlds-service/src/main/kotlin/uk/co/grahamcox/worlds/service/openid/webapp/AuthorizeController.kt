@@ -49,7 +49,7 @@ class AuthorizeController {
     /**
      * Handle the request for an Implicit Authorization Flow, when the response type is "id_token token"
      */
-    @RequestMapping(params = ["responseType=id_token token"])
+    @RequestMapping(params = ["response_type=id_token token"])
     fun startImplicitFlowToken(command: AuthorizeCommand): ModelAndView {
         return processImplicitFlow(command)
     }
@@ -57,7 +57,7 @@ class AuthorizeController {
     /**
      * Handle the request for an Implicit Authorization Flow, when the response type is "id_token"
      */
-    @RequestMapping(params = ["responseType=id_token"])
+    @RequestMapping(params = ["response_type=id_token"])
     fun startImplicitFlowIdToken(command: AuthorizeCommand): ModelAndView {
         return processImplicitFlow(command)
     }
@@ -85,24 +85,16 @@ class AuthorizeController {
     /**
      * Handle the request for an unsupported response_type value
      */
-    @RequestMapping(params = ["responseType!=id_token", "responseType!=id_token token"])
+    @RequestMapping(params = ["response_type!=id_token", "response_type!=id_token token"])
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun startUnknownFlow(@RequestParam("responseType") responseType: String): ModelAndView {
+    fun startUnknownFlow(@RequestParam("response_type") responseType: String?): ModelAndView {
         return ModelAndView("/openid/badResponseType",
                 mapOf(
-                        "unsupported_response_type" to responseType
-                ))
-    }
-
-    /**
-     * Handle the request for an absent response_type value
-     */
-    @RequestMapping
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun startNoFlow(): ModelAndView {
-        return ModelAndView("/openid/badResponseType",
-                mapOf(
-                        "missing_parameters" to listOf("responseType")
+                        if (responseType.isNullOrBlank()) {
+                            "missing_parameters" to listOf("response_type")
+                        } else {
+                            "unsupported_response_type" to responseType
+                        }
                 ))
     }
 }
