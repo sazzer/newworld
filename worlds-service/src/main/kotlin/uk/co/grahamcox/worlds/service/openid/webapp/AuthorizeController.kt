@@ -85,6 +85,26 @@ class AuthorizeController {
     }
 
     /**
+     * Handler to continue the auth flow, checking if the provided email address exists and showing either the Login
+     * or Register form as appropriate
+     */
+    @RequestMapping(value = ["/continue"], method = [RequestMethod.POST])
+    fun continueAuthentication(command: AuthorizeCommand, @RequestParam("email") email: String): ModelAndView {
+        val exists = false
+
+        val view = if (exists) {
+            "/openid/login"
+        } else {
+            "/openid/register"
+        }
+
+        return ModelAndView(view, mapOf(
+                "parameters" to command,
+                "email" to email
+        ))
+    }
+
+    /**
      * Handle the request for an unsupported response_type value
      */
     @RequestMapping(params = ["response_type!=id_token", "response_type!=id_token token"])
