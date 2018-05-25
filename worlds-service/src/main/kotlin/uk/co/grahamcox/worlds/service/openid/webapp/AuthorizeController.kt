@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.servlet.ModelAndView
+import uk.co.grahamcox.worlds.service.users.UserRetriever
 
 /**
  * Controller for managing the OpenID Connect flows for the /authorize endpoint.
@@ -45,7 +46,7 @@ import org.springframework.web.servlet.ModelAndView
  */
 @Controller
 @RequestMapping("/openid/authorize", method = [RequestMethod.GET])
-class AuthorizeController {
+class AuthorizeController(private val userRetriever: UserRetriever) {
     /**
      * Handle the request for an Implicit Authorization Flow, when the response type is "id_token token"
      */
@@ -90,9 +91,9 @@ class AuthorizeController {
      */
     @RequestMapping(value = ["/continue"], method = [RequestMethod.POST])
     fun continueAuthentication(command: AuthorizeCommand, @RequestParam("email") email: String): ModelAndView {
-        val exists = false
+        val user = userRetriever.getByEmail(email)
 
-        val view = if (exists) {
+        val view = if (user != null) {
             "/openid/login"
         } else {
             "/openid/register"

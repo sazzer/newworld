@@ -6,4 +6,9 @@ import java.util.*
 /**
  * Spring Data Repository representing the Users data
  */
-interface UsersRepository : CrudRepository<UserEntity, UUID>
+interface UsersRepository : CrudRepository<UserEntity, UUID> {
+    /**
+     * Find the user with the given email address, if there is one
+     */
+    fun findByEmailIgnoreCase(email: String) : Optional<UserEntity>
+}
