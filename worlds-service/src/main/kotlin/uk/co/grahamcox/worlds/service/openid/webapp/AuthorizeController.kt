@@ -2,10 +2,7 @@ package uk.co.grahamcox.worlds.service.openid.webapp
 
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
 import uk.co.grahamcox.worlds.service.users.UserRetriever
 
@@ -64,6 +61,16 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
     }
 
     /**
+     * Handle when there were mandatory parameters that are missing
+     */
+    @ExceptionHandler(MissingParametersException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleMissingParameters(e: MissingParametersException) =
+            ModelAndView("/openid/badResponseType", mapOf(
+                    "missing_parameters" to e.missingParameters
+            ))
+
+    /**
      * Handle the request for starting an Authorization Flow
      */
     private fun processStartFlow(command: AuthorizeCommand): ModelAndView {
@@ -79,9 +86,7 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
                     "parameters" to command
             ))
         } else {
-            ModelAndView("/openid/badResponseType", mapOf(
-                    "missing_parameters" to missingParams
-            ))
+            throw MissingParametersException(missingParams)
         }
     }
 

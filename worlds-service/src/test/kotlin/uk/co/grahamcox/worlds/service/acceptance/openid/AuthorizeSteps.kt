@@ -21,5 +21,9 @@ class AuthorizeSteps(private val requester: Requester) : En {
 
             requester.makeRequest(uri.toUriString(), HttpMethod.GET, null, String::class.java)
         }
+
+        Then("""^I get an OpenID Authorization error message of "(.+)"$""") { error: String ->
+
+        }
     }
 }
