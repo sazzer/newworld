@@ -52,7 +52,7 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
      */
     @RequestMapping(params = ["response_type=id_token token"])
     fun startImplicitFlowToken(command: AuthorizeCommand): ModelAndView {
-        return processImplicitFlow(command)
+        return processStartFlow(command)
     }
 
     /**
@@ -60,13 +60,13 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
      */
     @RequestMapping(params = ["response_type=id_token"])
     fun startImplicitFlowIdToken(command: AuthorizeCommand): ModelAndView {
-        return processImplicitFlow(command)
+        return processStartFlow(command)
     }
 
     /**
-     * Handle the request for an Implicit Authorization Flow
+     * Handle the request for starting an Authorization Flow
      */
-    private fun processImplicitFlow(command: AuthorizeCommand): ModelAndView {
+    private fun processStartFlow(command: AuthorizeCommand): ModelAndView {
         val missingParams = listOfNotNull(
                 if (command.clientId.isNullOrBlank()) "clientId" else null,
                 if (command.scope.isNullOrBlank()) "scope" else null,
@@ -90,19 +90,72 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
      * or Register form as appropriate
      */
     @RequestMapping(value = ["/continue"], method = [RequestMethod.POST])
-    fun continueAuthentication(command: AuthorizeCommand, @RequestParam("email") email: String): ModelAndView {
-        val user = userRetriever.getByEmail(email)
-
-        val view = if (user != null) {
-            "/openid/login"
+    fun continueAuthentication(command: AuthorizeCommand, @RequestParam("email") email: String?): ModelAndView {
+        return if (email.isNullOrBlank()) {
+            processStartFlow(command)
         } else {
-            "/openid/register"
+            val user = userRetriever.getByEmail(email!!)
+
+            val view = if (user != null) {
+                "/openid/login"
+            } else {
+                "/openid/register"
+            }
+
+            ModelAndView(view, mapOf(
+                    "parameters" to command,
+                    "email" to email
+            ))
         }
 
-        return ModelAndView(view, mapOf(
-                "parameters" to command,
-                "email" to email
-        ))
+    }
+
+    /**
+     * Handler to register a new user, or display an error if registration fails for some reason
+     */
+    @RequestMapping(value = ["/register"], method = [RequestMethod.POST])
+    fun register(command: AuthorizeCommand,
+                 @RequestParam("email") email: String,
+                 @RequestParam("password") password: String?,
+                 @RequestParam("password2") password2: String?,
+                 @RequestParam("username") username: String?,
+                 @RequestParam("display_name") displayName: String?): ModelAndView {
+
+        // First, check if the email address exists. If so then display the Login form instead, with a message indicating
+        // what's happened
+        val user = userRetriever.getByEmail(email)
+
+        return if (user != null) {
+            ModelAndView("/openid/login", mapOf(
+                    "parameters" to command,
+                    "email" to email,
+                    "email_exists_error" to true
+            ))
+        } else {
+            // Next, perform some validation of our inputs.
+            val errors = mapOf(
+                    "blank_password" to password.isNullOrBlank(),
+                    "password_mismatch" to (password != password2),
+                    "blank_username" to username.isNullOrBlank()
+            ).filter { it.value }
+
+            if (errors.isNotEmpty()) {
+                // If any of this validation fails then display the Register form again, with the error messages
+                ModelAndView("/openid/register", mapOf(
+                        "parameters" to command,
+                        "email" to email,
+                        "username" to username,
+                        "displayName" to displayName
+                ) + errors)
+            } else {
+                // Otherwise proceed to actually registering the user
+                ModelAndView("/openid/register", mapOf(
+                        "parameters" to command,
+                        "email" to email
+                ))
+            }
+
+        }
     }
 
     /**
