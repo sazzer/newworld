@@ -3,6 +3,7 @@ package uk.co.grahamcox.worlds.service.users
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
+import uk.co.grahamcox.worlds.service.users.dao.UserServiceImpl
 import uk.co.grahamcox.worlds.service.users.rest.UserController
 
 /**

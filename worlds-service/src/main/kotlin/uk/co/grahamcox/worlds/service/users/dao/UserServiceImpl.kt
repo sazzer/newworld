@@ -1,10 +1,9 @@
-package uk.co.grahamcox.worlds.service.users
+package uk.co.grahamcox.worlds.service.users.dao
 
 import org.slf4j.LoggerFactory
 import uk.co.grahamcox.worlds.service.model.Identity
 import uk.co.grahamcox.worlds.service.model.Resource
-import uk.co.grahamcox.worlds.service.users.dao.UserEntity
-import uk.co.grahamcox.worlds.service.users.dao.UsersRepository
+import uk.co.grahamcox.worlds.service.users.*
 import java.util.*
 
 /**

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.function.Executable
 import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.users.dao.UserEntity
+import uk.co.grahamcox.worlds.service.users.dao.UserServiceImpl
 import uk.co.grahamcox.worlds.service.users.dao.UsersRepository
 import java.time.Instant
 import java.util.*
