@@ -75,9 +75,9 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
      */
     private fun processStartFlow(command: AuthorizeCommand): ModelAndView {
         val missingParams = listOfNotNull(
-                if (command.clientId.isNullOrBlank()) "clientId" else null,
+                if (command.clientId.isNullOrBlank()) "client_id" else null,
                 if (command.scope.isNullOrBlank()) "scope" else null,
-                if (command.redirectUri.isNullOrBlank()) "redirectUri" else null,
+                if (command.redirectUri.isNullOrBlank()) "redirect_uri" else null,
                 if (command.nonce.isNullOrBlank()) "nonce" else null
         )
 

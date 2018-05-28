@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseCleaner
+import uk.co.grahamcox.worlds.service.acceptance.openid.AuthorizeConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.RequesterConfig
 import uk.co.grahamcox.worlds.service.acceptance.users.UsersConfig
 
@@ -14,7 +15,8 @@ import uk.co.grahamcox.worlds.service.acceptance.users.UsersConfig
 @Configuration
 @Import(
         RequesterConfig::class,
-        UsersConfig::class
+        UsersConfig::class,
+        AuthorizeConfig::class
 )
 class CucumberConfig(context: GenericApplicationContext) {
     init {

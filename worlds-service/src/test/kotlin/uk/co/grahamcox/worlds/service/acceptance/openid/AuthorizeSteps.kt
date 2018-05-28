@@ -4,12 +4,15 @@ import cucumber.api.java8.En
 import io.cucumber.datatable.DataTable
 import org.springframework.http.HttpMethod
 import org.springframework.web.util.UriComponentsBuilder
+import uk.co.grahamcox.worlds.service.acceptance.requester.HTMLMatcher
 import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
 
 /**
  * Cucumber steps for OpenID Authorization
  */
-class AuthorizeSteps(private val requester: Requester) : En {
+class AuthorizeSteps(
+        private val requester: Requester,
+        private val openidAuthorizeErrorMatcher: HTMLMatcher) : En {
     init {
         When("I start OpenID Authorization with parameters:$") { parameters: DataTable ->
             val uri = UriComponentsBuilder.fromPath("/openid/authorize")
@@ -23,7 +26,9 @@ class AuthorizeSteps(private val requester: Requester) : En {
         }
 
         Then("""^I get an OpenID Authorization error message of "(.+)"$""") { error: String ->
-
+            openidAuthorizeErrorMatcher.match(mapOf(
+                    "Error Message" to error
+            ))
         }
     }
 }

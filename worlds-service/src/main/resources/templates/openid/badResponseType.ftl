@@ -13,14 +13,14 @@
 
         <div class="ui bulleted list">
             <#if unsupported_response_type??>
-                <div class="item">
+                <div class="item wt-error">
                     <#assign args = [unsupported_response_type] />
                     <@spring.messageArgs "openid.authorize.malformed.unsupportedResponseType" args />
                 </div>
             </#if>
             <#if missing_parameters??>
                 <#list missing_parameters as param>
-                    <div class="item">
+                    <div class="item wt-error">
                         <#assign args = [param] />
                         <@spring.messageArgs "openid.authorize.malformed.missingParameter" args />
                     </div>
