@@ -12,7 +12,8 @@ import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
  */
 class AuthorizeSteps(
         private val requester: Requester,
-        private val openidAuthorizeErrorMatcher: HTMLMatcher) : En {
+        private val openidAuthorizeErrorMatcher: HTMLMatcher,
+        private val openidEmailEntryScreenMatcher: HTMLMatcher) : En {
     init {
         When("I start OpenID Authorization with parameters:$") { parameters: DataTable ->
             val uri = UriComponentsBuilder.fromPath("/openid/authorize")
@@ -29,6 +30,10 @@ class AuthorizeSteps(
             openidAuthorizeErrorMatcher.match(mapOf(
                     "Error Message" to error
             ))
+        }
+
+        Then("""^I get an OpenID Email entry screen with details:$""") { details: DataTable ->
+            openidEmailEntryScreenMatcher.match(details.asMap(String::class.java, String::class.java))
         }
     }
 }

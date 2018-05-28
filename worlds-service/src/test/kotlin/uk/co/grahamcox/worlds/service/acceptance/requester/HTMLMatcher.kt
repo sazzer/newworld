@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.service.acceptance.requester
 
 import org.jsoup.Jsoup
+import org.jsoup.select.Elements
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.function.Executable
 import org.springframework.http.MediaType
@@ -9,7 +10,8 @@ import org.springframework.http.MediaType
  * Configuration of a single field to match
  */
 data class HTMLFieldConfig(
-        val fieldPath: String
+        val fieldPath: String,
+        val valueExtractor: (Elements) -> String = { e -> e.text() }
 )
 
 /**
@@ -36,9 +38,10 @@ class HTMLMatcher(
                 .mapKeys { matchers[it.key]!! }
                 .toList()
                 .map { (field, expected) ->
-                    val value = parsed.select(field.fieldPath).text()
+                    val value = parsed.select(field.fieldPath)
+                    val realValue = field.valueExtractor(value)
 
-                    Executable { Assertions.assertEquals(expected, value) }
+                    Executable { Assertions.assertEquals(expected, realValue) }
                 }
 
         Assertions.assertAll(assertions)
