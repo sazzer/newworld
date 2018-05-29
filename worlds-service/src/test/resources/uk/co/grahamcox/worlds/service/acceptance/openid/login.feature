@@ -1,6 +1,8 @@
-Feature: Account Registration
+Feature: Logging in
 
-  Scenario: When I enter an unknown email address
+  Scenario: When I enter a known email address
+    Given a user exists with details:
+      | Email        | test@example.com                     |
     When I authenticate with parameters:
       | response_type | id_token               |
       | scope         | openid                 |
@@ -10,4 +12,4 @@ Feature: Account Registration
       | nonce         | MyNonce                |
       | email         | test@example.com       |
     Then I get an OK response
-    And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/startRegister.html.snapshot"
+    And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/startLogin.html.snapshot"
