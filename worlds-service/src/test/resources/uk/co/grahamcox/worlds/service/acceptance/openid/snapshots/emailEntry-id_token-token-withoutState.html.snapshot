@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Authenticate with Worlds</title>
+
+    <link rel="stylesheet" type="text/css" href="/semantic-ui/semantic.min.css"/>
+</head>
+<body>
+<div class="ui fluid container">
+    <div class="ui top fixed inverted borderless menu">
+        <div class="header item">
+Authenticate with Worlds        </div>
+    </div>
+
+    <div class="ui text container" style="padding-top: 4em;">
+    <h2 class="ui center aligned icon header">
+        <i class="circular user outline icon"></i>
+Login / Register    </h2>
+    <div class="ui segment">
+        <form action="/openid/authorize/continue" method="post" class="ui form">
+            <input type="hidden" name="response_type" value="id_token token" />
+            <input type="hidden" name="client_id" value="MyClientId" />
+            <input type="hidden" name="scope" value="openid" />
+            <input type="hidden" name="redirect_uri" value="http://www.example.com" />
+            <input type="hidden" name="nonce" value="MyNonce" />
+            <input type="hidden" name="state" value="" />
+            <div class="required field">
+                <label>
+Email Address                </label>
+                <input type="email" name="email" placeholder="user@example.com" required autofocus>
+            </div>
+            <button class="ui primary button" type="submit">Login / Register</button>
+        </form>
+    </div>
+    </div>
+</div>
+</body>
+</html>
