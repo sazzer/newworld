@@ -3,6 +3,7 @@ package uk.co.grahamcox.worlds.service.acceptance.openid
 import cucumber.api.java8.En
 import io.cucumber.datatable.DataTable
 import org.springframework.http.HttpMethod
+import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
 
@@ -21,6 +22,16 @@ class AuthorizeSteps(
                     }
 
             requester.makeRequest(uri.toUriString(), HttpMethod.GET, null, String::class.java)
+        }
+
+        When("I authenticate with parameters:$") { parameters: DataTable ->
+            val body = parameters.asMap<String, String>(String::class.java, String::class.java)
+                    .mapValues { listOf(it.value) }
+
+            requester.makeRequest("/openid/authorize/continue",
+                    HttpMethod.POST,
+                    LinkedMultiValueMap(body),
+                    String::class.java)
         }
     }
 }
