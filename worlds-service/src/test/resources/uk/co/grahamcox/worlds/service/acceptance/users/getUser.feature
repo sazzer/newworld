@@ -15,6 +15,7 @@ Feature: Getting a User by ID
       | Created      | 2018-05-23T09:33:00Z                 |
       | Updated      | 2018-05-23T09:34:00Z                 |
       | Email        | test@example.com                     |
+      | Username     | testuser                             |
       | Display Name | Test User                            |
     When I get the user with ID "00000000-0000-0000-0000-000000000001"
     Then I get an OK response
@@ -23,4 +24,5 @@ Feature: Getting a User by ID
       | ETag          | "00000000-0000-0000-0000-000000000002" |
       | Last Modified | Wed, 23 May 2018 09:34:00 GMT          |
       | Email         | test@example.com                       |
+      | Username      | testuser                               |
       | Display Name  | Test User                              |

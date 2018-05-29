@@ -99,6 +99,7 @@ internal class UserServiceImplTest {
                 updated = Instant.parse("2018-05-22T18:54:00Z"),
                 displayName = "Test User",
                 email = EMAIL_ADDRESS,
+                username = "username",
                 passwordHash = Base64.getEncoder().encodeToString("password".toByteArray()),
                 paswordSalt = Base64.getEncoder().encodeToString("salt".toByteArray())
         )
@@ -117,6 +118,7 @@ internal class UserServiceImplTest {
 
                 Executable { Assertions.assertEquals("Test User", user.data.displayName) },
                 Executable { Assertions.assertEquals(EMAIL_ADDRESS, user.data.email) },
+                Executable { Assertions.assertEquals("username", user.data.username) },
                 Executable { Assertions.assertArrayEquals("password".toByteArray(), user.data.password.hash) },
                 Executable { Assertions.assertArrayEquals("salt".toByteArray(), user.data.password.salt) }
         )

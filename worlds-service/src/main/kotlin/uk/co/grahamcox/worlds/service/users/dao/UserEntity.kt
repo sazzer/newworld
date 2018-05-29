@@ -25,6 +25,8 @@ data class UserEntity(
 
         val email: String,
 
+        val username: String,
+
         @Column(name = "display_name")
         val displayName: String,
 

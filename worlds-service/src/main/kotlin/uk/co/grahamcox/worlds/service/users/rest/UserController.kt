@@ -49,6 +49,7 @@ class UserController(
     private fun translateUser(user: Resource<UserId, UserData>) = UserModel(
             id = user.identity.id.id,
             displayName = user.data.displayName,
-            email = user.data.email
+            email = user.data.email,
+            username = user.data.username
     )
 }

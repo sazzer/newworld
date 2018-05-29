@@ -4,6 +4,7 @@ CREATE TABLE users(
     created TIMESTAMP WITH TIME ZONE NOT NULL,
     updated TIMESTAMP WITH TIME ZONE NOT NULL,
     email VARCHAR(260) NOT NULL UNIQUE,
+    username VARCHAR(100) NOT NULL UNIQUE,
     display_name VARCHAR(100) NOT NULL,
     password_hash VARCHAR(256) NOT NULL,
     password_salt VARCHAR(256) NOT NULL

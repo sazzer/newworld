@@ -50,6 +50,10 @@ class UsersConfig(context: GenericApplicationContext) {
                                         fieldName = "email",
                                         defaultGenerator = { "${UUID.randomUUID()}@example.com" }
                                 ),
+                                "Username" to SeedFieldConfig(
+                                        fieldName = "username",
+                                        defaultGenerator = { UUID.randomUUID().toString() }
+                                ),
                                 "Display Name" to SeedFieldConfig(
                                         fieldName = "display_name",
                                         defaultGenerator = { "Test User" }
@@ -83,6 +87,9 @@ class UsersConfig(context: GenericApplicationContext) {
                                 ),
                                 "Email" to ResponseFieldConfig(
                                         fieldPath = "body/email"
+                                ),
+                                "Username" to ResponseFieldConfig(
+                                        fieldPath = "body/username"
                                 ),
                                 "Display Name" to ResponseFieldConfig(
                                         fieldPath = "body/display_name"

@@ -8,5 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class UserModel(
         val id: String,
         @JsonProperty("display_name") val displayName: String,
-        val email: String
+        val email: String,
+        val username: String
 )

@@ -5,6 +5,7 @@ package uk.co.grahamcox.worlds.service.users
  */
 data class UserData(
         val email: String,
+        val username: String,
         val displayName: String,
         val password: Password
 )

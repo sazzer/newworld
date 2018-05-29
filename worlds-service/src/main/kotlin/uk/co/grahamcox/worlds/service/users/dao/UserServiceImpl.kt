@@ -62,6 +62,7 @@ class UserServiceImpl(private val dao: UsersRepository) : UserRetriever {
                 ),
                 data = UserData(
                         email = user.email,
+                        username = user.username,
                         displayName = user.displayName,
                         password = Password(
                                 hash = Base64.getDecoder().decode(user.passwordHash),

@@ -17,6 +17,9 @@
         "email": {
             "type": "string"
         },
+        "username": {
+            "type": "string"
+        },
         "password": {
             "type": "string",
             "writeOnly": true
