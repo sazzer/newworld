@@ -33,5 +33,15 @@ class AuthorizeSteps(
                     LinkedMultiValueMap(body),
                     String::class.java)
         }
+
+        When("I register a new user with parameters:$") { parameters: DataTable ->
+            val body = parameters.asMap<String, String>(String::class.java, String::class.java)
+                    .mapValues { listOf(it.value) }
+
+            requester.makeRequest("/openid/authorize/register",
+                    HttpMethod.POST,
+                    LinkedMultiValueMap(body),
+                    String::class.java)
+        }
     }
 }
