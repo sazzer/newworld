@@ -2,6 +2,7 @@ package uk.co.grahamcox.worlds.service.users
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -10,7 +11,10 @@ import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.users.dao.UserEntity
 import uk.co.grahamcox.worlds.service.users.dao.UserServiceImpl
 import uk.co.grahamcox.worlds.service.users.dao.UsersRepository
+import uk.co.grahamcox.worlds.service.users.password.Password
+import java.time.Clock
 import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 
 /**
@@ -23,12 +27,15 @@ internal class UserServiceImplTest {
 
         /** The email address to use in the tests */
         private const val EMAIL_ADDRESS = "test@example.com"
+
+        /** The current time */
+        private val NOW = Instant.parse("2018-06-01T16:56:00Z")
     }
     /** The mock DAO */
     private val dao = mockk<UsersRepository>()
 
     /** The test subject */
-    private val testSubject = UserServiceImpl(dao)
+    private val testSubject = UserServiceImpl(dao, Clock.fixed(NOW, ZoneId.of("UTC")))
 
     /**
      * Test getting a user by ID when the user doesn't exist
@@ -86,6 +93,66 @@ internal class UserServiceImplTest {
         Assertions.assertNotNull(user)
         verifyGeneratedUser(user!!)
         verify { dao.findByEmailIgnoreCase(EMAIL_ADDRESS) }
+    }
+
+    /**
+     * Test creating a new user
+     */
+    @Test
+    fun createUser() {
+        val user = UserData(
+                email = "test@example.com",
+                username = "testuser",
+                displayName = "Test User",
+                password = Password(
+                        hash = "hash".toByteArray(),
+                        salt = "salt".toByteArray()
+                )
+        )
+
+        val createdEntity = slot<UserEntity>()
+
+        every { dao.existsByUsernameIgnoreCase("testuser") } returns false
+        every { dao.save(capture(createdEntity)) } returns generateUserEntity()
+
+        val created = testSubject.create(user)
+
+        verifyGeneratedUser(created)
+        Assertions.assertAll(
+                Executable { Assertions.assertEquals(NOW, createdEntity.captured.created) },
+                Executable { Assertions.assertEquals(NOW, createdEntity.captured.updated) },
+                Executable { Assertions.assertEquals("test@example.com", createdEntity.captured.email) },
+                Executable { Assertions.assertEquals("testuser", createdEntity.captured.username) },
+                Executable { Assertions.assertEquals("Test User", createdEntity.captured.displayName) },
+                Executable { Assertions.assertEquals("aGFzaA==", createdEntity.captured.passwordHash) },
+                Executable { Assertions.assertEquals("c2FsdA==", createdEntity.captured.paswordSalt) }
+        )
+    }
+
+
+    /**
+     * Test creating a new user with a duplicate username
+     */
+    @Test
+    fun createUserDuplicateUsername() {
+        val user = UserData(
+                email = "test@example.com",
+                username = "testuser",
+                displayName = "Test User",
+                password = Password(
+                        hash = "hash".toByteArray(),
+                        salt = "salt".toByteArray()
+                )
+        )
+
+        val createdEntity = slot<UserEntity>()
+
+        every { dao.existsByUsernameIgnoreCase("testuser") } returns true
+
+        Assertions.assertThrows(DuplicateUsernameException::class.java) {
+            testSubject.create(user)
+        }
+
     }
 
     /**

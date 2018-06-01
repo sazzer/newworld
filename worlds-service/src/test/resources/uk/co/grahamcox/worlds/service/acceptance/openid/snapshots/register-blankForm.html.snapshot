@@ -35,8 +35,7 @@ Email Address                </label>
 Password                </label>
                 <input type="password" name="password" required autofocus>
                     <div class="ui error message">
-                        No password was entered
-                    </div>
+No password was entered                    </div>
             </div>
 
             <div class="required field ">
@@ -50,8 +49,7 @@ Repeat Password                </label>
 User name                </label>
                 <input type="text" name="username" value="" placeholder="Enter your desired username here" required>
                     <div class="ui error message">
-                        No username was entered
-                    </div>
+No username was entered                    </div>
             </div>
 
             <div class="field">

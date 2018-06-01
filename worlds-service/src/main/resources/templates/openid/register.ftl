@@ -19,6 +19,10 @@
             <#assign formError>error</#assign>
             <#assign usernameError>error</#assign>
         </#if>
+        <#if duplicate_username!false>
+            <#assign formError>error</#assign>
+            <#assign usernameError>error</#assign>
+        </#if>
         <form action="<@spring.url "/openid/authorize/register" />" method="post" class="ui form ${formError!}">
             <input type="hidden" name="response_type" value="${parameters.responseType}" />
             <input type="hidden" name="client_id" value="${parameters.clientId}" />
@@ -40,7 +44,7 @@
                 <input type="password" name="password" required autofocus>
                 <#if blank_password!false>
                     <div class="ui error message">
-                        No password was entered
+                        <@spring.message "openid.authorize.password.error.blank_password" />
                     </div>
                 </#if>
             </div>
@@ -52,7 +56,7 @@
                 <input type="password" name="password2" required>
                 <#if password_mismatch!false>
                     <div class="ui error message">
-                        The passwords did not match
+                        <@spring.message "openid.authorize.password2.error.password_mismatch" />
                     </div>
                 </#if>
             </div>
@@ -64,7 +68,12 @@
                 <input type="text" name="username" value="${username!}" placeholder="<@spring.message "openid.authorize.username.placeholder" />" required>
                 <#if blank_username!false>
                     <div class="ui error message">
-                        No username was entered
+                        <@spring.message "openid.authorize.username.error.blank_username" />
+                    </div>
+                </#if>
+                <#if duplicate_username!false>
+                    <div class="ui error message">
+                        <@spring.message "openid.authorize.username.error.duplicate_username" />
                     </div>
                 </#if>
             </div>

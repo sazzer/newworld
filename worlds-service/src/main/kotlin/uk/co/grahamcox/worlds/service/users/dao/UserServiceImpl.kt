@@ -4,12 +4,17 @@ import org.slf4j.LoggerFactory
 import uk.co.grahamcox.worlds.service.model.Identity
 import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.users.*
+import uk.co.grahamcox.worlds.service.users.password.Password
+import java.time.Clock
 import java.util.*
 
 /**
- * Standard implementation of the User Retriever in terms of the data base
+ * Standard implementation of the User Service in terms of the data base
  */
-class UserServiceImpl(private val dao: UsersRepository) : UserRetriever {
+class UserServiceImpl(
+        private val dao: UsersRepository,
+        private val clock: Clock
+) : UserService {
     companion object {
         /** The logger to use */
         private val LOG = LoggerFactory.getLogger(UserServiceImpl::class.java)
@@ -45,6 +50,33 @@ class UserServiceImpl(private val dao: UsersRepository) : UserRetriever {
                 .orElse(null)
         LOG.debug("Found user {} with email address {}", user, email)
         return user
+    }
+
+    /**
+     * Create a new user in the system
+     * @param user The user to create
+     * @return the newly created user
+     */
+    override fun create(user: UserData): Resource<UserId, UserData> {
+        if (dao.existsByUsernameIgnoreCase(user.username)) {
+            throw DuplicateUsernameException()
+        }
+        
+        val userEntity = UserEntity(
+                id = UUID.randomUUID(),
+                version = UUID.randomUUID(),
+                created = clock.instant(),
+                updated = clock.instant(),
+                email = user.email,
+                username = user.username,
+                displayName = user.displayName,
+                passwordHash = Base64.getEncoder().encodeToString(user.password.hash),
+                paswordSalt = Base64.getEncoder().encodeToString(user.password.salt)
+        )
+
+        val createdEntity = dao.save(userEntity)
+
+        return translateUser(createdEntity)
     }
 
     /**

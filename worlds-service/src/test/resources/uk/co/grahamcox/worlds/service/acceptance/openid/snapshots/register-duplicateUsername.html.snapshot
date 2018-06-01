@@ -36,18 +36,18 @@ Password                </label>
                 <input type="password" name="password" required autofocus>
             </div>
 
-            <div class="required field error">
+            <div class="required field ">
                 <label>
 Repeat Password                </label>
                 <input type="password" name="password2" required>
-                    <div class="ui error message">
-The passwords did not match                    </div>
             </div>
 
-            <div class="required field ">
+            <div class="required field error">
                 <label>
 User name                </label>
                 <input type="text" name="username" value="MyUsername" placeholder="Enter your desired username here" required>
+                    <div class="ui error message">
+That username is already registered. Please choose another.                    </div>
             </div>
 
             <div class="field">

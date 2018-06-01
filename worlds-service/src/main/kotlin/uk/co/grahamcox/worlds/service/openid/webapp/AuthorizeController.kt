@@ -4,7 +4,11 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
-import uk.co.grahamcox.worlds.service.users.UserRetriever
+import uk.co.grahamcox.worlds.service.users.DuplicateUsernameException
+import uk.co.grahamcox.worlds.service.users.password.Password
+import uk.co.grahamcox.worlds.service.users.UserData
+import uk.co.grahamcox.worlds.service.users.UserService
+import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
 
 /**
  * Controller for managing the OpenID Connect flows for the /authorize endpoint.
@@ -43,7 +47,10 @@ import uk.co.grahamcox.worlds.service.users.UserRetriever
  */
 @Controller
 @RequestMapping("/openid/authorize", method = [RequestMethod.GET])
-class AuthorizeController(private val userRetriever: UserRetriever) {
+class AuthorizeController(
+        private val userService: UserService,
+        private val passwordHasher: PasswordHasher
+) {
     /**
      * Handle the request for an Implicit Authorization Flow, when the response type is "id_token token"
      */
@@ -99,7 +106,7 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
         return if (email.isNullOrBlank()) {
             processStartFlow(command)
         } else {
-            val user = userRetriever.getByEmail(email!!)
+            val user = userService.getByEmail(email!!)
 
             val view = if (user != null) {
                 "/openid/login"
@@ -128,7 +135,7 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
 
         // First, check if the email address exists. If so then display the Login form instead, with a message indicating
         // what's happened
-        val user = userRetriever.getByEmail(email)
+        val user = userService.getByEmail(email)
 
         return if (user != null) {
             ModelAndView("/openid/login", mapOf(
@@ -154,10 +161,27 @@ class AuthorizeController(private val userRetriever: UserRetriever) {
                 ) + errors)
             } else {
                 // Otherwise proceed to actually registering the user
-                ModelAndView("/openid/register", mapOf(
-                        "parameters" to command,
-                        "email" to email
-                ))
+                try {
+                    val createdUser = userService.create(UserData(
+                            email = email,
+                            username = username!!,
+                            displayName = if (displayName.isNullOrBlank()) username else displayName!!,
+                            password = passwordHasher.hashPassword(password!!)
+                    ))
+
+                    ModelAndView("/openid/register", mapOf(
+                            "parameters" to command,
+                            "email" to email
+                    ))
+                } catch (e : DuplicateUsernameException) {
+                    ModelAndView("/openid/register", mapOf(
+                            "parameters" to command,
+                            "email" to email,
+                            "username" to username,
+                            "displayName" to displayName,
+                            "duplicate_username" to true
+                    ))
+                }
             }
 
         }

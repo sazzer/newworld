@@ -1,4 +1,3 @@
-@wip
 Feature: Account Registration
 
   Scenario: When I enter an unknown email address
@@ -42,7 +41,7 @@ Feature: Account Registration
 
   Scenario: When I register a duplicate email
     Given a user exists with details:
-      | Email        | test@example.com                     |
+      | Email | test@example.com |
     When I register a new user with parameters:
       | response_type | id_token               |
       | scope         | openid                 |
@@ -56,3 +55,20 @@ Feature: Account Registration
       | username      | MyUsername             |
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/register-duplicateEmail.html.snapshot"
+
+  Scenario: When I register a duplicate username
+    Given a user exists with details:
+      | Username | MyUsername |
+    When I register a new user with parameters:
+      | response_type | id_token               |
+      | scope         | openid                 |
+      | client_id     | MyClientId             |
+      | redirect_uri  | http://www.example.com |
+      | state         | MyState                |
+      | nonce         | MyNonce                |
+      | email         | test@example.com       |
+      | password      | MyPassword             |
+      | password2     | MyPassword             |
+      | username      | MyUsername             |
+    Then I get an OK response
+    And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/register-duplicateUsername.html.snapshot"
