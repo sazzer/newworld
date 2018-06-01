@@ -1,4 +1,4 @@
-package uk.co.grahamcox.worlds.service.users
+package uk.co.grahamcox.worlds.service.users.password
 
 import java.util.*
 
