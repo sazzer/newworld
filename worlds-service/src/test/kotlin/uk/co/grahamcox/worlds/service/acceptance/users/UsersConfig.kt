@@ -3,6 +3,7 @@ package uk.co.grahamcox.worlds.service.acceptance.users
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
+import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseSeeder
 import uk.co.grahamcox.worlds.service.acceptance.database.SeedFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
@@ -95,6 +96,13 @@ class UsersConfig(context: GenericApplicationContext) {
                                         fieldPath = "body/display_name"
                                 )
                         ))
+            }
+
+            bean("userEmailExistsVerifier") {
+                DatabaseExistsVerifier(
+                        ref(),
+                        "SELECT COUNT(*) FROM users WHERE email = :id"
+                )
             }
         }.initialize(context)
     }

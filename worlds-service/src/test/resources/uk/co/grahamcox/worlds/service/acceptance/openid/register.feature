@@ -11,6 +11,7 @@ Feature: Account Registration
       | email         | test@example.com       |
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/startRegister.html.snapshot"
+    And no user now exists with email address "test@example.com"
 
   Scenario: When I register without filling in the form
     When I register a new user with parameters:
@@ -23,6 +24,7 @@ Feature: Account Registration
       | email         | test@example.com       |
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/register-blankForm.html.snapshot"
+    And no user now exists with email address "test@example.com"
 
   Scenario: When I register with mismatched passwords
     When I register a new user with parameters:
@@ -38,6 +40,7 @@ Feature: Account Registration
       | username      | MyUsername             |
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/register-mismatchedPasswords.html.snapshot"
+    And no user now exists with email address "test@example.com"
 
   Scenario: When I register a duplicate email
     Given a user exists with details:
@@ -72,3 +75,4 @@ Feature: Account Registration
       | username      | MyUsername             |
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/register-duplicateUsername.html.snapshot"
+    And no user now exists with email address "test@example.com"
