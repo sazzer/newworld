@@ -16,17 +16,25 @@ import java.time.Duration
 class OpenIdConfig(context: GenericApplicationContext) {
     init {
         beans {
-            bean<RegisterController>()
+            // For now this is only the strings that map on to "Implicit Flow"
+            // I.e. not anything that uses the "code" flow.
+            val supportedResponseTypes = mapOf(
+                    "id_token" to setOf(ResponseTypes.ID_TOKEN),
+                    "id_token token" to setOf(ResponseTypes.ID_TOKEN, ResponseTypes.TOKEN)
+            )
+
+            bean {
+                RegisterController(
+                        ref(),
+                        ref(),
+                        supportedResponseTypes
+                )
+            }
+            
             bean {
                 StartAuthorizeController(
                         ref(),
-                        // For now this is only the strings that map on to "Implicit Flow"
-                        // I.e. not anything that uses the "code" flow.
-                        mapOf(
-                                "id_token" to setOf(ResponseTypes.ID_TOKEN),
-                                "id_token token" to setOf(ResponseTypes.ID_TOKEN, ResponseTypes.TOKEN)
-                        )
-
+                        supportedResponseTypes
                 )
             }
 

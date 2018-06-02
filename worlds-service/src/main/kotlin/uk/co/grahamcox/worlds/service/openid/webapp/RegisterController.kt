@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
+import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.users.DuplicateUsernameException
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserService
@@ -17,8 +18,9 @@ import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
 @RequestMapping("/openid/authorize/register", method = [RequestMethod.POST])
 class RegisterController(
         private val userService: UserService,
-        private val passwordHasher: PasswordHasher
-) {
+        private val passwordHasher: PasswordHasher,
+        supportedResponseTypes: Map<String, Set<ResponseTypes>>
+) : AuthorizeControllerBase(supportedResponseTypes)  {
     /**
      * Handler to register a new user, or display an error if registration fails for some reason
      */
@@ -29,6 +31,8 @@ class RegisterController(
                  @RequestParam("password2") password2: String?,
                  @RequestParam("username") username: String?,
                  @RequestParam("display_name") displayName: String?): ModelAndView {
+
+        verifyCommand(command)
 
         // First, check if the email address exists. If so then display the Login form instead, with a message indicating
         // what's happened

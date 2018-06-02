@@ -13,6 +13,19 @@ Feature: Account Registration
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/startRegister.html.snapshot"
     And no user now exists with email address "test@example.com"
 
+  Scenario: When I register with an unsupported response type
+    When I register a new user with parameters:
+      | response_type | code                   |
+      | scope         | openid                 |
+      | client_id     | MyClientId             |
+      | redirect_uri  | http://www.example.com |
+      | state         | MyState                |
+      | nonce         | MyNonce                |
+      | email         | test@example.com       |
+    Then I get a Bad Request response
+    And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/register-unsupportedResponseType.html.snapshot"
+    And no user now exists with email address "test@example.com"
+
   Scenario: When I register without filling in the form
     When I register a new user with parameters:
       | response_type | id_token               |
