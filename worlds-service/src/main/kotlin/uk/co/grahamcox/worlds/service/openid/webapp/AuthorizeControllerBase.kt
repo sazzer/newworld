@@ -13,8 +13,10 @@ open class AuthorizeControllerBase(private val supportedResponseTypes: Map<Strin
 
     /**
      * Verify that the Authorize Command has valid values in it
+     * @param command The command object to verify
+     * @return the set of response types that are supported
      */
-    protected fun verifyCommand(command: AuthorizeCommand) {
+    protected fun verifyCommand(command: AuthorizeCommand): Set<ResponseTypes> {
         if (command.responseType == null) {
             throw MissingParametersException(listOf("response_type"))
         }
@@ -32,6 +34,8 @@ open class AuthorizeControllerBase(private val supportedResponseTypes: Map<Strin
         if (missingParams.isNotEmpty()) {
             throw MissingParametersException(missingParams)
         }
+
+        return responseTypes
     }
 
     /**

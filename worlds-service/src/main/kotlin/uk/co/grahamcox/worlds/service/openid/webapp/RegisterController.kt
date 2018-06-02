@@ -32,7 +32,7 @@ class RegisterController(
                  @RequestParam("username") username: String?,
                  @RequestParam("display_name") displayName: String?): ModelAndView {
 
-        verifyCommand(command)
+        val responseTypes = verifyCommand(command)
 
         // First, check if the email address exists. If so then display the Login form instead, with a message indicating
         // what's happened

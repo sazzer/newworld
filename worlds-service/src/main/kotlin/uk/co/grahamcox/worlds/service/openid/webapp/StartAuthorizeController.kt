@@ -50,6 +50,21 @@ import uk.co.grahamcox.worlds.service.users.UserService
  * * token => Return an Access Token directly
  *
  * This is the only real difference between the different flows.
+ *
+ * Callback Handling
+ * -----------------
+ * A redirect is made to redirect_url, with parameters of:
+ * * code - If the response_Type contains "code"
+ *
+ * * id_token - If the response_type contains "id_token"
+ *
+ * * access_token - If the response_type contains "token"
+ * * token_type=Bearer - If the response_type contains "token"
+ * * expires_in - If the response_type contains "token"
+ *
+ * * state - The same value as was provided in the "state" parameter
+ *
+ * If the response contains an access_token then it must be made as a Fragment call. Otherwise, make it as a Query String
  */
 @Controller
 @RequestMapping("/openid/authorize", method = [RequestMethod.GET])
