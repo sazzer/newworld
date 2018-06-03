@@ -5,11 +5,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.servlet.ModelAndView
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
+import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
+import uk.co.grahamcox.worlds.service.openid.scopes.UnknownScopesException
 
 /**
  * Base class for the Authorize Controller classes to build upon
  */
-open class AuthorizeControllerBase(private val supportedResponseTypes: Map<String, Set<ResponseTypes>>) {
+open class AuthorizeControllerBase(
+        private val scopeRegistry: ScopeRegistry,
+        private val supportedResponseTypes: Map<String, Set<ResponseTypes>>
+) {
 
     /**
      * Verify that the Authorize Command has valid values in it
@@ -35,6 +40,7 @@ open class AuthorizeControllerBase(private val supportedResponseTypes: Map<Strin
             throw MissingParametersException(missingParams)
         }
 
+        scopeRegistry.parseScopeString(command.scope!!)
         return responseTypes
     }
 
@@ -56,5 +62,15 @@ open class AuthorizeControllerBase(private val supportedResponseTypes: Map<Strin
     fun handleUnsupportedResponseType(e: UnsupportedResponseTypeException) =
             ModelAndView("/openid/badResponseType", mapOf(
                     "unsupported_response_type" to e.responseType
+            ))
+
+    /**
+     * Handle when there was a scopes string that contains unknown scopes
+     */
+    @ExceptionHandler(UnknownScopesException::class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    fun handleUnknownScopes(e: UnknownScopesException) =
+            ModelAndView("/openid/badResponseType", mapOf(
+                    "unsupported_scopes" to e.unknownScopes
             ))
 }

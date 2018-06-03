@@ -26,6 +26,14 @@
                     </div>
                 </#list>
             </#if>
+            <#if unsupported_scopes??>
+                <#list unsupported_scopes as scope>
+                    <div class="item wt-error">
+                        <#assign args = [scope] />
+                        <@spring.messageArgs "openid.authorize.malformed.unsupportedScope" args />
+                    </div>
+                </#list>
+            </#if>
         </div>
     </div>
 </@page.page>

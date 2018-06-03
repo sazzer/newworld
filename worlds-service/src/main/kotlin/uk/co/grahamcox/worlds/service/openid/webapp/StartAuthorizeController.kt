@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
+import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.users.UserService
 
 /**
@@ -70,8 +71,9 @@ import uk.co.grahamcox.worlds.service.users.UserService
 @RequestMapping("/openid/authorize", method = [RequestMethod.GET])
 class StartAuthorizeController(
         private val userService: UserService,
+        scopeRegistry: ScopeRegistry,
         supportedResponseTypes: Map<String, Set<ResponseTypes>>
-) : AuthorizeControllerBase(supportedResponseTypes) {
+) : AuthorizeControllerBase(scopeRegistry, supportedResponseTypes) {
 
     /**
      * Start the flow for authorization

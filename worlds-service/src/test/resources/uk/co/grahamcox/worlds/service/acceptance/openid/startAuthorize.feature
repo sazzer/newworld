@@ -55,6 +55,17 @@ Feature: Starting OpenID Authorization
       | id_token+token | Scope | ClientId  |                       | Nonce | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/missingParameter-id_token-token-redirectUri.html.snapshot | Missing parameter "redirect_uri" for response type "id_token token" |
       | id_token+token | Scope | ClientId  | http://www.google.com |       | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/missingParameter-id_token-token-nonce.html.snapshot       | Missing parameter "nonce" for response type "id_token token"        |
 
+  Scenario: Starting OpenID authorization with invalid scopes
+    When I start OpenID Authorization with parameters:
+      | response_type | id_token               |
+      | scope         | invalid                |
+      | client_id     | MyClientId             |
+      | redirect_uri  | http://www.example.com |
+      | state         | MyState                |
+      | nonce         | MyNonce                |
+    Then I get a Bad Request response
+    And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/invalidScope.html.snapshot"
+
   Scenario Outline: Starting OpenID authorization with valid details: <Comment>
     When I start OpenID Authorization with parameters:
       | response_type | <Response Type>        |

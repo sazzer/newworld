@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
+import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.users.DuplicateUsernameException
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserService
@@ -19,8 +20,9 @@ import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
 class RegisterController(
         private val userService: UserService,
         private val passwordHasher: PasswordHasher,
+        scopeRegistry: ScopeRegistry,
         supportedResponseTypes: Map<String, Set<ResponseTypes>>
-) : AuthorizeControllerBase(supportedResponseTypes)  {
+) : AuthorizeControllerBase(scopeRegistry, supportedResponseTypes)  {
     /**
      * Handler to register a new user, or display an error if registration fails for some reason
      */

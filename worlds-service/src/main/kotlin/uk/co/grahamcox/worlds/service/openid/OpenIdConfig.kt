@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
+import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.openid.token.AccessTokenGeneratorImpl
 import uk.co.grahamcox.worlds.service.openid.webapp.RegisterController
 import uk.co.grahamcox.worlds.service.openid.webapp.StartAuthorizeController
@@ -24,15 +25,25 @@ class OpenIdConfig(context: GenericApplicationContext) {
             )
 
             bean {
+                ScopeRegistry(
+                        listOf(
+                                OpenIdScopes.values().toList()
+                        ).flatten()
+                )
+            }
+
+            bean {
                 RegisterController(
+                        ref(),
                         ref(),
                         ref(),
                         supportedResponseTypes
                 )
             }
-            
+
             bean {
                 StartAuthorizeController(
+                        ref(),
                         ref(),
                         supportedResponseTypes
                 )
