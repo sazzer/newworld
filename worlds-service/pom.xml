@@ -12,7 +12,7 @@
     <name>worlds-service</name>
     <description>Backend Service for New Worlds</description>
     <properties>
-        <version.cucumber>3.0.0</version.cucumber>
+        <version.cucumber>3.0.2</version.cucumber>
         <version.junitJupiter>5.2.0</version.junitJupiter>
         <version.junitPlatform>1.2.0</version.junitPlatform>
         <version.junitVintage>5.2.0</version.junitVintage>
