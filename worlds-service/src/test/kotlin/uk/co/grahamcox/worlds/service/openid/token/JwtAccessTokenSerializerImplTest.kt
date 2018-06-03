@@ -17,7 +17,7 @@ internal class JwtAccessTokenSerializerImplTest {
     /** The test subject */
     private val testSubject = JwtAccessTokenSerializerImpl(
             Algorithm.HMAC512("superSecret"),
-            ScopeRegistry(OpenIdScopes.values().toList()))
+            ScopeRegistry(setOf(OpenIdScopes.OPENID)))
 
     /**
      * Test serializing an Access Token into a String
@@ -57,5 +57,85 @@ internal class JwtAccessTokenSerializerImplTest {
         val result = testSubject.deserialize(jwt)
 
         Assertions.assertEquals(accessToken, result)
+    }
+
+    /**
+     * Test deserializing an access token string with unknown scopes mentioned
+     */
+    @Test
+    fun testDeserializeUnknownScopes() {
+        val now = Instant.now().truncatedTo(ChronoUnit.SECONDS)
+        val accessToken = AccessToken(
+                id = AccessTokenId("accessTokenId"),
+                user = UserId("userId"),
+                created = now,
+                expires = now.plus(Duration.ofDays(1)),
+                scopes = setOf(OpenIdScopes.OPENID, OpenIdScopes.PROFILE, OpenIdScopes.EMAIL)
+        )
+
+        val expected = AccessToken(
+                id = AccessTokenId("accessTokenId"),
+                user = UserId("userId"),
+                created = now,
+                expires = now.plus(Duration.ofDays(1)),
+                scopes = setOf(OpenIdScopes.OPENID)
+        )
+
+        val jwt = testSubject.serialize(accessToken)
+        val result = testSubject.deserialize(jwt)
+
+        Assertions.assertEquals(expected, result)
+    }
+
+    /**
+     * Test deserializing an access token that has expired
+     */
+    @Test
+    fun testDeserializeExpired() {
+        val now = Instant.now().truncatedTo(ChronoUnit.SECONDS)
+        val accessToken = AccessToken(
+                id = AccessTokenId("accessTokenId"),
+                user = UserId("userId"),
+                created = now,
+                expires = now.minus(Duration.ofDays(1)),
+                scopes = setOf(OpenIdScopes.OPENID)
+        )
+
+        val jwt = testSubject.serialize(accessToken)
+        Assertions.assertThrows(ExpiredJwtException::class.java) {
+            testSubject.deserialize(jwt)
+        }
+    }
+
+    /**
+     * Test deserializing an access token that is just not valid
+     */
+    @Test
+    fun testDeserializeInvalid() {
+        Assertions.assertThrows(InvalidJwtException::class.java) {
+            testSubject.deserialize("invalid")
+        }
+    }
+
+    /**
+     * Test deserializing an access token that was signed with a different key
+     */
+    @Test
+    fun testDeserializeBadSignature() {
+        val now = Instant.now().truncatedTo(ChronoUnit.SECONDS)
+        val accessToken = AccessToken(
+                id = AccessTokenId("accessTokenId"),
+                user = UserId("userId"),
+                created = now,
+                expires = now.plus(Duration.ofDays(1)),
+                scopes = setOf(OpenIdScopes.OPENID)
+        )
+
+        val jwt = JwtAccessTokenSerializerImpl(Algorithm.HMAC512("otherKey"), ScopeRegistry(setOf()))
+                .serialize(accessToken)
+
+        Assertions.assertThrows(InvalidJwtException::class.java) {
+            testSubject.deserialize(jwt)
+        }
     }
 }

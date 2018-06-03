@@ -2,6 +2,8 @@ package uk.co.grahamcox.worlds.service.openid.token
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.exceptions.TokenExpiredException
 import org.slf4j.LoggerFactory
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.users.UserId
@@ -44,9 +46,19 @@ class JwtAccessTokenSerializerImpl(
      * @return the deserialized access token
      */
     override fun deserialize(accessToken: String): AccessToken {
-        val decoded = JWT.require(signingAlgorithm)
-                .build()
-                .verify(accessToken)
+        val decoded = try {
+            JWT.require(signingAlgorithm)
+                    .withIssuer(JwtAccessTokenSerializerImpl::class.qualifiedName)
+                    .withAudience(JwtAccessTokenSerializerImpl::class.qualifiedName)
+                    .build()
+                    .verify(accessToken)
+        } catch (e: TokenExpiredException) {
+            LOG.info("Access token has already expired", e)
+            throw ExpiredJwtException()
+        } catch (e: JWTVerificationException) {
+            LOG.warn("Invalid access token provided", e)
+            throw InvalidJwtException()
+        }
 
         val result = AccessToken(
                 id = AccessTokenId(decoded.id),
@@ -55,7 +67,7 @@ class JwtAccessTokenSerializerImpl(
                 expires = decoded.expiresAt.toInstant(),
                 scopes = decoded.getClaim("scopes")
                         .asArray(String::class.java)
-                        .flatMap(scopesRegistry::parseScopeString)
+                        .mapNotNull { scopesRegistry.scopesMap[it] }
                         .toSet()
         )
 

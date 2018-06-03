@@ -9,7 +9,7 @@ class ScopeRegistry(
     /**
      * Map of all the scopes by their ID
      */
-    private val scopesMap = scopes.groupBy { it.id }
+    val scopesMap = scopes.groupBy { it.id }
             .filter { it.value.isNotEmpty() }
             .onEach {
                 if (it.value.size > 1) {
