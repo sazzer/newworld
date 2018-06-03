@@ -1,16 +1,24 @@
 package uk.co.grahamcox.worlds.service.openid.webapp
 
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
+import uk.co.grahamcox.worlds.service.openid.token.AccessTokenGenerator
+import uk.co.grahamcox.worlds.service.openid.token.AccessTokenSerializer
 import uk.co.grahamcox.worlds.service.users.DuplicateUsernameException
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserService
 import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
+import java.time.Clock
+import java.time.Duration
 
 /**
  * Controller for handling user registration as part of authenticating a user
@@ -20,7 +28,10 @@ import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
 class RegisterController(
         private val userService: UserService,
         private val passwordHasher: PasswordHasher,
-        scopeRegistry: ScopeRegistry,
+        private val accessTokenGenerator: AccessTokenGenerator,
+        private val accessTokenSerializer: AccessTokenSerializer,
+        private val scopeRegistry: ScopeRegistry,
+        private val clock: Clock,
         supportedResponseTypes: Map<String, Set<ResponseTypes>>
 ) : AuthorizeControllerBase(scopeRegistry, supportedResponseTypes)  {
     /**
@@ -32,7 +43,7 @@ class RegisterController(
                  @RequestParam("password") password: String?,
                  @RequestParam("password2") password2: String?,
                  @RequestParam("username") username: String?,
-                 @RequestParam("display_name") displayName: String?): ModelAndView {
+                 @RequestParam("display_name") displayName: String?): Any {
 
         val responseTypes = verifyCommand(command)
 
@@ -72,10 +83,29 @@ class RegisterController(
                             password = passwordHasher.hashPassword(password!!)
                     ))
 
-                    ModelAndView("/openid/register", mapOf(
-                            "parameters" to command,
-                            "email" to email
-                    ))
+                    val redirectUri = UriComponentsBuilder.fromUriString(command.redirectUri!!)
+                            .queryParam("state", command.state)
+
+                    if (responseTypes.contains(ResponseTypes.TOKEN)) {
+                        val accessToken = accessTokenGenerator.generate(createdUser.identity.id,
+                                scopeRegistry.parseScopeString(command.scope!!))
+                        val serialized = accessTokenSerializer.serialize(accessToken)
+
+                        val now = clock.instant()
+                        val duration = Duration.between(now, accessToken.expires)
+                                .seconds
+
+                        redirectUri.queryParam("token_type", "Bearer")
+                        redirectUri.queryParam("access_token", serialized)
+                        redirectUri.queryParam("expires_in", duration)
+                    }
+
+                    redirectUri.fragment(redirectUri.build().query)
+                    redirectUri.query(null)
+
+                    return ResponseEntity.status(HttpStatus.SEE_OTHER)
+                            .location(redirectUri.build().toUri())
+                            .build<Unit>()
                 } catch (e : DuplicateUsernameException) {
                     ModelAndView("/openid/register", mapOf(
                             "parameters" to command,

@@ -1,11 +1,13 @@
 package uk.co.grahamcox.worlds.service.openid
 
+import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.openid.token.AccessTokenGeneratorImpl
+import uk.co.grahamcox.worlds.service.openid.token.JwtAccessTokenSerializerImpl
 import uk.co.grahamcox.worlds.service.openid.webapp.RegisterController
 import uk.co.grahamcox.worlds.service.openid.webapp.StartAuthorizeController
 import java.time.Duration
@@ -37,6 +39,9 @@ class OpenIdConfig(context: GenericApplicationContext) {
                         ref(),
                         ref(),
                         ref(),
+                        ref(),
+                        ref(),
+                        ref(),
                         supportedResponseTypes
                 )
             }
@@ -53,6 +58,13 @@ class OpenIdConfig(context: GenericApplicationContext) {
                 AccessTokenGeneratorImpl(
                         ref(),
                         Duration.ofDays(365)
+                )
+            }
+
+            bean {
+                JwtAccessTokenSerializerImpl(
+                        Algorithm.HMAC512("superSecret"),
+                        ref()
                 )
             }
         }.initialize(context)

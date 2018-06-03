@@ -33,5 +33,9 @@ class UserSteps(
         Then("""^no user now exists with email address "(.+)"$""") { email: String ->
             userEmailExistsVerifier.checkNotExists(email)
         }
+
+        Then("""^a user now exists with email address "(.+)"$""") { email: String ->
+            userEmailExistsVerifier.checkExists(email)
+        }
     }
 }

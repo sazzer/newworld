@@ -1,5 +1,6 @@
 package uk.co.grahamcox.worlds.service.acceptance.requester
 
+import io.cucumber.datatable.DataTable
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.function.Executable
 
@@ -8,7 +9,9 @@ import org.junit.jupiter.api.function.Executable
  */
 data class ResponseFieldConfig(
         val fieldPath: String,
-        val expectedConversion: (String) -> Any = { it -> it }
+        val expectedConversion: (String) -> Any? = { it -> it },
+        val actualConversion: (Any) -> Any? = { it -> it },
+        val comparison: (Any?, Any?) -> Unit = { expected, actual -> Assertions.assertEquals(expected, actual) }
 )
 
 /**
@@ -18,6 +21,11 @@ class ResponseMatcher(
         private val requester: Requester,
         private val matchers: Map<String, ResponseFieldConfig>
 ) {
+    /**
+     * Check if the last response in the Requester matches the expected values
+     */
+    fun match(dataTable: DataTable) = match(dataTable.asMap(String::class.java, String::class.java))
+
     /**
      * Check if the last response in the Requester matches the expected values
      */
@@ -32,9 +40,10 @@ class ResponseMatcher(
                 .toList()
                 .map { (field, expected) ->
                     val value = lastResponse.context.getValue(field.fieldPath)
+                    val realValue = field.actualConversion(value)
                     val realExpected = field.expectedConversion(expected)
 
-                    Executable { Assertions.assertEquals(realExpected, value) }
+                    Executable { field.comparison(realExpected, realValue) }
                 }
 
         Assertions.assertAll(assertions)

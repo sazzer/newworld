@@ -6,12 +6,14 @@ import org.springframework.http.HttpMethod
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
+import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
 
 /**
  * Cucumber steps for OpenID Authorization
  */
 class AuthorizeSteps(
-        private val requester: Requester) : En {
+        private val requester: Requester,
+        private val authRedirectMatcher: ResponseMatcher) : En {
     init {
         When("I start OpenID Authorization with parameters:$") { parameters: DataTable ->
             val uri = UriComponentsBuilder.fromPath("/openid/authorize")
@@ -42,6 +44,10 @@ class AuthorizeSteps(
                     HttpMethod.POST,
                     LinkedMultiValueMap(body),
                     String::class.java)
+        }
+
+        Then("^I am redirected to the callback address:$") { details: DataTable ->
+            authRedirectMatcher.match(details)
         }
     }
 }
