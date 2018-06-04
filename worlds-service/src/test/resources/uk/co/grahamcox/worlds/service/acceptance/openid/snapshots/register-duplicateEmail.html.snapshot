@@ -17,6 +17,8 @@ Authenticate with Worlds        </div>
         <i class="circular key icon"></i>
 Login    </h2>
     <div class="ui segment">
+            <div class="ui warning message">
+This email address is already registered. Please log in now.            </div>
         <form action="/openid/authorize/login" method="post" class="ui form">
             <input type="hidden" name="response_type" value="id_token" />
             <input type="hidden" name="client_id" value="MyClientId" />

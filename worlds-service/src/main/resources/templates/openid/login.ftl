@@ -7,6 +7,11 @@
         <@spring.message "openid.authorize.login.header" />
     </h2>
     <div class="ui segment">
+        <#if email_exists_error!false>
+            <div class="ui warning message">
+                <@spring.message "openid.authorize.login.error.duplicate_email" />
+            </div>
+        </#if>
         <form action="<@spring.url "/openid/authorize/login" />" method="post" class="ui form">
             <input type="hidden" name="response_type" value="${parameters.responseType}" />
             <input type="hidden" name="client_id" value="${parameters.clientId}" />
