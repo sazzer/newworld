@@ -1,6 +1,5 @@
 package uk.co.grahamcox.worlds.service.openid.webapp
 
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -8,17 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
-import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
-import uk.co.grahamcox.worlds.service.openid.token.AccessTokenGenerator
-import uk.co.grahamcox.worlds.service.openid.token.AccessTokenSerializer
 import uk.co.grahamcox.worlds.service.users.DuplicateUsernameException
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserService
 import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
-import java.time.Clock
-import java.time.Duration
 
 /**
  * Controller for handling user registration as part of authenticating a user
