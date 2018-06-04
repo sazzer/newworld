@@ -8,6 +8,7 @@ import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.openid.token.AccessTokenGeneratorImpl
 import uk.co.grahamcox.worlds.service.openid.token.JwtAccessTokenSerializerImpl
+import uk.co.grahamcox.worlds.service.openid.webapp.LoginController
 import uk.co.grahamcox.worlds.service.openid.webapp.RedirectUriBuilder
 import uk.co.grahamcox.worlds.service.openid.webapp.RegisterController
 import uk.co.grahamcox.worlds.service.openid.webapp.StartAuthorizeController
@@ -47,6 +48,16 @@ class OpenIdConfig(context: GenericApplicationContext) {
 
             bean {
                 RegisterController(
+                        ref(),
+                        ref(),
+                        ref(),
+                        ref(),
+                        supportedResponseTypes
+                )
+            }
+
+            bean {
+                LoginController(
                         ref(),
                         ref(),
                         ref(),

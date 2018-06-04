@@ -46,6 +46,16 @@ class AuthorizeSteps(
                     String::class.java)
         }
 
+        When("I log in with parameters:$") { parameters: DataTable ->
+            val body = parameters.asMap<String, String>(String::class.java, String::class.java)
+                    .mapValues { listOf(it.value) }
+
+            requester.makeRequest("/openid/authorize/login",
+                    HttpMethod.POST,
+                    LinkedMultiValueMap(body),
+                    String::class.java)
+        }
+
         Then("^I am redirected to the callback address:$") { details: DataTable ->
             authRedirectMatcher.match(details)
         }

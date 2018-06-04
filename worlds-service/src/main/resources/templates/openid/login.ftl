@@ -7,12 +7,20 @@
         <@spring.message "openid.authorize.login.header" />
     </h2>
     <div class="ui segment">
+        <#if blank_password!false>
+            <#assign formError>error</#assign>
+            <#assign passwordError>error</#assign>
+        </#if>
+        <#if invalid_password!false>
+            <#assign formError>error</#assign>
+            <#assign passwordError>error</#assign>
+        </#if>
         <#if email_exists_error!false>
             <div class="ui warning message">
                 <@spring.message "openid.authorize.login.error.duplicate_email" />
             </div>
         </#if>
-        <form action="<@spring.url "/openid/authorize/login" />" method="post" class="ui form">
+        <form action="<@spring.url "/openid/authorize/login" />" method="post" class="ui form ${formError!}">
             <input type="hidden" name="response_type" value="${parameters.responseType}" />
             <input type="hidden" name="client_id" value="${parameters.clientId}" />
             <input type="hidden" name="scope" value="${parameters.scope}" />
@@ -30,6 +38,16 @@
                     <@spring.message "openid.authorize.password.label" />
                 </label>
                 <input type="password" name="password" required autofocus>
+                <#if blank_password!false>
+                    <div class="ui error message">
+                        <@spring.message "openid.authorize.password.error.blank_password" />
+                    </div>
+                </#if>
+                <#if invalid_password!false>
+                    <div class="ui error message">
+                        <@spring.message "openid.authorize.password.error.invalid_password" />
+                    </div>
+                </#if>
             </div>
             <button class="ui primary button" type="submit"><@spring.message "openid.authorize.login.action" /></button>
         </form>

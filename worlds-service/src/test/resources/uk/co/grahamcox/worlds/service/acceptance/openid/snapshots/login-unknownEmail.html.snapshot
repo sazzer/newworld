@@ -14,13 +14,13 @@ Authenticate with Worlds        </div>
 
     <div class="ui text container" style="padding-top: 4em;">
     <h2 class="ui center aligned icon header">
-        <i class="circular key icon"></i>
-Login    </h2>
+        <i class="circular id badge outline icon"></i>
+Register    </h2>
     <div class="ui segment">
             <div class="ui warning message">
-This email address is already registered. Please log in now.            </div>
-        <form action="/openid/authorize/login" method="post" class="ui form ">
-            <input type="hidden" name="response_type" value="id_token" />
+This email address is not registered.            </div>
+        <form action="/openid/authorize/register" method="post" class="ui form ">
+            <input type="hidden" name="response_type" value="id_token token" />
             <input type="hidden" name="client_id" value="MyClientId" />
             <input type="hidden" name="scope" value="openid" />
             <input type="hidden" name="redirect_uri" value="http://www.example.com" />
@@ -29,14 +29,34 @@ This email address is already registered. Please log in now.            </div>
             <div class="read-only required field">
                 <label>
 Email Address                </label>
-                <input type="email" name="email" value="test@example.com" readonly>
+                <input type="email" name="email" value="unknown@example.com" readonly>
             </div>
-            <div class="required field">
+
+            <div class="required field ">
                 <label>
 Password                </label>
                 <input type="password" name="password" required autofocus>
             </div>
-            <button class="ui primary button" type="submit">Login</button>
+
+            <div class="required field ">
+                <label>
+Repeat Password                </label>
+                <input type="password" name="password2" required>
+            </div>
+
+            <div class="required field ">
+                <label>
+User name                </label>
+                <input type="text" name="username" value="" placeholder="Enter your desired username here" required>
+            </div>
+
+            <div class="field">
+                <label>
+Display name                </label>
+                <input type="text" name="display_name" value="" placeholder="Enter your display name here">
+            </div>
+
+            <button class="ui primary button" type="submit">Register</button>
         </form>
     </div>
     </div>
