@@ -28,10 +28,8 @@ import java.time.Duration
 class RegisterController(
         private val userService: UserService,
         private val passwordHasher: PasswordHasher,
-        private val accessTokenGenerator: AccessTokenGenerator,
-        private val accessTokenSerializer: AccessTokenSerializer,
-        private val scopeRegistry: ScopeRegistry,
-        private val clock: Clock,
+        private val redirectUriBuilder: RedirectUriBuilder,
+        scopeRegistry: ScopeRegistry,
         supportedResponseTypes: Map<String, Set<ResponseTypes>>
 ) : AuthorizeControllerBase(scopeRegistry, supportedResponseTypes)  {
     /**
@@ -45,7 +43,7 @@ class RegisterController(
                  @RequestParam("username") username: String?,
                  @RequestParam("display_name") displayName: String?): Any {
 
-        val responseTypes = verifyCommand(command)
+        verifyCommand(command)
 
         // First, check if the email address exists. If so then display the Login form instead, with a message indicating
         // what's happened
@@ -83,28 +81,8 @@ class RegisterController(
                             password = passwordHasher.hashPassword(password!!)
                     ))
 
-                    val redirectUri = UriComponentsBuilder.fromUriString(command.redirectUri!!)
-                            .queryParam("state", command.state)
-
-                    if (responseTypes.contains(ResponseTypes.TOKEN)) {
-                        val accessToken = accessTokenGenerator.generate(createdUser.identity.id,
-                                scopeRegistry.parseScopeString(command.scope!!))
-                        val serialized = accessTokenSerializer.serialize(accessToken)
-
-                        val now = clock.instant()
-                        val duration = Duration.between(now, accessToken.expires)
-                                .seconds
-
-                        redirectUri.queryParam("token_type", "Bearer")
-                        redirectUri.queryParam("access_token", serialized)
-                        redirectUri.queryParam("expires_in", duration)
-                    }
-
-                    redirectUri.fragment(redirectUri.build().query)
-                    redirectUri.query(null)
-
                     return ResponseEntity.status(HttpStatus.SEE_OTHER)
-                            .location(redirectUri.build().toUri())
+                            .location(redirectUriBuilder.buildUri(command, createdUser))
                             .build<Unit>()
                 } catch (e : DuplicateUsernameException) {
                     ModelAndView("/openid/register", mapOf(
