@@ -2,8 +2,10 @@ package uk.co.grahamcox.worlds.service.spring
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenArgumentResolver
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenInterceptor
 
 /**
@@ -14,6 +16,22 @@ class WebMvcConfig : WebMvcConfigurer {
     /** Interceptor to add for handling Access Tokens */
     @Autowired
     private lateinit var accessTokenInterceptor: AccessTokenInterceptor
+
+    /** Argument Resolver for handling Access Tokens */
+    @Autowired
+    private lateinit var accessTokenArgumentResolver: AccessTokenArgumentResolver
+
+    /**
+     * Add resolvers to support custom controller method argument types.
+     *
+     * This does not override the built-in support for resolving handler
+     * method arguments. To customize the built-in support for argument
+     * resolution, configure [RequestMappingHandlerAdapter] directly.
+     * @param resolvers initially an empty list
+     */
+    override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {
+        resolvers.add(accessTokenArgumentResolver)
+    }
 
     /**
      * Add Spring MVC lifecycle interceptors for pre- and post-processing of

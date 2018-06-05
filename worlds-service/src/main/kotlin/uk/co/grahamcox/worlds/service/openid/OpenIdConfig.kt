@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
+import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenArgumentResolver
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenInterceptor
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenStore
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
@@ -93,6 +94,7 @@ class OpenIdConfig(context: GenericApplicationContext) {
 
             bean<AccessTokenStore>()
             bean<AccessTokenInterceptor>()
+            bean<AccessTokenArgumentResolver>()
         }.initialize(context)
     }
 }
