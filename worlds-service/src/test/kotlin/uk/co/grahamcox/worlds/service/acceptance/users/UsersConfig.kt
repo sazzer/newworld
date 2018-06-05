@@ -87,7 +87,13 @@ class UsersConfig(context: GenericApplicationContext) {
                                         expectedConversion = { listOf(it) }
                                 ),
                                 "Email" to ResponseFieldConfig(
-                                        fieldPath = "body/email"
+                                        fieldPath = "body/email",
+                                        expectedConversion = {
+                                            when (it) {
+                                                "[null]" -> null
+                                                else -> it
+                                            }
+                                        }
                                 ),
                                 "Username" to ResponseFieldConfig(
                                         fieldPath = "body/username"

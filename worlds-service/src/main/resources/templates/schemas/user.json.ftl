@@ -4,7 +4,6 @@
     "type": "object",
     "required": [
         "display_name",
-        "email",
         "password"
     ],
     "properties": {
@@ -19,10 +18,6 @@
         },
         "username": {
             "type": "string"
-        },
-        "password": {
-            "type": "string",
-            "writeOnly": true
         }
     },
     "links": [

@@ -5,6 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import uk.co.grahamcox.worlds.service.model.Resource
+import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
 import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserId
@@ -17,7 +18,8 @@ import uk.co.grahamcox.worlds.service.users.UserRetriever
 @RestController
 @RequestMapping("/api/users")
 class UserController(
-        val userRetriever: UserRetriever
+        private val userRetriever: UserRetriever,
+        private val accessTokenHolder: AccessTokenHolder
 ) {
     /**
      * Handle a User Not Found error
@@ -47,10 +49,14 @@ class UserController(
     /**
      * Translate a User resource into the REST version
      */
-    private fun translateUser(user: Resource<UserId, UserData>) = UserModel(
-            id = user.identity.id.id,
-            displayName = user.data.displayName,
-            email = user.data.email,
-            username = user.data.username
-    )
+    private fun translateUser(user: Resource<UserId, UserData>): UserModel {
+        val currentUser = accessTokenHolder.accessToken?.user
+
+        return UserModel(
+                id = user.identity.id.id,
+                displayName = user.data.displayName,
+                email = if (currentUser == user.identity.id) user.data.email else null,
+                username = user.data.username
+        )
+    }
 }

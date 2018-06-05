@@ -24,11 +24,11 @@ class AuthorizeConfig(context: GenericApplicationContext) {
     init {
         beans {
             bean("authRedirectMatcher") {
-                fun convertToUriComponents(input: Any) = (input as List<String>)
+                fun convertToUriComponents(input: Any?) = (input as List<String>)
                         .first()
                         .let { UriComponentsBuilder.fromUriString(it).build() }
 
-                fun getUriFragmentValue(input: Any, key: String): String? {
+                fun getUriFragmentValue(input: Any?, key: String): String? {
                     val uriComponents = convertToUriComponents(input)
                     return UriComponentsBuilder.newInstance()
                             .query(uriComponents.fragment)

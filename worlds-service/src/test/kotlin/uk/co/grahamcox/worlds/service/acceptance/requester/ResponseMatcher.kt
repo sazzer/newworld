@@ -10,7 +10,7 @@ import org.junit.jupiter.api.function.Executable
 data class ResponseFieldConfig(
         val fieldPath: String,
         val expectedConversion: (String) -> Any? = { it -> it },
-        val actualConversion: (Any) -> Any? = { it -> it },
+        val actualConversion: (Any?) -> Any? = { it -> it },
         val comparison: (Any?, Any?) -> Unit = { expected, actual -> Assertions.assertEquals(expected, actual) }
 )
 
