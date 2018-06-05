@@ -70,11 +70,10 @@ class LoginController(
                             "invalid_password" to true
                     ))
                 } else {
-                    ModelAndView("/openid/login", mapOf(
-                            "parameters" to command,
-                            "email" to email
-                    ))
-                }
+
+                    return ResponseEntity.status(HttpStatus.SEE_OTHER)
+                            .location(redirectUriBuilder.buildUri(command, user))
+                            .build<Unit>()                }
             }
         }
     }

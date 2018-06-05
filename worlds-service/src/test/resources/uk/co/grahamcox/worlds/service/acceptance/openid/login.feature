@@ -57,7 +57,7 @@ Feature: Logging in
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/login-missingPassword.html.snapshot"
 
-  @ignore
+  @wip
   Scenario: When I successfully log in
     When I log in with parameters:
       | response_type | id_token token         |
