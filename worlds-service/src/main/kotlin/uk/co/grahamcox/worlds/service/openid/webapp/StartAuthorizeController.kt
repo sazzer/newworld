@@ -10,28 +10,24 @@ import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.users.UserService
 
 /**
- * Controller for managing the OpenID Connect flows for the /authorize endpoint.
+ * Controller for managing the OAuth 2.0 and OpenID Connect flows for the /authorize endpoint.
  *
- * Authorization Code Flow
- * -----------------------
- * responseType: code
- * Required Parameters: scope, responseType, clientId, redirectUri
- * Recommended Parameters: state
- * Optional Parameters: response_mode, nonce, display, prompt, max_age, ui_locales, id_token_hint, login_hint, acr_values
- *
- * Implicit Flow
- * -------------
- * responseType: id_token token, id_token
- * Required Parameters: scope, responseType, clientId, redirectUri, nonce
- * Recommended Parameters: state
- * Optional Parameters: response_mode, display, prompt, max_age, ui_locales, id_token_hint, login_hint, acr_values
- *
- * Hybrid Flow
- * -----------
- * responseType: code id_token, code token, code id_token token
- * Required Parameters: scope, responseType, clientId, redirectUri
- * Recommended Parameters: state
- * Optional Parameters: response_mode, nonce, display, prompt, max_age, ui_locales, id_token_hint, login_hint, acr_values
+ * Parameters
+ * ----------
+ * response_type - required
+ * scope - required
+ * client_id - required
+ * redirect_uri - required
+ * nonce - required if response_type contains "id_token"
+ * state - recommended
+ * response_mode - not yet supported
+ * display - not yet supported
+ * prompt - not yet supported
+ * max_age - not yet supported
+ * ui_locales - not yet supported
+ * id_token_hint - not yet supported
+ * login_hint - not yet supported
+ * acr_values - not yet supported
  *
  * Difference between State and Nonce
  * ----------------------------------

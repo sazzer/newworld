@@ -24,6 +24,7 @@ class OpenIdConfig(context: GenericApplicationContext) {
             // For now this is only the strings that map on to "Implicit Flow"
             // I.e. not anything that uses the "code" flow.
             val supportedResponseTypes = mapOf(
+                    "token" to setOf(ResponseTypes.TOKEN),
                     "id_token" to setOf(ResponseTypes.ID_TOKEN),
                     "id_token token" to setOf(ResponseTypes.ID_TOKEN, ResponseTypes.TOKEN)
             )

@@ -92,7 +92,7 @@ Feature: Account Registration
 
   Scenario: When I successfully register a new user
     When I register a new user with parameters:
-      | response_type | id_token token         |
+      | response_type | token                  |
       | scope         | openid                 |
       | client_id     | MyClientId             |
       | redirect_uri  | http://www.example.com |

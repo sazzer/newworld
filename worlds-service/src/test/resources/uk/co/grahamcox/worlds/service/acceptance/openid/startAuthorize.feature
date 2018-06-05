@@ -14,7 +14,6 @@ Feature: Starting OpenID Authorization
     Examples:
       | Response Type       | Snapshot                                                                                                             |
       | code                | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/unsupportedResponseType-code.html.snapshot                |
-      | token               | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/unsupportedResponseType-token.html.snapshot               |
       | code+id_token       | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/unsupportedResponseType-code-id_token.html.snapshot       |
       | code+token          | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/unsupportedResponseType-code-token.html.snapshot          |
       | code+id_token+token | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/unsupportedResponseType-code-id_token-token.html.snapshot |
@@ -81,6 +80,11 @@ Feature: Starting OpenID Authorization
       | Response Type | State | Snapshot                                                                                                  | Comment                |
       | id_token      | State | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/emailEntry-id_token-withState.html.snapshot    | id_token with state    |
       | id_token      |       | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/emailEntry-id_token-withoutState.html.snapshot | id_token without state |
+
+    Examples: token
+      | Response Type | State | Snapshot                                                                                               | Comment             |
+      | token         | State | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/emailEntry-token-withState.html.snapshot    | token with state    |
+      | token         |       | uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/emailEntry-token-withoutState.html.snapshot | token without state |
 
     Examples: id_token token
       | Response Type  | State | Snapshot                                                                                                        | Comment                      |
