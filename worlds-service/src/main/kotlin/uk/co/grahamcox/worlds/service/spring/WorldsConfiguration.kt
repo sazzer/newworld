@@ -14,7 +14,8 @@ import java.time.Clock
 @Import(
         DatabaseConfig::class,
         UsersConfig::class,
-        OpenIdConfig::class
+        OpenIdConfig::class,
+        WebMvcConfig::class
 )
 class WorldsConfiguration(context: GenericApplicationContext) {
 
