@@ -5,6 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import uk.co.grahamcox.worlds.service.model.Resource
+import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserId
 import uk.co.grahamcox.worlds.service.users.UserNotFoundException
@@ -34,7 +35,7 @@ class UserController(
      * @return the response entity representing the user
      */
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
-    fun getUser(@PathVariable("id") id: String): ResponseEntity<UserModel> {
+    fun getUser(@PathVariable("id") id: String, accessToken: AccessToken): ResponseEntity<UserModel> {
         val user = userRetriever.getById(UserId(id))
 
         return ResponseEntity.status(HttpStatus.OK)
