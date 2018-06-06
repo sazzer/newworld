@@ -21,7 +21,14 @@ Feature: Getting a User by ID
 
   Scenario: Get a known user when not authenticated
     When I get the user with ID "00000000-0000-0000-0000-000000000001"
-    Then I get an Unauthorized response
+    Then I get an OK response
+    And I get a user with details:
+      | ID            | 00000000-0000-0000-0000-000000000001   |
+      | ETag          | "00000000-0000-0000-0000-000000000002" |
+      | Last Modified | Wed, 23 May 2018 09:34:00 GMT          |
+      | Email         | [null]                                 |
+      | Username      | testuser                               |
+      | Display Name  | Test User                              |
 
   Scenario: Get a known user when authenticated as a different user
     Given I have authenticated as user "00000000-0000-0000-0000-000000000002"
