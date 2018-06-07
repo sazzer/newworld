@@ -1,5 +1,6 @@
 // @flow
 
+import {call, put} from 'redux-saga/effects';
 import buildUrl from 'build-url';
 import uuid from "uuid/v4";
 
@@ -44,10 +45,22 @@ export function startAuth(state: string, nonce: string) {
         }
     });
 
-    window.open(realUrl,
-        'worldsAuth',
-        'dependent'
-    );
+    return new Promise((resolve, reject) => {
+        const openedWindow = window.open(realUrl,
+            'worldsAuth',
+            'dependent'
+        );
+
+        function callback(event) {
+            if (event.data && event.data.message === 'authenticationResult') {
+                window.removeEventListener('message', callback);
+                openedWindow.close();
+                resolve(event.data);
+            }
+        }
+
+        window.addEventListener('message', callback);
+    });
 }
 
 /** Action to indicate that we are starting authentication */
@@ -77,8 +90,12 @@ export const mutations = {
 
 /** The sagas for this sub-module */
 export const sagas = {
-    [START_AUTH_ACTION]: function(action: StartAuthAction) {
-        startAuth(action.state, action.nonce);
+    [START_AUTH_ACTION]: function*(action: StartAuthAction): Generator<any, any, any> {
+        const result = yield call(startAuth, action.state, action.nonce);
+        yield put({
+            type: 'AUTHENTICATED',
+            data: result.params
+        });
     }
 };
 

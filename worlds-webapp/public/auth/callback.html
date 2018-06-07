@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Authentication Result</title>
+</head>
+<body>
+<noscript>
+    You need to enable JavaScript to run this app.
+</noscript>
+Authenticated
+<script>
+    var params = {};
+
+    window.location.hash
+        .substr(1)
+        .split('&')
+        .map(function(v) {
+            return v.split('=');
+        })
+        .forEach(function(parts) {
+            var key = parts[0];
+            var value = parts[1];
+
+            params[key] = value;
+        });
+
+    var message = {
+        message: 'authenticationResult',
+        params: params
+    };
+
+    window.opener.postMessage(message, '*');
+</script>
+</body>
+</html>
