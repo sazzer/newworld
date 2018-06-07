@@ -1,9 +1,13 @@
 // @flow
 
 import React from 'react';
-import { Interpolate } from 'react-i18next';
-import { Menu } from 'semantic-ui-react'
+import {Interpolate} from 'react-i18next';
+import {Menu} from 'semantic-ui-react'
+import LoginMenu from './LoginMenu';
 
+/**
+ * React Component representing the header bar of the application
+ */
 export default function HeaderBar() {
     return (
         <Menu fixed="top" inverted borderless>
@@ -12,9 +16,7 @@ export default function HeaderBar() {
             </Menu.Item>
 
             <Menu.Menu position="right">
-                <Menu.Item>
-                    <Interpolate i18nKey="page.login" />
-                </Menu.Item>
+                <LoginMenu/>
             </Menu.Menu>
         </Menu>
     );
