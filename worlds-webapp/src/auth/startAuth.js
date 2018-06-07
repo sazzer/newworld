@@ -77,7 +77,7 @@ export const mutations = {
 
 /** The sagas for this sub-module */
 export const sagas = {
-    [START_AUTH_ACTION]: function*(action: StartAuthAction): Generator<void, void, StartAuthAction> {
+    [START_AUTH_ACTION]: function(action: StartAuthAction) {
         startAuth(action.state, action.nonce);
     }
 };
