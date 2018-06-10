@@ -2,6 +2,8 @@ package uk.co.grahamcox.worlds.service.openid.webapp
 
 import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.worlds.service.model.Resource
+import uk.co.grahamcox.worlds.service.openid.client.ClientId
+import uk.co.grahamcox.worlds.service.openid.idtoken.IdTokenGenerator
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.openid.token.AccessTokenGenerator
@@ -19,17 +21,20 @@ class RedirectUriBuilder(
         private val clock: Clock,
         private val accessTokenGenerator: AccessTokenGenerator,
         private val accessTokenSerializer: AccessTokenSerializer,
+        private val idTokenGenerator: IdTokenGenerator,
         private val scopeRegistry: ScopeRegistry,
         private val supportedResponseTypes: Map<String, Set<ResponseTypes>>
 ) {
     /**
      * Build the URI to redirect the user to
      * @param command The authorize command object
+     * @param clientId The Client to redirect the user for
      * @param user The user to redirect for
      * @return the URI
      *
      */
     fun buildUri(command: AuthorizeCommand,
+                 clientId: ClientId,
                  user: Resource<UserId, UserData>): URI {
         val redirectUri = UriComponentsBuilder.fromUriString(command.redirectUri!!)
                 .queryParam("state", command.state)
@@ -48,6 +53,12 @@ class RedirectUriBuilder(
             redirectUri.queryParam("token_type", "Bearer")
             redirectUri.queryParam("access_token", serialized)
             redirectUri.queryParam("expires_in", duration)
+        }
+
+        if (responseTypes.contains(ResponseTypes.ID_TOKEN)) {
+            val idToken = idTokenGenerator.generate(user, clientId, command.nonce)
+
+            redirectUri.queryParam("id_token", idToken)
         }
 
         redirectUri.fragment(redirectUri.build().query)

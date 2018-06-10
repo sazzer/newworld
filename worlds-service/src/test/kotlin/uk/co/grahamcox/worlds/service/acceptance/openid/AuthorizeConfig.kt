@@ -37,6 +37,14 @@ class AuthorizeConfig(context: GenericApplicationContext) {
                             ?.firstOrNull()
                 }
 
+                fun checkPresence(expected: Any?, actual: Any?) {
+                    when(expected.toString().toUpperCase()) {
+                        "PRESENT" -> Assertions.assertNotNull(actual)
+                        "ABSENT" -> Assertions.assertNull(actual)
+                        else -> Assertions.fail("Expected must be Present or Absent")
+                    }
+                }
+
                 ResponseMatcher(
                         ref(),
                         mapOf(
@@ -62,13 +70,12 @@ class AuthorizeConfig(context: GenericApplicationContext) {
                                 "Access Token Fragment" to ResponseFieldConfig(
                                         fieldPath = "headers/location",
                                         actualConversion = { url -> getUriFragmentValue(url, "access_token") },
-                                        comparison = { expected, actual ->
-                                            when(expected.toString().toUpperCase()) {
-                                                "PRESENT" -> Assertions.assertNotNull(actual)
-                                                "ABSENT" -> Assertions.assertNull(actual)
-                                                else -> Assertions.fail("Expected must be Present or Absent")
-                                            }
-                                        }
+                                        comparison = ::checkPresence
+                                ),
+                                "ID Token Fragment" to ResponseFieldConfig(
+                                        fieldPath = "headers/location",
+                                        actualConversion = { url -> getUriFragmentValue(url, "id_token") },
+                                        comparison = ::checkPresence
                                 ),
                                 "Token Type Fragment" to ResponseFieldConfig(
                                         fieldPath = "headers/location",

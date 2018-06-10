@@ -57,7 +57,7 @@ Feature: Logging in
     Then I get an OK response
     And the response matches snapshot "uk/co/grahamcox/worlds/service/acceptance/openid/snapshots/login-missingPassword.html.snapshot"
 
-  Scenario: When I successfully log in
+  Scenario: When I successfully log in only asking for an access token
     When I log in with parameters:
       | response_type | token                  |
       | scope         | openid                 |
@@ -76,3 +76,25 @@ Feature: Logging in
       | Token Type Fragment   | Bearer          |
       | Expires In Fragment   | 31536000        |
       | State Fragment        | MyState         |
+      | ID Token Fragment     | Absent          |
+
+  Scenario: When I successfully log in asking for an access token and ID token
+    When I log in with parameters:
+      | response_type | id_token token         |
+      | scope         | openid                 |
+      | client_id     | MyClientId             |
+      | redirect_uri  | http://www.example.com |
+      | state         | MyState                |
+      | nonce         | MyNonce                |
+      | email         | test@example.com       |
+      | password      | MyPassword             |
+    Then I get a See Other response
+    And I am redirected to the callback address:
+      | URL Scheme            | http            |
+      | URL Host              | www.example.com |
+      | Query String Present  | No              |
+      | Access Token Fragment | Present         |
+      | Token Type Fragment   | Bearer          |
+      | Expires In Fragment   | 31536000        |
+      | State Fragment        | MyState         |
+      | ID Token Fragment     | Present         |

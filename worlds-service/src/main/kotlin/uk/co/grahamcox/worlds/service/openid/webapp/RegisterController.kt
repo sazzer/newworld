@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
+import uk.co.grahamcox.worlds.service.openid.client.ClientId
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.scopes.ScopeRegistry
 import uk.co.grahamcox.worlds.service.users.DuplicateUsernameException
@@ -76,7 +77,7 @@ class RegisterController(
                     ))
 
                     return ResponseEntity.status(HttpStatus.SEE_OTHER)
-                            .location(redirectUriBuilder.buildUri(command, createdUser))
+                            .location(redirectUriBuilder.buildUri(command, ClientId(command.clientId!!), createdUser))
                             .build<Unit>()
                 } catch (e : DuplicateUsernameException) {
                     ModelAndView("/openid/register", mapOf(

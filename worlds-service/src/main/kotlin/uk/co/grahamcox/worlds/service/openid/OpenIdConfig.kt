@@ -4,6 +4,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
+import uk.co.grahamcox.worlds.service.openid.idtoken.IdTokenGeneratorImpl
 import uk.co.grahamcox.worlds.service.openid.responseTypes.ResponseTypes
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenArgumentResolver
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenControllerAdvice
@@ -43,6 +44,7 @@ class OpenIdConfig(context: GenericApplicationContext) {
 
             bean {
                 RedirectUriBuilder(
+                        ref(),
                         ref(),
                         ref(),
                         ref(),
@@ -90,6 +92,14 @@ class OpenIdConfig(context: GenericApplicationContext) {
                 JwtAccessTokenSerializerImpl(
                         Algorithm.HMAC512("superSecret"),
                         ref()
+                )
+            }
+
+            bean {
+                IdTokenGeneratorImpl(
+                        ref(),
+                        Duration.ofDays(1),
+                        Algorithm.HMAC512("anotherSecret")
                 )
             }
 
