@@ -3,8 +3,11 @@
 import {createSagas} from "redux-box";
 import type {StartAuthModule, StartAuthModuleState} from "./startAuth";
 import * as startAuth from './startAuth';
+import type {AccessTokenModuleState} from "./accessToken";
+import * as accessToken from './accessToken';
+import * as finishAuth from './finishAuth';
 
-type AuthModuleState = StartAuthModuleState;
+type AuthModuleState = StartAuthModuleState | AccessTokenModuleState;
 
 /** The name of the module */
 const MODULE_NAME = 'auth';
@@ -20,12 +23,14 @@ const actions = {
 
 /** The set of mutations that are triggered in response to actions */
 const mutations = {
-    ...startAuth.mutations
+    ...startAuth.mutations,
+    ...accessToken.mutations
 };
 
 /** The set of Sagas that are triggered in response to actions */
 const sagas = {
-    ...startAuth.sagas
+    ...startAuth.sagas,
+    ...finishAuth.sagas
 };
 
 /** The set of selectors that are used to get data out of the module */

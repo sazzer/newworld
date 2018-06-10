@@ -3,6 +3,7 @@
 import {call, put} from 'redux-saga/effects';
 import buildUrl from 'build-url';
 import uuid from "uuid/v4";
+import {finishAuthAction} from "./finishAuth";
 
 /** The action for starting authentication */
 const START_AUTH_ACTION = 'AUTH/START_AUTH';
@@ -20,6 +21,7 @@ export type StartAuthModule = {
 
 /** The type that is used for the Start Auth action */
 type StartAuthAction = {
+    type: string,
     state: string,
     nonce: string
 };
@@ -64,7 +66,7 @@ export function startAuth(state: string, nonce: string) {
 }
 
 /** Action to indicate that we are starting authentication */
-export function startAuthAction() {
+export function startAuthAction(): StartAuthAction {
     return {
         type: START_AUTH_ACTION,
         state: uuid(),
@@ -92,10 +94,7 @@ export const mutations = {
 export const sagas = {
     [START_AUTH_ACTION]: function*(action: StartAuthAction): Generator<any, any, any> {
         const result = yield call(startAuth, action.state, action.nonce);
-        yield put({
-            type: 'AUTHENTICATED',
-            data: result.params
-        });
+        yield put(finishAuthAction(result.params));
     }
 };
 

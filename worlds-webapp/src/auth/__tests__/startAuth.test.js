@@ -24,7 +24,7 @@ describe('startAuthAction', () => {
 describe('startAuthMutation', () => {
     describe('Specifying new values', () => {
         const state = {};
-        testSubject.startAuthMutation(state, {state: 'MyState', nonce: 'MyNonce'});
+        testSubject.startAuthMutation(state, {type: '', state: 'MyState', nonce: 'MyNonce'});
 
         it('Has 2 keys', () => {
            expect(Object.keys(state)).toHaveLength(2);
