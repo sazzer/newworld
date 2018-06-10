@@ -3,6 +3,7 @@
 import {put} from 'redux-saga/effects';
 import jwtDecode from 'jwt-decode';
 import {storeAccessTokenAction} from "./accessToken";
+import {storeCurrentUserAction} from "../users/currentUser";
 
 /** The action for finishing authentication */
 const FINISH_AUTH_ACTION = 'AUTH/FINISH_AUTH';
@@ -36,10 +37,7 @@ export const sagas = {
         yield put(storeAccessTokenAction(action.payload.access_token, action.payload.token_type, action.payload.expires_in));
 
         const idToken = jwtDecode(action.payload.id_token);
-        yield put({
-            type: 'USER/CURRENT_USER',
-            id: idToken.sub
-        });
+        yield put(storeCurrentUserAction(idToken.sub));
     }
 };
 
