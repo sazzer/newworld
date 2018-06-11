@@ -3,6 +3,7 @@ package uk.co.grahamcox.worlds.service.spring
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
+import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenArgumentResolver
@@ -47,5 +48,14 @@ class WebMvcConfig : WebMvcConfigurer {
      */
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(accessTokenInterceptor)
+    }
+
+    /**
+     * Configure cross origin requests processing.
+     * @since 4.2
+     */
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("*")
     }
 }
