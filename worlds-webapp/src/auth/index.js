@@ -30,7 +30,8 @@ const mutations = {
 /** The set of Sagas that are triggered in response to actions */
 const sagas = {
     ...startAuth.sagas,
-    ...finishAuth.sagas
+    ...finishAuth.sagas,
+    ...accessToken.sagas
 };
 
 /** The set of selectors that are used to get data out of the module */

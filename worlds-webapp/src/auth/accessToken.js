@@ -1,5 +1,7 @@
 // @flow
 
+import {setAccessToken} from "../api";
+
 /** The action for storing the access token */
 const STORE_ACCESS_TOKEN_ACTION = 'AUTH/STORE_ACCESS_TOKEN';
 
@@ -42,3 +44,11 @@ export function storeAccessTokenMutation(state: AccessTokenModuleState, action: 
 export const mutations = {
     [STORE_ACCESS_TOKEN_ACTION]: storeAccessTokenMutation
 };
+
+/** The sagas for this sub-module */
+export const sagas = {
+    [STORE_ACCESS_TOKEN_ACTION]: function(action: StoreAccessTokenAction) {
+        setAccessToken(action.accessToken.token);
+    }
+};
+
