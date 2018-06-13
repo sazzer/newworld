@@ -1,8 +1,8 @@
 // @flow
 
 import {createSagas} from "redux-box";
-import type {CurrentUserState} from "./currentUser";
-import type {UsersState} from "./users";
+import type {CurrentUserState, CurrentUserModule} from "./currentUser";
+import type {UsersState, UsersModule} from "./users";
 import * as currentUser from './currentUser';
 import * as users from './users';
 
@@ -34,6 +34,8 @@ const sagas = {
 
 /** The set of selectors that are used to get data out of the module */
 const selectors = {
+    ...currentUser.selectors,
+    ...users.selectors
 };
 
 /** The actual module */
@@ -45,3 +47,6 @@ export const module = {
     sagas: createSagas(sagas),
     selectors
 };
+
+/** The type representing the Users module */
+export type UserModule = UsersModule & CurrentUserModule;

@@ -3,7 +3,7 @@
 import React from 'react';
 import {Interpolate} from 'react-i18next';
 import {Menu} from 'semantic-ui-react'
-import LoginMenu from './LoginMenu';
+import UserMenu from './UserMenu';
 
 /**
  * React Component representing the header bar of the application
@@ -16,7 +16,7 @@ export default function HeaderBar() {
             </Menu.Item>
 
             <Menu.Menu position="right">
-                <LoginMenu/>
+                <UserMenu />
             </Menu.Menu>
         </Menu>
     );

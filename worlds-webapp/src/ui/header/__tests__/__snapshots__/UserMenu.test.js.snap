@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserMenu Renders correctly when a current user is present 1`] = `<Connect(ConnectedLoggedInMenu) />`;
+
+exports[`UserMenu Renders correctly when no current user is present 1`] = `<Connect(ConnectedLoginMenu) />`;
