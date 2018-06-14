@@ -47,10 +47,10 @@ class CucumberRunner {
         }
 
         args.add("--glue")
-        args.add("classpath:uk/co/grahamcox/worlds/e2e/features")
+        args.add("classpath:uk/co/grahamcox/worlds/e2e")
 
         args.add("--plugin")
-        args.add("null")
+        args.add("pretty")
 
         options.paths.forEach { path ->
             args.add(path)
