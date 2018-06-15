@@ -13,8 +13,6 @@ class SeleniumSteps(
     init {
         When("I open the main page") {
             webBrowser.openHomePage()
-
-            webBrowser.applicationPage.header
         }
 
         After { scenario ->

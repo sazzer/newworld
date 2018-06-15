@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.e2e.browser
 
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory
 
@@ -12,4 +13,12 @@ class HeaderBarPageModel(parent: WebElement) {
         PageFactory.initElements(DefaultElementLocatorFactory(parent), this)
     }
 
+    /** The Web Element that represents the Login Menu Entry */
+    @FindBy(css = "[data-test=loginMenu]")
+    private lateinit var loginMenuElement: WebElement
+
+    val loginMenuVisible: Boolean
+    get() {
+        return loginMenuElement.isDisplayed
+    }
 }

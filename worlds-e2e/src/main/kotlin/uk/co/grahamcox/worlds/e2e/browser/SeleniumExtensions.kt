@@ -1,9 +1,6 @@
 package uk.co.grahamcox.worlds.e2e.browser
 
-import org.openqa.selenium.By
-import org.openqa.selenium.NoSuchElementException
-import org.openqa.selenium.SearchContext
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.*
 import org.slf4j.LoggerFactory
 import java.util.concurrent.TimeUnit
 
@@ -49,5 +46,16 @@ fun SearchContext.waitUntilExists(by: By, interval: Long = DEFAULT_INTERVAL, tri
     return repeatOnFailure(interval, tries, setOf(NoSuchElementException::class.java)) {
         LOG.debug("Finding element: {}", by)
         findElement(by)
+    }
+}
+
+/**
+ * Safe check for if an element is visible or not
+ */
+fun WebElement.safeIsVisible(): Boolean {
+    return try {
+        this.isDisplayed
+    } catch (e: NoSuchElementException) {
+        false
     }
 }
