@@ -52,7 +52,8 @@ fun SearchContext.waitUntilExists(by: By, interval: Long = DEFAULT_INTERVAL, tri
 /**
  * Safe check for if an element is visible or not
  */
-fun WebElement.safeIsVisible(): Boolean {
+val WebElement.safeIsVisible: Boolean
+get() {
     return try {
         this.isDisplayed
     } catch (e: NoSuchElementException) {

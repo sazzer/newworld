@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.e2e.authentication
 
 import cucumber.api.java8.En
+import org.assertj.core.api.Assertions
 import uk.co.grahamcox.worlds.e2e.browser.WebBrowser
 
 /**
@@ -13,9 +14,9 @@ class AuthenticationSteps(
     init {
         Then("I am not logged in") {
             val header = webBrowser.applicationPage.header
-            if (!header.loginMenuVisible) {
-                throw AssertionError("Login menu is not visible")
-            }
+            Assertions.assertThat(header.loginMenuVisible)
+                    .`as`("Check visibility of the Login Menu Link")
+                    .isTrue()
         }
     }
 }

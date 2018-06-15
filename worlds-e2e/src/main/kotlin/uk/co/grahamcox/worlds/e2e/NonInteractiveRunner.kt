@@ -1,5 +1,6 @@
 package uk.co.grahamcox.worlds.e2e
 
+import org.assertj.core.api.Assertions
 import org.springframework.beans.factory.InitializingBean
 
 /**
@@ -14,8 +15,9 @@ class NonInteractiveRunner(
     override fun afterPropertiesSet() {
         val options = CucumberOptions()
 
-        if (!cucumberRunner.run(options)) {
-            throw AssertionError("Cucumber tests were unsuccessful")
-        }
+        val result = cucumberRunner.run(options)
+        Assertions.assertThat(result)
+                .`as`("The cucumber tests did not run successfully")
+                .isTrue()
     }
 }

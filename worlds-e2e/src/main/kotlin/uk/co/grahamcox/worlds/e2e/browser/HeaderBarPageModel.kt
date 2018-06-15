@@ -14,11 +14,11 @@ class HeaderBarPageModel(parent: WebElement) {
     }
 
     /** The Web Element that represents the Login Menu Entry */
-    @FindBy(css = "[data-test=loginMenu]")
+    @FindBy(css = "[data-test=loginMenu2]")
     private lateinit var loginMenuElement: WebElement
 
     val loginMenuVisible: Boolean
     get() {
-        return loginMenuElement.isDisplayed
+        return loginMenuElement.safeIsVisible
     }
 }
