@@ -1,14 +1,12 @@
 package uk.co.grahamcox.worlds.e2e
 
 import cucumber.api.java.Before
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.ContextConfiguration
+import org.springframework.boot.test.context.SpringBootTest
 
 /**
  * Cucumber steps class for ensuring that Spring is started
  */
-@ContextConfiguration(classes = [CucumberConfig::class])
-@ActiveProfiles("test")
+@SpringBootTest(classes = [CucumberConfig::class])
 class SpringSteps {
     /**
      * No-op function so that there is a Cucumber annotated method in this class
