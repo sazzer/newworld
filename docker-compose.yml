@@ -1,0 +1,18 @@
+version: '3'
+services:
+    worlds-postgres:
+        image: postgres
+        ports:
+            - "127.0.0.1:5432:5432"
+        environment:
+            POSTGRES_DB: worlds
+            POSTGRES_USER: worlds
+            POSTGRES_PASSWORD: worlds
+    worlds-service:
+        image: worlds/service:0.0.1-SNAPSHOT
+        links:
+            - worlds-postgres:postgres
+        ports:
+            - "127.0.0.1:8080:8080"
+        environment:
+            PG_URI: jdbc:postgresql://postgres:5432/worlds?user=worlds&password=worlds

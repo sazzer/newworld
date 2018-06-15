@@ -12,4 +12,4 @@ build:
         - chown -R ciuser:ciuser $CIUSER_BUILD_DIR
           # Then, build running all tests but as a non-root user because of Postgres 
         - su -c "cd $CIUSER_BUILD_DIR && mvn clean install -B" ciuser
-
+        - mvn clean install -Pdocker -DskipTests -B
