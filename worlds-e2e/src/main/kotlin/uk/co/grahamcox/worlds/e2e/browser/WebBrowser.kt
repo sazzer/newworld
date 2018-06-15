@@ -1,4 +1,4 @@
-package uk.co.grahamcox.worlds.e2e.selenium
+package uk.co.grahamcox.worlds.e2e.browser
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
@@ -11,6 +11,13 @@ class WebBrowser(
         private val webDriver: WebDriver,
         @Value("\${selenium.url}") private val baseUrl: String
 ) {
+    /** The representation of the main application page */
+    val applicationPage: ApplicationPage
+    get() {
+        val appElement = webDriver.waitUntilExists(By.id("App"))
+        return ApplicationPage(appElement)
+    }
+
     /**
      * Open the application home
      */

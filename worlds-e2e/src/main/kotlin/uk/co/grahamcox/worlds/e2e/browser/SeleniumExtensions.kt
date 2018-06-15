@@ -1,8 +1,9 @@
-package uk.co.grahamcox.worlds.e2e.selenium
+package uk.co.grahamcox.worlds.e2e.browser
 
 import org.openqa.selenium.By
 import org.openqa.selenium.NoSuchElementException
 import org.openqa.selenium.SearchContext
+import org.openqa.selenium.WebElement
 import org.slf4j.LoggerFactory
 import java.util.concurrent.TimeUnit
 
@@ -44,8 +45,8 @@ fun <T> repeatOnFailure(interval: Long, tries: Int, exceptions: Set<Class<out Th
 /**
  * Wait until a given element exists
  */
-fun SearchContext.waitUntilExists(by: By, interval: Long = DEFAULT_INTERVAL, tries: Int = DEFAULT_TRIES) {
-    repeatOnFailure(interval, tries, setOf(NoSuchElementException::class.java)) {
+fun SearchContext.waitUntilExists(by: By, interval: Long = DEFAULT_INTERVAL, tries: Int = DEFAULT_TRIES): WebElement {
+    return repeatOnFailure(interval, tries, setOf(NoSuchElementException::class.java)) {
         LOG.debug("Finding element: {}", by)
         findElement(by)
     }

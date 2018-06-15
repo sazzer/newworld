@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.e2e.selenium
 
 import cucumber.api.java8.En
+import uk.co.grahamcox.worlds.e2e.browser.WebBrowser
 
 /**
  * Cucumber steps for interacting directly with Selenium
@@ -12,6 +13,8 @@ class SeleniumSteps(
     init {
         When("I open the main page") {
             webBrowser.openHomePage()
+
+            webBrowser.applicationPage.header
         }
 
         After { scenario ->
