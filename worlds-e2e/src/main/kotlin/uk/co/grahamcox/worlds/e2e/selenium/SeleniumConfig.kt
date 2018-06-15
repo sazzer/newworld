@@ -12,6 +12,7 @@ class SeleniumConfig(context: GenericApplicationContext) {
     init {
         beans {
             bean<WebDriverFactory>()
+            bean<WebBrowser>()
         }.initialize(context)
     }
 }
