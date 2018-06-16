@@ -38,7 +38,7 @@ export default function request(config: Request): Promise<Response> {
     }
 
     return axios.request({
-        baseURL: process.env.REACT_APP_API_BASE,
+        baseURL: process.env.REACT_APP_API_BASE || window.configuration.REACT_APP_API_BASE,
         timeout: 10000,
         url: realUrl,
         method: config.method || 'GET',

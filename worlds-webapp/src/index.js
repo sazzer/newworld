@@ -7,7 +7,6 @@ import {Provider} from 'react-redux';
 import {history, store} from './redux'
 import i18n from './i18n';
 import App from './ui/App';
-import registerServiceWorker from './registerServiceWorker';
 
 /**
  * The contents of the app, wrapped in the translations layer
@@ -30,4 +29,3 @@ const AppWrapper = () => (
 );
 
 ReactDOM.render(<AppWrapper />, document.getElementById('root'));
-registerServiceWorker();

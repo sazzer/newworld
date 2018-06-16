@@ -32,9 +32,9 @@ type StartAuthAction = {
  * @param nonce The nonce to use for the auth flow
  */
 export function startAuth(state: string, nonce: string) {
-    const url = process.env.REACT_APP_AUTH_URL;
-    const clientId = process.env.REACT_APP_AUTH_CLIENT;
-    const callback = process.env.REACT_APP_AUTH_CALLBACK;
+    const url = process.env.REACT_APP_AUTH_URL || window.configuration.REACT_APP_AUTH_URL;
+    const clientId = process.env.REACT_APP_AUTH_CLIENT || window.configuration.REACT_APP_AUTH_CLIENT;
+    const callback = process.env.REACT_APP_AUTH_CALLBACK || window.configuration.REACT_APP_AUTH_CALLBACK;
 
     const realUrl = buildUrl(url, {
         queryParams: {
