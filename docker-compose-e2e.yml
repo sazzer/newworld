@@ -1,0 +1,35 @@
+version: '3'
+services:
+    worlds-e2e-postgres:
+        image: postgres
+        ports:
+            - "127.0.0.1:5432:5432"
+        environment:
+            POSTGRES_DB: worlds
+            POSTGRES_USER: worlds
+            POSTGRES_PASSWORD: worlds
+    worlds-e2e-service:
+        image: worlds/service:0.0.1-SNAPSHOT
+        links:
+            - worlds-e2e-postgres:postgres
+        ports:
+            - "127.0.0.1:8080:8080"
+        environment:
+            PG_URI: jdbc:postgresql://postgres:5432/worlds?user=worlds&password=worlds
+    worlds-e2e-webapp:
+        image: worlds/webapp:0.0.1-SNAPSHOT
+        ports: 
+            - "127.0.0.1:8000:80"
+        environment:
+            REACT_APP_AUTH_URL: http://api.worlds.com:8080/openid/authorize
+            REACT_APP_AUTH_CLIENT: 4BBBDEB7-4A30-454A-B1BC-A7529204DBCC
+            REACT_APP_AUTH_CALLBACK: http://www.worlds.com/auth/callback.html
+            REACT_APP_API_BASE: http://api.worlds.com:8080/api
+    worlds-e2e:
+        image: worlds/e2e:0.0.1-SNAPSHOT
+        links:
+            - worlds-e2e-postgres:postgres
+            - worlds-e2e-service:api.worlds.com
+            - worlds-e2e-webapp:www.worlds.com
+        environment:
+            WEB_URL: http://www.worlds.com
