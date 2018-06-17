@@ -1,0 +1,10 @@
+{
+  "name": "worlds-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {},
+  "scripts": {},
+  "devDependencies": {
+    "flow-bin": "^0.74.0"
+  }
+}
