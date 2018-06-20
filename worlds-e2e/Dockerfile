@@ -13,4 +13,4 @@ WORKDIR /opt/worlds/e2e
 RUN yarn install
 COPY src /opt/worlds/e2e/src
 
-CMD dockerize -wait tcp://postgres:5432 -wait http://api.worlds.com:8080/actuator/health -wait http://www.worlds.com yarn start
+CMD dockerize -wait tcp://postgres:5432 -wait http://api.worlds.com:8080/actuator/health -wait http://www.worlds.com -timeout 30s yarn start

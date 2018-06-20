@@ -21,6 +21,8 @@ AfterAll(async () => {
 
 
 When('I open the home page', async () => {
-    await browser.get('http://localhost:3000');
+    const url = process.env.WEB_URL;
+    console.log(`Opening page to ${url}`);
+    await browser.get(url);
     await browser.wait(until.elementLocated(By.id('App')));
 });

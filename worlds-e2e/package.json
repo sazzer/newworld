@@ -4,13 +4,14 @@
   "private": true,
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "dotenv": "^6.0.0",
     "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "scripts": {
     "lint": "eslint src",
     "flow": "flow",
     "check": "yarn lint && yarn flow",
-    "start": "cucumber-js --require-module babel-core/register --require-module babel-polyfill -f node_modules/cucumber-pretty -r src src"
+    "start": "cucumber-js --require-module babel-core/register --require-module babel-polyfill --require-module dotenv/config -f node_modules/cucumber-pretty -r src src"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
