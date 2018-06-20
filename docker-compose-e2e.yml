@@ -25,11 +25,19 @@ services:
             REACT_APP_AUTH_CLIENT: 4BBBDEB7-4A30-454A-B1BC-A7529204DBCC
             REACT_APP_AUTH_CALLBACK: http://www.worlds.com/auth/callback.html
             REACT_APP_API_BASE: http://api.worlds.com:8080/api
+    worlds-e2e-selenium-firefox:
+        image: selenium/standalone-firefox:3.12.0-cobalt
+        links:
+            - worlds-e2e-service:api.worlds.com
+            - worlds-e2e-webapp:www.worlds.com
     worlds-e2e:
         image: worlds/e2e:0.0.1-SNAPSHOT
         links:
             - worlds-e2e-postgres:postgres
             - worlds-e2e-service:api.worlds.com
             - worlds-e2e-webapp:www.worlds.com
+            - worlds-e2e-selenium-firefox:selenium
         environment:
             WEB_URL: http://www.worlds.com
+            SELENIUM_BROWSER: firefox
+            SELENIUM_REMOTE_URL: http://selenium:4444/wd/hub
