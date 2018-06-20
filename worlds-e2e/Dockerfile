@@ -11,6 +11,6 @@ COPY package.json yarn.lock .flowconfig .babelrc .eslintrc.js /opt/worlds/e2e/
 WORKDIR /opt/worlds/e2e
 
 RUN yarn install
-COPY src /opt/worlds/e2e/
+COPY src /opt/worlds/e2e/src
 
 CMD dockerize -wait tcp://postgres:5432 -wait http://api.worlds.com:8080/actuator/health -wait http://www.worlds.com yarn start

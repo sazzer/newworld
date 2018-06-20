@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "scripts": {
     "lint": "eslint src",
     "flow": "flow",
     "check": "yarn lint && yarn flow",
-    "start": "cucumber-js --require-module babel-core/register --require-module babel-polyfill -f node_modules/cucumber-pretty -r cucumber cucumber"
+    "start": "cucumber-js --require-module babel-core/register --require-module babel-polyfill -f node_modules/cucumber-pretty -r src src"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
