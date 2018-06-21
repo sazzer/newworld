@@ -28,7 +28,7 @@
                 <@spring.message "openid.authorize.register.error.unknown_email" />
             </div>
         </#if>
-        <form action="<@spring.url "/openid/authorize/register" />" method="post" class="ui form ${formError!}" data-test="registerForm">
+        <form action="<@spring.url "/openid/authorize/register" />" method="post" class="ui form ${formError!}">
             <input type="hidden" name="response_type" value="${parameters.responseType}" />
             <input type="hidden" name="client_id" value="${parameters.clientId}" />
             <input type="hidden" name="scope" value="${parameters.scope}" />

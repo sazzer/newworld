@@ -17,7 +17,7 @@ type LoginMenuProps = {
  */
 export function LoginMenu(props: LoginMenuProps) {
     return (
-        <Menu.Item onClick={props.onClickLogin} data-test="loginMenu">
+        <Menu.Item onClick={props.onClickLogin}>
             <Interpolate i18nKey="page.login" />
         </Menu.Item>
     );

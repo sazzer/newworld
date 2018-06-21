@@ -27,7 +27,6 @@
     <modules>
         <module>worlds-service</module>
         <module>worlds-webapp</module>
-        <module>worlds-e2e</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
