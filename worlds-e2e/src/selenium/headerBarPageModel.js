@@ -5,6 +5,10 @@ import { WebElement, By, error } from 'selenium-webdriver';
 /** Selector for finding the Login Menu option */
 const LOGIN_MENU_SELECTOR = By.css('[data-test="loginMenu"]');
 
+
+/** Selector for finding the Logged In User display */
+const LOGGED_IN_USER_SELECTOR = By.css('[data-test="loggedInUser"]');
+
 /**
  * Page Model representing the header bar
  */
@@ -27,13 +31,29 @@ export default class HeaderBarPageModel {
     async isLoggedIn() {
         try {
             await this._rootElement.findElement(LOGIN_MENU_SELECTOR);
-            return true;
+            return false;
         } catch (e) {
             if (e instanceof error.NoSuchElementError) {
-                return false;
+                return true;
             } else {
                 throw e;
             }
         }
+    }
+
+    /**
+     * Get the display name of the logged in user
+     */
+    async loggedInUser() {
+        const loggedInUser = await this._rootElement.findElement(LOGGED_IN_USER_SELECTOR);
+        return loggedInUser.getText();
+    }
+
+    /**
+     * Start the login process
+     */
+    async startLogin() {
+        const loginLink = await this._rootElement.findElement(LOGIN_MENU_SELECTOR);
+        await loginLink.click();
     }
 }

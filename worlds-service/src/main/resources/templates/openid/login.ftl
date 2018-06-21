@@ -20,7 +20,7 @@
                 <@spring.message "openid.authorize.login.error.duplicate_email" />
             </div>
         </#if>
-        <form action="<@spring.url "/openid/authorize/login" />" method="post" class="ui form ${formError!}">
+        <form action="<@spring.url "/openid/authorize/login" />" method="post" class="ui form ${formError!}" data-test="loginForm">
             <input type="hidden" name="response_type" value="${parameters.responseType}" />
             <input type="hidden" name="client_id" value="${parameters.clientId}" />
             <input type="hidden" name="scope" value="${parameters.scope}" />

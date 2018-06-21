@@ -22,7 +22,7 @@ export function LoggedInMenu(props: LoggedInMenuProps) {
     }
 
     return (
-        <Menu.Item>{username}</Menu.Item>
+        <Menu.Item data-test="loggedInUser">{username}</Menu.Item>
     );
 }
 
