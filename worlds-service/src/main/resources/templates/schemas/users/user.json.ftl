@@ -3,8 +3,8 @@
     "$schema": "http://json-schema.org/draft-07/hyper-schema#",
     "type": "object",
     "required": [
-        "display_name",
-        "password"
+        "username",
+        "display_name"
     ],
     "properties": {
         "id":{
@@ -14,7 +14,8 @@
             "type": "string"
         },
         "email": {
-            "type": "string"
+            "type": "string",
+            "format": "email"
         },
         "username": {
             "type": "string"
@@ -29,6 +30,13 @@
             ],
             "targetSchema": {
                 "$ref": "#"
+            },
+            "submissionSchema": {
+                "required": [
+                    "username",
+                    "display_name",
+                    "email"
+                ]
             }
         }
     ],

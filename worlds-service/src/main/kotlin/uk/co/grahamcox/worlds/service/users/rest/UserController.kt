@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
+import uk.co.grahamcox.worlds.service.rest.schemaLink
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserId
 import uk.co.grahamcox.worlds.service.users.UserNotFoundException
@@ -42,6 +43,7 @@ class UserController(
         return ResponseEntity.status(HttpStatus.OK)
                 .eTag(user.identity.version)
                 .lastModified(user.identity.updated.toEpochMilli())
+                .schemaLink("/schema/users/user.json")
                 .body(translateUser(user))
     }
 
