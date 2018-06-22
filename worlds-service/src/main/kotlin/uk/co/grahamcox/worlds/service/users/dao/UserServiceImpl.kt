@@ -7,11 +7,12 @@ import uk.co.grahamcox.worlds.service.users.*
 import uk.co.grahamcox.worlds.service.users.password.Password
 import java.time.Clock
 import java.util.*
+import javax.transaction.Transactional
 
 /**
  * Standard implementation of the User Service in terms of the data base
  */
-class UserServiceImpl(
+open class UserServiceImpl(
         private val dao: UsersRepository,
         private val clock: Clock
 ) : UserService {
@@ -57,6 +58,7 @@ class UserServiceImpl(
      * @param user The user to create
      * @return the newly created user
      */
+    @Transactional
     override fun create(user: UserData): Resource<UserId, UserData> {
         if (dao.existsByUsernameIgnoreCase(user.username)) {
             throw DuplicateUsernameException()
@@ -77,6 +79,28 @@ class UserServiceImpl(
         val createdEntity = dao.save(userEntity)
 
         return translateUser(createdEntity)
+    }
+
+    /**
+     * Update a user to have the provided data
+     * @param userId The ID of the user to update
+     * @param user The data to update the user with
+     * @return the updated user
+     */
+    @Transactional
+    override fun update(userId: UserId, user: UserData): Resource<UserId, UserData> {
+        val userEntity = dao.findById(UUID.fromString(userId.id))
+                .orElseThrow { UserNotFoundException() }
+
+        userEntity.version = UUID.randomUUID()
+        userEntity.updated = clock.instant()
+        userEntity.email = user.email
+        userEntity.username = user.username
+        userEntity.displayName = user.displayName
+        userEntity.passwordHash = Base64.getEncoder().encodeToString(user.password.hash)
+        userEntity.paswordSalt = Base64.getEncoder().encodeToString(user.password.salt)
+
+        return translateUser(userEntity)
     }
 
     /**

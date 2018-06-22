@@ -145,13 +145,71 @@ internal class UserServiceImplTest {
                 )
         )
 
-        val createdEntity = slot<UserEntity>()
-
         every { dao.existsByUsernameIgnoreCase("testuser") } returns true
 
         Assertions.assertThrows(DuplicateUsernameException::class.java) {
             testSubject.create(user)
         }
+
+    }
+
+    /**
+     * Test updating a user that doesn't exist
+     */
+    @Test
+    fun updateUnknownUser() {
+        every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.empty()
+
+        Assertions.assertThrows(UserNotFoundException::class.java) {
+            testSubject.update(UserId(USER_ID), UserData(
+                    email = "test@example.com",
+                    username = "testuser",
+                    displayName = "Test User",
+                    password = Password(
+                            hash = "hash".toByteArray(),
+                            salt = "salt".toByteArray()
+                    )
+            ))
+        }
+    }
+
+
+    /**
+     * Test updating a user that doesn't exist
+     */
+    @Test
+    fun updateKnownUser() {
+        val userEntity = generateUserEntity()
+        every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.of(userEntity)
+
+        val user = testSubject.update(UserId(USER_ID), UserData(
+                email = "new@example.com",
+                username = "newuser",
+                displayName = "New User",
+                password = Password(
+                        hash = "hash".toByteArray(),
+                        salt = "salt".toByteArray()
+                )
+        ))
+
+        Assertions.assertAll(
+                Executable { Assertions.assertEquals(UserId(USER_ID), user.identity.id) },
+                Executable { Assertions.assertNotEquals("00000000-0000-0000-0000-000000000002", user.identity.version) },
+                Executable { Assertions.assertEquals(Instant.parse("2018-05-22T18:53:00Z"), user.identity.created) },
+                Executable { Assertions.assertNotEquals(Instant.parse("2018-05-22T18:54:00Z"), user.identity.updated) },
+
+                Executable { Assertions.assertEquals("New User", user.data.displayName) },
+                Executable { Assertions.assertEquals("new@example.com", user.data.email) },
+                Executable { Assertions.assertEquals("newuser", user.data.username) },
+                Executable { Assertions.assertArrayEquals("hash".toByteArray(), user.data.password.hash) },
+                Executable { Assertions.assertArrayEquals("salt".toByteArray(), user.data.password.salt) },
+
+                Executable { Assertions.assertEquals("New User", userEntity.displayName) },
+                Executable { Assertions.assertEquals("new@example.com", userEntity.email) },
+                Executable { Assertions.assertEquals("newuser", userEntity.username) },
+                Executable { Assertions.assertEquals("aGFzaA==", userEntity.passwordHash) },
+                Executable { Assertions.assertEquals("c2FsdA==", userEntity.paswordSalt) }
+        )
 
     }
 

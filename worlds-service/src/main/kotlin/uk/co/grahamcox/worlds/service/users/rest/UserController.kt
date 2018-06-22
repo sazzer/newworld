@@ -6,11 +6,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
+import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.rest.schemaLink
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserId
 import uk.co.grahamcox.worlds.service.users.UserNotFoundException
-import uk.co.grahamcox.worlds.service.users.UserRetriever
+import uk.co.grahamcox.worlds.service.users.UserService
 
 /**
  * Controller for working with Users
@@ -18,7 +19,7 @@ import uk.co.grahamcox.worlds.service.users.UserRetriever
 @RestController
 @RequestMapping("/api/users")
 class UserController(
-        private val userRetriever: UserRetriever,
+        private val userService: UserService,
         private val accessTokenHolder: AccessTokenHolder
 ) {
     /**
@@ -38,8 +39,42 @@ class UserController(
      */
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.GET])
     fun getUser(@PathVariable("id") id: String): ResponseEntity<UserModel> {
-        val user = userRetriever.getById(UserId(id))
+        val user = userService.getById(UserId(id))
 
+        return buildUserResponse(user)
+    }
+
+    /**
+     * Update a single User by ID
+     * @param id The ID of the user
+     * @param accessToken The access token that is making the request
+     * @param updated The updated representation of the user
+     * @return the response entity representing the user
+     */
+    @RequestMapping(value = ["/{id}"], method = [RequestMethod.PUT])
+    fun updateUser(@PathVariable("id") id: String,
+                   accessToken: AccessToken,
+                   @RequestBody updated: UserInputModel): ResponseEntity<UserModel> {
+        val userId = UserId(id)
+        val user = userService.getById(userId)
+
+        val updatedUserData = UserData(
+                email = updated.email,
+                displayName = updated.displayName,
+                username = updated.username,
+                password = user.data.password
+        )
+
+        val updatedUser = userService.update(userId, updatedUserData)
+        return buildUserResponse(updatedUser)
+    }
+
+    /**
+     * Build the response to send back to the client for a User
+     * @param user The user to send back
+     * @return the actual response entity representing the user
+     */
+    private fun buildUserResponse(user: Resource<UserId, UserData>): ResponseEntity<UserModel> {
         return ResponseEntity.status(HttpStatus.OK)
                 .eTag(user.identity.version)
                 .lastModified(user.identity.updated.toEpochMilli())

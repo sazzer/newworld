@@ -7,6 +7,7 @@ import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.service.SchemaController
 import uk.co.grahamcox.worlds.service.database.DatabaseConfig
 import uk.co.grahamcox.worlds.service.openid.OpenIdConfig
+import uk.co.grahamcox.worlds.service.rest.ValidationControllerAdvice
 import uk.co.grahamcox.worlds.service.users.UsersConfig
 import java.time.Clock
 
@@ -26,6 +27,7 @@ class WorldsConfiguration(context: GenericApplicationContext) {
             }
 
             bean<SchemaController>()
+            bean<ValidationControllerAdvice>()
         }.initialize(context)
     }
 

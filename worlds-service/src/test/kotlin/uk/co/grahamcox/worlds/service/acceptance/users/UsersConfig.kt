@@ -3,12 +3,11 @@ package uk.co.grahamcox.worlds.service.acceptance.users
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
+import org.springframework.http.HttpMethod
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseSeeder
 import uk.co.grahamcox.worlds.service.acceptance.database.SeedFieldConfig
-import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
-import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseFieldConfig
-import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
+import uk.co.grahamcox.worlds.service.acceptance.requester.*
 import java.time.Clock
 import java.time.Instant
 import java.util.*
@@ -108,6 +107,36 @@ class UsersConfig(context: GenericApplicationContext) {
                 DatabaseExistsVerifier(
                         ref(),
                         "SELECT COUNT(*) FROM users WHERE email = :id"
+                )
+            }
+
+            bean("userRetrievalRequestSubmitter") {
+                RequestSubmitter(
+                        ref(),
+                        "/api/users/{id}",
+                        HttpMethod.GET,
+                        mapOf(
+                                "ID" to RequestFieldConfig(
+                                        fieldName = "id"
+                                )
+                        ),
+                        mapOf()
+                )
+            }
+
+            bean("userUpdateRequestSubmitter") {
+                RequestSubmitter(
+                        ref(),
+                        "/api/users/{id}",
+                        HttpMethod.PUT,
+                        mapOf(
+                                "ID" to RequestFieldConfig("id")
+                        ),
+                        mapOf(
+                                "Email" to RequestFieldConfig("email"),
+                                "Username" to RequestFieldConfig("username"),
+                                "Display Name" to RequestFieldConfig("display_name")
+                        )
                 )
             }
         }.initialize(context)

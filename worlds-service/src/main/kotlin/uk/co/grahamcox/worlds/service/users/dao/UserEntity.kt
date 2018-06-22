@@ -17,22 +17,22 @@ data class UserEntity(
         @Column(name = "user_id")
         val id: UUID,
 
-        val version: UUID,
+        var version: UUID,
 
         val created: Instant,
 
-        val updated: Instant,
+        var updated: Instant,
 
-        val email: String,
+        var email: String,
 
-        val username: String,
+        var username: String,
 
         @Column(name = "display_name")
-        val displayName: String,
+        var displayName: String,
 
         @Column(name = "password_hash")
-        val passwordHash: String,
+        var passwordHash: String,
 
         @Column(name = "password_salt")
-        val paswordSalt: String
+        var paswordSalt: String
 )
