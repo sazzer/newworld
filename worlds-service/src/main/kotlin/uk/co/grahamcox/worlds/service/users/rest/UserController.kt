@@ -8,10 +8,7 @@ import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
 import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.rest.schemaLink
-import uk.co.grahamcox.worlds.service.users.UserData
-import uk.co.grahamcox.worlds.service.users.UserId
-import uk.co.grahamcox.worlds.service.users.UserNotFoundException
-import uk.co.grahamcox.worlds.service.users.UserService
+import uk.co.grahamcox.worlds.service.users.*
 
 /**
  * Controller for working with Users
@@ -30,6 +27,16 @@ class UserController(
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.parseMediaType("application/problem+json"))
                 .body(UserNotFoundProblem())
+    }
+
+    /**
+     * Handle a Duplicate Username error
+     */
+    @ExceptionHandler(DuplicateUsernameException::class)
+    fun handleDuplicateUsername(): ResponseEntity<DuplicateUsernameProblem> {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .contentType(MediaType.parseMediaType("application/problem+json"))
+                .body(DuplicateUsernameProblem())
     }
 
     /**

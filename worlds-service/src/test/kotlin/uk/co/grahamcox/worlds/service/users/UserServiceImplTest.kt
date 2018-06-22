@@ -112,7 +112,7 @@ internal class UserServiceImplTest {
 
         val createdEntity = slot<UserEntity>()
 
-        every { dao.existsByUsernameIgnoreCase("testuser") } returns false
+        every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.empty()
         every { dao.save(capture(createdEntity)) } returns generateUserEntity()
 
         val created = testSubject.create(user)
@@ -145,7 +145,7 @@ internal class UserServiceImplTest {
                 )
         )
 
-        every { dao.existsByUsernameIgnoreCase("testuser") } returns true
+        every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.of(generateUserEntity())
 
         Assertions.assertThrows(DuplicateUsernameException::class.java) {
             testSubject.create(user)
@@ -158,6 +158,7 @@ internal class UserServiceImplTest {
      */
     @Test
     fun updateUnknownUser() {
+        every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.empty()
         every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.empty()
 
         Assertions.assertThrows(UserNotFoundException::class.java) {
@@ -175,11 +176,42 @@ internal class UserServiceImplTest {
 
 
     /**
+     * Test updating a user to have a duplicate username
+     */
+    @Test
+    fun updateUDuplicateUsername() {
+        every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.of(UserEntity(
+                id = UUID.randomUUID(),
+                username = "",
+                displayName = "",
+                email = "",
+                updated = Instant.now(),
+                created = Instant.now(),
+                version = UUID.randomUUID(),
+                paswordSalt = "",
+                passwordHash = ""
+        ))
+
+        Assertions.assertThrows(DuplicateUsernameException::class.java) {
+            testSubject.update(UserId(USER_ID), UserData(
+                    email = "test@example.com",
+                    username = "testuser",
+                    displayName = "Test User",
+                    password = Password(
+                            hash = "hash".toByteArray(),
+                            salt = "salt".toByteArray()
+                    )
+            ))
+        }
+    }
+
+    /**
      * Test updating a user that doesn't exist
      */
     @Test
     fun updateKnownUser() {
         val userEntity = generateUserEntity()
+        every { dao.findByUsernameIgnoreCase("newuser") } returns Optional.empty()
         every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.of(userEntity)
 
         val user = testSubject.update(UserId(USER_ID), UserData(

@@ -60,7 +60,7 @@ open class UserServiceImpl(
      */
     @Transactional
     override fun create(user: UserData): Resource<UserId, UserData> {
-        if (dao.existsByUsernameIgnoreCase(user.username)) {
+        if (dao.findByUsernameIgnoreCase(user.username).isPresent) {
             throw DuplicateUsernameException()
         }
         
@@ -89,6 +89,10 @@ open class UserServiceImpl(
      */
     @Transactional
     override fun update(userId: UserId, user: UserData): Resource<UserId, UserData> {
+        if (dao.findByUsernameIgnoreCase(user.username).filter { it.id != UUID.fromString(userId.id) }.isPresent) {
+            throw DuplicateUsernameException()
+        }
+
         val userEntity = dao.findById(UUID.fromString(userId.id))
                 .orElseThrow { UserNotFoundException() }
 

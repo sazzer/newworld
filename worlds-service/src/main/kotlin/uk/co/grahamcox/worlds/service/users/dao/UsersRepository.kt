@@ -13,9 +13,9 @@ interface UsersRepository : CrudRepository<UserEntity, UUID> {
     fun findByEmailIgnoreCase(email: String) : Optional<UserEntity>
 
     /**
-     * Test whether the given username exists or not
+     * Get the user with the given username
      * @param username The username to test
-     * @return True if the username exists. False if not
+     * @return The matching user entity
      */
-    fun existsByUsernameIgnoreCase(username: String) : Boolean
+    fun findByUsernameIgnoreCase(username: String) : Optional<UserEntity>
 }
