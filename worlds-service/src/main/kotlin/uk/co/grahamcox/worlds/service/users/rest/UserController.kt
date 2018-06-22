@@ -5,6 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import uk.co.grahamcox.worlds.service.model.Resource
+import uk.co.grahamcox.worlds.service.openid.authorization.Authorizer
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
 import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.rest.schemaLink
@@ -54,15 +55,18 @@ class UserController(
     /**
      * Update a single User by ID
      * @param id The ID of the user
-     * @param accessToken The access token that is making the request
+     * @param authorizer The means to check that the user can perform this action
      * @param updated The updated representation of the user
      * @return the response entity representing the user
      */
     @RequestMapping(value = ["/{id}"], method = [RequestMethod.PUT])
     fun updateUser(@PathVariable("id") id: String,
-                   accessToken: AccessToken,
+                   authorizer: Authorizer,
                    @RequestBody updated: UserInputModel): ResponseEntity<UserModel> {
         val userId = UserId(id)
+
+        authorizer.sameUser(userId)
+        
         val user = userService.getById(userId)
 
         val updatedUserData = UserData(

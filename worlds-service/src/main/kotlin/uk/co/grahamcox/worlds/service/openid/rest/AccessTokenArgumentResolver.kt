@@ -5,6 +5,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
+import uk.co.grahamcox.worlds.service.openid.authorization.Authorizer
 import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.users.UserId
 import kotlin.reflect.jvm.kotlinFunction
@@ -24,7 +25,9 @@ class AccessTokenArgumentResolver(
      * `false` otherwise
      */
     override fun supportsParameter(parameter: MethodParameter) =
-            parameter.parameterType == AccessToken::class.java || parameter.parameterType == UserId::class.java
+            parameter.parameterType == AccessToken::class.java ||
+                    parameter.parameterType == UserId::class.java ||
+                    parameter.parameterType == Authorizer::class.java
 
     /**
      * Resolves a method parameter into an argument value from a given request.
@@ -53,9 +56,10 @@ class AccessTokenArgumentResolver(
             throw MissingAccessTokenException()
         }
 
-        return when {
-            parameter.parameterType == AccessToken::class.java -> accessToken
-            parameter.parameterType == UserId::class.java -> accessToken?.user
+        return when(parameter.parameterType) {
+            AccessToken::class.java -> accessToken
+            UserId::class.java -> accessToken?.user
+            Authorizer::class.java -> accessToken?.let(::Authorizer)
             else -> null
         }
     }

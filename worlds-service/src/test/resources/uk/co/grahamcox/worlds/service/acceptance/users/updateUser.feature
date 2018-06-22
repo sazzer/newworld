@@ -20,6 +20,14 @@ Feature: Updating a User
       | Username     | updateduser         |
       | Display Name | Updated User        |
     Then I get an Unauthorized response
+    
+  Scenario: Update a user when authenticated as a different user
+    Given I have authenticated as user "00000000-0000-0000-0000-000000000002"
+    When I update the user with ID "00000000-0000-0000-0000-000000000001" to have details:
+      | Email        | updated@example.com |
+      | Username     | updateduser         |
+      | Display Name | Updated User        |
+    Then I get a Forbidden response
 
   Scenario: Update a user with missing required fields - Email Address missing
     Given I have authenticated as user "00000000-0000-0000-0000-000000000001"
