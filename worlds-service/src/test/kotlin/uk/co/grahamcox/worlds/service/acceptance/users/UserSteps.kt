@@ -14,6 +14,7 @@ import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
 class UserSteps(
         private val userRetrievalRequestSubmitter: RequestSubmitter,
         private val userUpdateRequestSubmitter: RequestSubmitter,
+        private val changePasswordRequestSubmitter: RequestSubmitter,
         private val userSeeder: DatabaseSeeder,
         private val userResponseMatcher: ResponseMatcher,
         private val userEmailExistsVerifier: DatabaseExistsVerifier
@@ -33,6 +34,16 @@ class UserSteps(
                     mapOf("ID" to id)
 
             userUpdateRequestSubmitter.makeRequest(payload)
+        }
+
+        When("""^I change the password of the user with ID "(.+)" from "(.+)" to "(.+)"$""") {
+            id: String, old: String, new: String ->
+            val payload = mapOf(
+                    "ID" to id,
+                    "Old" to old,
+                    "New" to new)
+
+            changePasswordRequestSubmitter.makeRequest(payload)
         }
 
         Then("^I get a user with details:$") { details: DataTable ->

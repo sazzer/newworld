@@ -18,7 +18,8 @@ import uk.co.grahamcox.worlds.service.users.*
 @RequestMapping("/api/users")
 class UserController(
         private val userService: UserService,
-        private val accessTokenHolder: AccessTokenHolder
+        private val accessTokenHolder: AccessTokenHolder,
+        private val passwordChanger: PasswordChanger
 ) {
     /**
      * Handle a User Not Found error
@@ -38,6 +39,16 @@ class UserController(
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .contentType(MediaType.parseMediaType("application/problem+json"))
                 .body(DuplicateUsernameProblem())
+    }
+
+    /**
+     * Handle an Invalid Password  error
+     */
+    @ExceptionHandler(InvalidPasswordException::class)
+    fun handleInvalidPassword(): ResponseEntity<InvalidPasswordProblem> {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .contentType(MediaType.parseMediaType("application/problem+json"))
+                .body(InvalidPasswordProblem())
     }
 
     /**
@@ -66,18 +77,37 @@ class UserController(
         val userId = UserId(id)
 
         authorizer.sameUser(userId)
-        
+
         val user = userService.getById(userId)
 
-        val updatedUserData = UserData(
+        val updatedUserData = user.data.copy(
                 email = updated.email,
                 displayName = updated.displayName,
-                username = updated.username,
-                password = user.data.password
+                username = updated.username
         )
 
         val updatedUser = userService.update(userId, updatedUserData)
         return buildUserResponse(updatedUser)
+    }
+
+    /**
+     * Change the password of a single user
+     * @param id The ID of the user
+     * @param authorizer The means to check that the user can perform this action
+     * @param changePasswordInputModel The description needed to change the password
+     */
+    @RequestMapping(value = ["/{id}/password"], method = [RequestMethod.PUT])
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun changePassword(@PathVariable("id") id: String,
+                   authorizer: Authorizer,
+                   @RequestBody changePasswordInputModel: ChangePasswordInputModel) {
+        val userId = UserId(id)
+
+        authorizer.sameUser(userId)
+
+        passwordChanger.changePassword(userId,
+                changePasswordInputModel.oldPassword,
+                changePasswordInputModel.newPassword)
     }
 
     /**

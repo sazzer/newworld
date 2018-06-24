@@ -139,6 +139,21 @@ class UsersConfig(context: GenericApplicationContext) {
                         )
                 )
             }
+
+            bean("changePasswordRequestSubmitter") {
+                RequestSubmitter(
+                        ref(),
+                        "/api/users/{id}/password",
+                        HttpMethod.PUT,
+                        mapOf(
+                                "ID" to RequestFieldConfig("id")
+                        ),
+                        mapOf(
+                                "Old" to RequestFieldConfig("old_password"),
+                                "New" to RequestFieldConfig("new_password")
+                        )
+                )
+            }
         }.initialize(context)
     }
 }

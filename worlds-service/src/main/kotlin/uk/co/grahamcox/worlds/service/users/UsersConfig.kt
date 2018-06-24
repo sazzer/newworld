@@ -26,6 +26,8 @@ class UsersConfig(context: GenericApplicationContext) {
                         keyLength = 256
                 )
             }
+
+            bean<PasswordChangerImpl>()
         }.initialize(context)
     }
 }
