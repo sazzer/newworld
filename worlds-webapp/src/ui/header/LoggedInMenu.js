@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import {Menu} from 'semantic-ui-react'
+import {Interpolate} from 'react-i18next';
+import {Dropdown} from 'semantic-ui-react'
 import {connectStore} from "redux-box";
 import type {UserModule} from '../../users';
 import {module as usersModule} from '../../users';
@@ -22,7 +23,13 @@ export function LoggedInMenu(props: LoggedInMenuProps) {
     }
 
     return (
-        <Menu.Item>{username}</Menu.Item>
+        <Dropdown item text={username}>
+            <Dropdown.Menu>
+                <Dropdown.Item>
+                    <Interpolate i18nKey="page.userMenu.logout" />
+                </Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
     );
 }
 

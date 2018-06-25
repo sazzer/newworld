@@ -1,6 +1,9 @@
 {
   "page": {
     "title": "Worlds",
-    "login": "Login / Register"
+    "login": "Login / Register",
+    "userMenu": {
+      "logout": "Logout"
+    }
   }
 }
