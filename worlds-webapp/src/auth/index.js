@@ -3,11 +3,11 @@
 import {createSagas} from "redux-box";
 import type {StartAuthModule, StartAuthModuleState} from "./startAuth";
 import * as startAuth from './startAuth';
-import type {AccessTokenModuleState} from "./accessToken";
+import type {AccessTokenModuleState, AccessTokenModule} from "./accessToken";
 import * as accessToken from './accessToken';
 import * as finishAuth from './finishAuth';
 
-type AuthModuleState = StartAuthModuleState | AccessTokenModuleState;
+type AuthModuleState = StartAuthModuleState & AccessTokenModuleState;
 
 /** The name of the module */
 const MODULE_NAME = 'auth';
@@ -18,7 +18,8 @@ const state: AuthModuleState = {
 
 /** The set of actions that can be performed */
 const actions = {
-    ...startAuth.actions
+    ...startAuth.actions,
+    ...accessToken.actions
 };
 
 /** The set of mutations that are triggered in response to actions */
@@ -49,4 +50,4 @@ export const module = {
 };
 
 /** Flow type to represent the Auth module */
-export type AuthModule = StartAuthModule;
+export type AuthModule = StartAuthModule & AccessTokenModule;

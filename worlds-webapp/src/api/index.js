@@ -21,7 +21,7 @@ export type Response = {
 };
 
 /** The access token to use. May be undefined. */
-let accessToken: string;
+let accessToken: ?string;
 
 /**
  * Make a request to the API server for the given details
@@ -52,6 +52,6 @@ export default function request(config: Request): Promise<Response> {
  * Set the Access Token to use for all future requests
  * @param newAccessToken the access token to use
  */
-export function setAccessToken(newAccessToken: string) {
+export function setAccessToken(newAccessToken?: string) {
     accessToken = newAccessToken;
 }

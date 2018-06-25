@@ -7,6 +7,9 @@ import type {User, UsersState} from "./users";
 /** The action for storing the current user */
 const STORE_CURRENT_USER_ACTION = 'USERS/STORE_CURRENT_USER';
 
+/** The action for clearing the current user */
+const CLEAR_CURRENT_USER_ACTION = 'USERS/CLEAR_CURRENT_USER';
+
 /** The type representing the part of the state that we care about */
 export type CurrentUserState = {
     currentUser?: string
@@ -18,6 +21,10 @@ type StoreCurrentUserAction = {
     currentUser: string
 };
 
+type ClearCurrentUserAction = {
+    type: string
+};
+
 /** Action to indicate that we are storing the current user */
 export function storeCurrentUserAction(user: string): StoreCurrentUserAction {
     return {
@@ -26,9 +33,21 @@ export function storeCurrentUserAction(user: string): StoreCurrentUserAction {
     };
 }
 
+/** Action to indicate that we are clearing the current user */
+export function clearCurrentUserAction(): ClearCurrentUserAction {
+    return {
+        type: CLEAR_CURRENT_USER_ACTION
+    };
+}
+
 /** Mutation for storing the current user ID into the redux store */
 export function storeCurrentUserMutation(state: CurrentUserState, action: StoreCurrentUserAction) {
     state.currentUser = action.currentUser;
+}
+
+/** Mutation for clearing the current user ID from the redux store */
+export function clearCurrentUserMutation(state: CurrentUserState, action: ClearCurrentUserAction) {
+    delete state.currentUser;
 }
 
 /**
@@ -57,7 +76,8 @@ export function selectHasCurrentUser(state: CurrentUserState & UsersState): bool
 
 /** The mutations for this sub-module */
 export const mutations = {
-    [STORE_CURRENT_USER_ACTION]: storeCurrentUserMutation
+    [STORE_CURRENT_USER_ACTION]: storeCurrentUserMutation,
+    [CLEAR_CURRENT_USER_ACTION]: clearCurrentUserMutation
 };
 
 /** The sagas for this sub-module */

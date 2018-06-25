@@ -22,13 +22,26 @@ describe('storeAccessTokenAction', () => {
     });
 });
 
+describe('clearAccessTokenAction', () => {
+    describe('Generating the action object', () => {
+        const result = testSubject.clearAccessTokenAction();
+
+        it('Has 1 keys', () => {
+            expect(Object.keys(result)).toHaveLength(1);
+        });
+        it('Has the right type', () => {
+            expect(result.type).toEqual('AUTH/CLEAR_ACCESS_TOKEN');
+        });
+    });
+});
+
 describe('storeAccessTokenMutation', () => {
     describe('Specifying new values', () => {
         const state = {};
         testSubject.storeAccessTokenMutation(state, {type: '', accessToken: {token: 'accessToken', type: 'Bearer', expires: 3600}});
 
         it('Has 1 key', () => {
-           expect(Object.keys(state)).toHaveLength(1);
+            expect(Object.keys(state)).toHaveLength(1);
         });
         it('Has the right access token', () => {
             expect(state.accessToken).toEqual({
@@ -36,6 +49,23 @@ describe('storeAccessTokenMutation', () => {
                 type: 'Bearer',
                 expires: 3600
             });
+        });
+    });
+});
+
+describe('clearAccessTokenMutation', () => {
+    describe('Clearing existing values', () => {
+        const state = {
+            accessToken: {
+                token: 'accessToken',
+                type: 'Bearer',
+                expires: 3600
+            }
+        };
+        testSubject.clearAccessTokenMutation(state, {type: ''});
+
+        it('Has 0 keys', () => {
+            expect(Object.keys(state)).toHaveLength(0);
         });
     });
 });

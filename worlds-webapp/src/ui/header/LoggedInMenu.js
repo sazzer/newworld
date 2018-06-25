@@ -5,12 +5,15 @@ import {Interpolate} from 'react-i18next';
 import {Dropdown} from 'semantic-ui-react'
 import {connectStore} from "redux-box";
 import type {UserModule} from '../../users';
+import type {AuthModule} from '../../auth';
 import {module as usersModule} from '../../users';
+import {module as authModule} from '../../auth';
 import type {User} from "../../users/users";
 
 /** The flow type representing the props for the LoggedIn Menu */
 type LoggedInMenuProps = {
-    user: ?User
+    user: ?User,
+    onLogout: () => void
 };
 
 /**
@@ -25,7 +28,7 @@ export function LoggedInMenu(props: LoggedInMenuProps) {
     return (
         <Dropdown item text={username}>
             <Dropdown.Menu>
-                <Dropdown.Item>
+                <Dropdown.Item onClick={props.onLogout} >
                     <Interpolate i18nKey="page.userMenu.logout" />
                 </Dropdown.Item>
             </Dropdown.Menu>
@@ -36,10 +39,10 @@ export function LoggedInMenu(props: LoggedInMenuProps) {
 /**
  * Wrapper around the LoggedIn Menu that connects it to Redux
  */
-export function ConnectedLoggedInMenu({users}: {users: UserModule}) {
+export function ConnectedLoggedInMenu({users, auth}: {users: UserModule, auth: AuthModule}) {
     return (
-        <LoggedInMenu user={users.selectCurrentUser()} />
+        <LoggedInMenu user={users.selectCurrentUser()} onLogout={auth.logout} />
     )
 }
 
-export default connectStore({users: usersModule})(ConnectedLoggedInMenu);
+export default connectStore({users: usersModule, auth: authModule})(ConnectedLoggedInMenu);

@@ -19,16 +19,42 @@ describe('storeCurrentUserAction', () => {
     });
 });
 
+describe('clearCurrentUserAction', () => {
+    describe('Generating the action object', () => {
+        const result = testSubject.clearCurrentUserAction();
+
+        it('Has 1 keys', () => {
+            expect(Object.keys(result)).toHaveLength(1);
+        });
+        it('Has the right type', () => {
+            expect(result.type).toEqual('USERS/CLEAR_CURRENT_USER');
+        });
+    });
+});
+
 describe('storeCurrentUserMutation', () => {
     describe('Specifying new values', () => {
         const state = {};
         testSubject.storeCurrentUserMutation(state, {type: '', currentUser: 'someId'});
 
         it('Has 1 key', () => {
-           expect(Object.keys(state)).toHaveLength(1);
+            expect(Object.keys(state)).toHaveLength(1);
         });
         it('Has the right current user ID', () => {
             expect(state.currentUser).toBe('someId');
+        });
+    });
+});
+
+describe('clearCurrentUserMutation', () => {
+    describe('Clearing existing values', () => {
+        const state = {
+            currentUser: 'someId'
+        };
+        testSubject.clearCurrentUserMutation(state, {type: ''});
+
+        it('Has 0 keys', () => {
+            expect(Object.keys(state)).toHaveLength(0);
         });
     });
 });
