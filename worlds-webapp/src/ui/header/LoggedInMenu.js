@@ -4,11 +4,13 @@ import React from 'react';
 import {Interpolate} from 'react-i18next';
 import {Dropdown} from 'semantic-ui-react'
 import {connectStore} from "redux-box";
+import {Link} from 'react-router-dom';
 import type {UserModule} from '../../users';
 import type {AuthModule} from '../../auth';
 import {module as usersModule} from '../../users';
 import {module as authModule} from '../../auth';
 import type {User} from "../../users/users";
+import './LoggedInMenu.css';
 
 /** The flow type representing the props for the LoggedIn Menu */
 type LoggedInMenuProps = {
@@ -26,8 +28,13 @@ export function LoggedInMenu(props: LoggedInMenuProps) {
     }
 
     return (
-        <Dropdown item text={username}>
+        <Dropdown item text={username} className="loggedInMenu">
             <Dropdown.Menu>
+                <Dropdown.Item>
+                    <Link to="/profile">
+                        <Interpolate i18nKey="page.userMenu.profile" />
+                    </Link>
+                </Dropdown.Item>
                 <Dropdown.Item onClick={props.onLogout} >
                     <Interpolate i18nKey="page.userMenu.logout" />
                 </Dropdown.Item>

@@ -3,7 +3,8 @@
     "title": "Worlds",
     "login": "Login / Register",
     "userMenu": {
-      "logout": "Logout"
+      "logout": "Logout",
+      "profile": "User Profile"
     }
   }
 }
