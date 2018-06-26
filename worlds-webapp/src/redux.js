@@ -1,20 +1,18 @@
 // @flow
 
 import {createStore} from 'redux-box';
-import {routerMiddleware, routerReducer} from 'react-router-redux';
-import createHistory from 'history/createBrowserHistory';
+import {routerMiddleware, connectRouter} from 'connected-react-router';
+import {createBrowserHistory} from 'history';
 import {module as authModule} from './auth';
 import {module as usersModule} from './users';
 
-export const history = createHistory();
+export const history = createBrowserHistory();
 
 const reduxBoxConfig = {
     middlewares: [
         routerMiddleware(history)
     ],
-    reducers: {
-        routing: routerReducer
-    }
+    decorateReducer: connectRouter(history)
 };
 
 export const store = createStore([

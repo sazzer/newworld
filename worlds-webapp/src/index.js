@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {I18nextProvider, translate} from 'react-i18next';
 import 'semantic-ui-css/semantic.min.css';
-import {ConnectedRouter as Router} from 'react-router-redux';
+import {ConnectedRouter as Router} from 'connected-react-router';
 import {Provider} from 'react-redux';
 import {history, store} from './redux'
 import i18n from './i18n';
