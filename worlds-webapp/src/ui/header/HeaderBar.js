@@ -10,7 +10,7 @@ import UserMenu from './UserMenu';
  */
 export default function HeaderBar() {
     return (
-        <Menu fixed="top" inverted borderless>
+        <Menu attached="top" inverted borderless>
             <Menu.Item header>
                 <Interpolate i18nKey="page.title" />
             </Menu.Item>
