@@ -37,6 +37,7 @@ const sagas = {
 
 /** The set of selectors that are used to get data out of the module */
 const selectors = {
+    ...accessToken.selectors
 };
 
 /** The actual module */

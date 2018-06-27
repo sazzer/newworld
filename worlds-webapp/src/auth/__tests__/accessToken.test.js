@@ -69,3 +69,26 @@ describe('clearAccessTokenMutation', () => {
         });
     });
 });
+
+describe('selectHasAccessToken', () => {
+    describe('Access Token is not present', () => {
+        const state = { };
+
+        it('Returns false', () => {
+            expect(testSubject.selectHasAccessToken(state)).toBe(false);
+        })
+    });
+    describe('Access Token is present', () => {
+        const state = {
+            accessToken: {
+                token: 'accessToken',
+                type: 'Bearer',
+                expires: 3600
+            }
+        };
+
+        it('Returns true', () => {
+            expect(testSubject.selectHasAccessToken(state)).toBe(true);
+        })
+    });
+});

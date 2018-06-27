@@ -66,6 +66,11 @@ export function clearAccessTokenMutation(state: AccessTokenModuleState, action: 
     delete state.accessToken;
 }
 
+/** Selector to see if we've got an access token available */
+export function selectHasAccessToken(state: AccessTokenModuleState): boolean {
+    return state.accessToken !== undefined;
+}
+
 /** The actions for this sub-module */
 export const actions = {
     logout: clearAccessTokenAction
@@ -89,3 +94,6 @@ export const sagas = {
     }
 };
 
+export const selectors = {
+    selectHasAccessToken: (state: AccessTokenModuleState) => () => selectHasAccessToken(state)
+};
