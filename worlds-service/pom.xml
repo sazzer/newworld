@@ -262,7 +262,7 @@
                         </executions>
                         <configuration>
                             <tag>${project.version}</tag>
-                            <repository>worlds/service</repository>
+                            <repository>${docker.image}</repository>
                             <buildArgs>
                                 <JAR_FILE>./target/${project.build.finalName}.jar</JAR_FILE>
                             </buildArgs>
@@ -270,6 +270,9 @@
                     </plugin>
                 </plugins>
             </build>
+            <properties>
+                <docker.image>worlds/service</docker.image>
+            </properties>
         </profile>
     </profiles>
 </project>
