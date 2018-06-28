@@ -3,6 +3,10 @@ language: java
 jdk: 
     - oraclejdk8
 
+env:
+  - secure: CZYGpYgQIXH1a123eHZ3CDrJg7heeBPO2hPc0vbm9u5+KpwAoUz7cW/OnjL7V8s4lIw4hMssxfFtuIafYH4CeSRn3yczWsdqU88xAI1MdSA8dYcER0vxhtvqNTPUIzvx/ANiXfLdz13tA5GugZf5AhQrkqA3SnrksQg57Pad8DIl1RUweWKnTPyvFsT5XmW3qtTAaiGknx5dfy2bFJmkexXyTCpbTDW+pqwYUUyeH53POpbiOEdm1/mlSoGUUsgAocp0iMTPjV0w9H3PLdl2liL0WtGVhUSpNYFj67U7yzp4PZY7P6romV3yuQ4q6Yk5Q5pCkmits29yMsB3Bz0YCA==
+
+
 build:
     ci:
         # A bunch of setup stuff first
@@ -12,3 +16,9 @@ build:
         - chown -R ciuser:ciuser $CIUSER_BUILD_DIR
           # Then, build running all tests but as a non-root user because of Postgres 
         - su -c "cd $CIUSER_BUILD_DIR && mvn clean install -B" ciuser
+    post_ci:
+          # Finally, if we've built on our master then deploy it to our CD servers 
+        - if [ "$BRANCH" == "master-kt" ]; then which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh; fi
+        - if [ "$BRANCH" == "master-kt" ]; then npm install -g surge; fi
+        - if [ "$BRANCH" == "master-kt" ]; then mvn clean install -DskipTests; fi
+        - if [ "$BRANCH" == "master-kt" ]; then ./deploy.sh; fi
