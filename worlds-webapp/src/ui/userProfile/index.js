@@ -1,11 +1,14 @@
 // @flow
 
 import React from 'react';
+import HasAccessToken from '../HasAccessToken';
 
 export default function UserProfile() {
     return (
-        <div>
-            User Profile Here
-        </div>
+        <HasAccessToken>
+            <div>
+                User Profile Here
+            </div>
+        </HasAccessToken>
     );
 }

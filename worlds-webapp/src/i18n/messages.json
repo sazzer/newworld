@@ -6,5 +6,9 @@
       "logout": "Logout",
       "profile": "User Profile"
     }
+  },
+  "unauthenticated": {
+    "header": "Not Logged In",
+    "message": "You must be logged in to access this page!"
   }
 }

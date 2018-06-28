@@ -24,7 +24,8 @@ export type AccessTokenModuleState = {
 
 /** The signature of the Access Token sub-module */
 export type AccessTokenModule = {
-    logout: () => void
+    logout: () => void,
+    selectHasAccessToken: () => boolean
 }
 
 /** The type that is used for storing the access token action */
