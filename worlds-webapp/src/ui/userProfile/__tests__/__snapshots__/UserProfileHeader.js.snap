@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileHeader Renders correctly 1`] = `
+<Header
+  as="h2"
+  dividing={true}
+>
+  <Icon
+    as="i"
+    name="user"
+  />
+  <HeaderContent>
+    Test User
+  </HeaderContent>
+</Header>
+`;

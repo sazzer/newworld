@@ -6,14 +6,16 @@ import i18n from "../src/i18n";
 import '@storybook/addon-console';
 import {withConsole} from '@storybook/addon-console';
 import JSXAddon from 'storybook-addon-jsx';
-import {Container} from 'semantic-ui-react';
+import {Container, Segment} from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 addDecorator((story) => {
     const StoryWrapper = () => {
         return (
             <Container>
-                {story()}
+                <Segment>
+                    {story()}
+                </Segment>
             </Container>
         );
     };
