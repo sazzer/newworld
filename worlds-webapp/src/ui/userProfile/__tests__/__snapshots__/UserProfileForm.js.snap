@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileForm Renders correctly 1`] = `
+<Form
+  as="form"
+>
+  <FormField>
+    <label>
+      Email Address
+    </label>
+    <input
+      name="email"
+      onChange={[Function]}
+      required={true}
+    />
+  </FormField>
+  <FormField>
+    <label>
+      Username
+    </label>
+    <input
+      name="username"
+      onChange={[Function]}
+      required={true}
+      value="testuser"
+    />
+  </FormField>
+  <FormField>
+    <label>
+      Display Name
+    </label>
+    <input
+      name="displayName"
+      onChange={[Function]}
+      required={true}
+      value="Test User"
+    />
+  </FormField>
+  <Button
+    as="button"
+    onClick={[Function]}
+    primary={true}
+    role="button"
+  >
+    Save
+  </Button>
+</Form>
+`;

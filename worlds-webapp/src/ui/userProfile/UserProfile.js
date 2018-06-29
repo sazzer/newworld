@@ -7,6 +7,7 @@ import type {User} from "../../users/users";
 import {module as usersModule} from "../../users";
 import UserProfileBreadcrumbs from './UserProfileBreadcrumbs';
 import UserProfileHeader from './UserProfileHeader';
+import UserProfileForm from './UserProfileForm';
 import LoadingScreen from '../LoadingScreen';
 
 /** The flow type representing the props for the User Breadcrumbs */
@@ -25,6 +26,7 @@ export function UserProfile(props: UserProfileProps) {
             <div>
                 <UserProfileBreadcrumbs user={props.user} />
                 <UserProfileHeader user={props.user} />
+                <UserProfileForm user={props.user} />
             </div>
         );
     } else {
