@@ -1,5 +1,6 @@
 import React from 'react';
 import {I18nextProvider, translate} from 'react-i18next';
+import {MemoryRouter as Router} from 'react-router';
 import {addDecorator, configure, setAddon} from '@storybook/react';
 import i18n from "../src/i18n";
 import '@storybook/addon-console';
@@ -20,9 +21,11 @@ addDecorator((story) => {
     const TranslatedStoryWrapper = translate(['worlds'], {wait: true})(StoryWrapper);
 
     return (
-        <I18nextProvider i18n={i18n}>
-            <TranslatedStoryWrapper />
-        </I18nextProvider>
+        <Router>
+            <I18nextProvider i18n={i18n}>
+                <TranslatedStoryWrapper />
+            </I18nextProvider>
+        </Router>
     );
 });
 

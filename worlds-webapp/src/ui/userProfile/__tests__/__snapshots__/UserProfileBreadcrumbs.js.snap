@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileBreadcrumbs Renders correctly 1`] = `
+<Breadcrumb>
+  <BreadcrumbSection>
+    <Link
+      replace={false}
+      to="/"
+    >
+      <Interpolate
+        className=""
+        i18nKey="userProfile.breadcrumbs.home"
+      />
+    </Link>
+  </BreadcrumbSection>
+  <BreadcrumbDivider />
+  <BreadcrumbSection
+    active={true}
+  >
+    <Interpolate
+      className=""
+      i18nKey="userProfile.breadcrumbs.current"
+    />
+    <Link
+      replace={false}
+      to="/profile"
+    >
+      Test User
+    </Link>
+  </BreadcrumbSection>
+</Breadcrumb>
+`;
