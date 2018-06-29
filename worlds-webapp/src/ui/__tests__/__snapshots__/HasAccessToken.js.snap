@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MissingAccessToken Renders correctly 1`] = `
+<Segment
+  raised={true}
+>
+  <Header
+    as="h2"
+    icon={true}
+    textAlign="center"
+  >
+    <Icon
+      as="i"
+      name="lock"
+    />
+    <Interpolate
+      className=""
+      i18nKey="unauthenticated.header"
+    />
+    <HeaderSubheader>
+      <Interpolate
+        className=""
+        i18nKey="unauthenticated.message"
+      />
+    </HeaderSubheader>
+  </Header>
+</Segment>
+`;

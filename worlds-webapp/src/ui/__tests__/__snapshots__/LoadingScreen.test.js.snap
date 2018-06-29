@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingScreen Renders correctly 1`] = `
+<Segment
+  raised={true}
+  style={
+    Object {
+      "minHeight": "10em",
+    }
+  }
+>
+  <Dimmer
+    active={true}
+    inverted={true}
+  >
+    <Loader
+      inline="centered"
+      size="large"
+    >
+      <Interpolate
+        className=""
+        i18nKey="loading.message"
+      />
+    </Loader>
+  </Dimmer>
+</Segment>
+`;

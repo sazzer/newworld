@@ -11,6 +11,9 @@
     "header": "Not Logged In",
     "message": "You must be logged in to access this page!"
   },
+  "loading": {
+    "message": "Loading, Please wait..."
+  },
   "userProfile": {
     "breadcrumbs": {
       "home": "Home",
