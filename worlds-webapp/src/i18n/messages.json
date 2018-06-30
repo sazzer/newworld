@@ -18,6 +18,12 @@
     "breadcrumbs": {
       "home": "Home",
       "current": "User Profile: "
+    },
+    "form": {
+      "email": "Email Address",
+      "username": "Username",
+      "displayName": "Display Name",
+      "save": "Save"
     }
   }
 }

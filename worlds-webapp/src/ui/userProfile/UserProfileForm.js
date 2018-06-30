@@ -30,27 +30,27 @@ export default function UserProfileForm(props: UserProfileFormProps) {
     return (
         <Form>
             <Form.Field>
-                <label>Email Address</label>
+                <label><Interpolate i18nKey="userProfile.form.email" /></label>
                 <input value={props.user.email}
                        name="email"
                        onChange={processChange(props.onUpdateEmail)}
                        required />
             </Form.Field>
             <Form.Field>
-                <label>Username</label>
+                <label><Interpolate i18nKey="userProfile.form.username" /></label>
                 <input value={props.user.username}
                        name="username"
                        onChange={processChange(props.onUpdateUsername)}
                        required />
             </Form.Field>
             <Form.Field>
-                <label>Display Name</label>
+                <label><Interpolate i18nKey="userProfile.form.displayName" /></label>
                 <input value={props.user.displayName}
                        name="displayName"
                        onChange={processChange(props.onUpdateDisplayName)}
                        required />
             </Form.Field>
-            <Button primary onClick={props.onSave}>Save</Button>
+            <Button primary onClick={props.onSave}><Interpolate i18nKey="userProfile.form.save" /></Button>
         </Form>
     );
 }
