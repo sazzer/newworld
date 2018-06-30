@@ -18,6 +18,7 @@ const state: UserModuleState = {
 
 /** The set of actions that can be performed */
 const actions = {
+    ...users.actions
 };
 
 /** The set of mutations that are triggered in response to actions */

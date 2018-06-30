@@ -16,7 +16,32 @@ describe('loadUserAction', () => {
             expect(result.userId).toEqual('someUser');
         });
     });
+});
 
+describe('saveUserAction', () => {
+    describe('Generating the action object', () => {
+        const result = testSubject.saveUserAction({
+            id: 'someId',
+            username: 'testUser',
+            email: 'email@example.com',
+            displayName: 'Test User'
+        });
+
+        it('Has 2 keys', () => {
+            expect(Object.keys(result)).toHaveLength(2);
+        });
+        it('Has the right type', () => {
+            expect(result.type).toEqual('USERS/SAVE_USER');
+        });
+        it('Has a current user', () => {
+            expect(result.user).toEqual({
+                id: 'someId',
+                username: 'testUser',
+                email: 'email@example.com',
+                displayName: 'Test User'
+            });
+        });
+    });
 });
 
 describe('storeUserMutation', () => {

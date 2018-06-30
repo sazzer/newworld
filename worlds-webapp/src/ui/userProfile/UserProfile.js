@@ -12,7 +12,8 @@ import LoadingScreen from '../LoadingScreen';
 
 /** The flow type representing the props for the User Breadcrumbs */
 type UserProfileProps = {
-    user: ?User
+    user: ?User,
+    onSaveProfile: (User) => void
 };
 
 /**
@@ -26,7 +27,7 @@ export function UserProfile(props: UserProfileProps) {
             <div>
                 <UserProfileBreadcrumbs user={props.user} />
                 <UserProfileHeader user={props.user} />
-                <UserProfileForm user={props.user} />
+                <UserProfileForm user={props.user} onSave={props.onSaveProfile}/>
             </div>
         );
     } else {
@@ -39,7 +40,7 @@ export function UserProfile(props: UserProfileProps) {
  */
 export function ConnectedUserProfile({users}: {users: UserModule}) {
     return (
-        <UserProfile user={users.selectCurrentUser()} />
+        <UserProfile user={users.selectCurrentUser()} onSaveProfile={users.saveUser} />
     )
 }
 

@@ -6,6 +6,9 @@ import request from '../api';
 /** The action for loading a user from the backend */
 const LOAD_USER_ACTION = 'USERS/LOAD_USER';
 
+/** The action for saving a user to the backend */
+const SAVE_USER_ACTION = 'USERS/SAVE_USER';
+
 /** The action for storing a user into the store */
 const STORE_USER_ACTION = 'USERS/STORE_USER';
 
@@ -28,6 +31,12 @@ type LoadUserAction = {
     userId: string
 };
 
+/** The type that is used for the Save User action */
+type SaveUserAction = {
+    type: string,
+    user: User
+};
+
 /** the type that is used for the Store User action */
 type StoreUserAction = {
     type: string,
@@ -39,6 +48,14 @@ export function loadUserAction(user: string): LoadUserAction {
     return {
         type: LOAD_USER_ACTION,
         userId: user
+    };
+}
+
+/** Action to indicate that we are loading a user */
+export function saveUserAction(user: User): SaveUserAction {
+    return {
+        type: SAVE_USER_ACTION,
+        user: user
     };
 }
 
@@ -87,7 +104,20 @@ export const sagas = {
                 email: user.data.email
             }
         });
+    },
+    [SAVE_USER_ACTION]: function*(action: SaveUserAction): Generator<any, any, any> {
+        console.log(action);
+
+        yield put({
+            type: STORE_USER_ACTION,
+            user: {...action.user}
+        });
     }
+};
+
+/** The actions for this sub-module */
+export const actions = {
+    saveUser: saveUserAction
 };
 
 /** The selectors for this sub-module */
@@ -99,5 +129,6 @@ export const selectors = {
 /** Type describing what is exposed by this sub-module */
 export type UsersModule = {
     selectUsers: () => { [string]: User },
-    selectUserById: (string) => ?User
+    selectUserById: (string) => ?User,
+    saveUser: (User) => void
 };
