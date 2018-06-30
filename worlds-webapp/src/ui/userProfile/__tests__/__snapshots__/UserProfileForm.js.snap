@@ -6,7 +6,10 @@ exports[`UserProfileForm Renders correctly 1`] = `
 >
   <FormField>
     <label>
-      Email Address
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.email"
+      />
     </label>
     <input
       name="email"
@@ -16,7 +19,10 @@ exports[`UserProfileForm Renders correctly 1`] = `
   </FormField>
   <FormField>
     <label>
-      Username
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.username"
+      />
     </label>
     <input
       name="username"
@@ -27,7 +33,10 @@ exports[`UserProfileForm Renders correctly 1`] = `
   </FormField>
   <FormField>
     <label>
-      Display Name
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.displayName"
+      />
     </label>
     <input
       name="displayName"
@@ -42,7 +51,10 @@ exports[`UserProfileForm Renders correctly 1`] = `
     primary={true}
     role="button"
   >
-    Save
+    <Interpolate
+      className=""
+      i18nKey="userProfile.form.save"
+    />
   </Button>
 </Form>
 `;
