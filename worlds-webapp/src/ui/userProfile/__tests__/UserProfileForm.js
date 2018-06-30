@@ -44,7 +44,7 @@ describe('UserProfileForm', () => {
         element.find("Button").simulate("click");
 
         expect(onSave).toHaveBeenCalledTimes(1);
-        
+
         expect(onUpdateEmail).toHaveBeenCalledTimes(0);
         expect(onUpdateUsername).toHaveBeenCalledTimes(0);
         expect(onUpdateDisplayName).toHaveBeenCalledTimes(0);

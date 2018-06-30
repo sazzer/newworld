@@ -7,7 +7,7 @@ import type {User} from "../../users/users";
 import {module as usersModule} from "../../users";
 import UserProfileBreadcrumbs from './UserProfileBreadcrumbs';
 import UserProfileHeader from './UserProfileHeader';
-import UserProfileForm from './UserProfileForm';
+import UserProfileForm from './UserProfileFormWrapper';
 import LoadingScreen from '../LoadingScreen';
 
 /** The flow type representing the props for the User Breadcrumbs */
