@@ -106,11 +106,27 @@ export const sagas = {
         });
     },
     [SAVE_USER_ACTION]: function*(action: SaveUserAction): Generator<any, any, any> {
-        console.log(action);
+        const user = yield call(request, {
+            method: 'PUT',
+            url: '/users/{userId}',
+            path: {
+                userId: action.user.id
+            },
+            data: {
+                display_name: action.user.displayName,
+                email: action.user.email,
+                username: action.user.username
+            }
+        });
 
         yield put({
             type: STORE_USER_ACTION,
-            user: {...action.user}
+            user: {
+                id: user.data.id,
+                username: user.data.username,
+                displayName: user.data.display_name,
+                email: user.data.email
+            }
         });
     }
 };

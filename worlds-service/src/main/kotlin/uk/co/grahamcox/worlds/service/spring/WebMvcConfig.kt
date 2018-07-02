@@ -2,6 +2,7 @@ package uk.co.grahamcox.worlds.service.spring
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
@@ -56,6 +57,7 @@ class WebMvcConfig : WebMvcConfigurer {
      */
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/api/**")
+                .allowedMethods(*HttpMethod.values().map { it.name }.toTypedArray())
                 .allowedOrigins("*")
     }
 }
