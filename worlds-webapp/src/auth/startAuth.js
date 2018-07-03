@@ -22,8 +22,10 @@ export type StartAuthModule = {
 /** The type that is used for the Start Auth action */
 type StartAuthAction = {
     type: string,
-    state: string,
-    nonce: string
+    payload: {
+        state: string,
+        nonce: string
+    },
 };
 
 /**
@@ -47,7 +49,7 @@ export function startAuth(state: string, nonce: string) {
         }
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const openedWindow = window.open(realUrl,
             'worldsAuth',
             'dependent'
@@ -69,15 +71,17 @@ export function startAuth(state: string, nonce: string) {
 export function startAuthAction(): StartAuthAction {
     return {
         type: START_AUTH_ACTION,
-        state: uuid(),
-        nonce: uuid()
+        payload: {
+            state: uuid(),
+            nonce: uuid()
+        }
     };
 }
 
 /** Mutation for storing the state and nonce we used for starting authentication into the redux store */
 export function startAuthMutation(state: StartAuthModuleState, action: StartAuthAction) {
-    state.state = action.state;
-    state.nonce = action.nonce;
+    state.state = action.payload.state;
+    state.nonce = action.payload.nonce;
 }
 
 /** The actions for this sub-module */
@@ -93,7 +97,7 @@ export const mutations = {
 /** The sagas for this sub-module */
 export const sagas = {
     [START_AUTH_ACTION]: function*(action: StartAuthAction): Generator<any, any, any> {
-        const result = yield call(startAuth, action.state, action.nonce);
+        const result = yield call(startAuth, action.payload.state, action.payload.nonce);
         yield put(finishAuthAction(result.params));
     }
 };

@@ -18,7 +18,9 @@ export type CurrentUserState = {
 /** The type that is used for the Store Current User action */
 type StoreCurrentUserAction = {
     type: string,
-    currentUser: string
+    payload: {
+        currentUser: string,
+    },
 };
 
 type ClearCurrentUserAction = {
@@ -29,7 +31,9 @@ type ClearCurrentUserAction = {
 export function storeCurrentUserAction(user: string): StoreCurrentUserAction {
     return {
         type: STORE_CURRENT_USER_ACTION,
-        currentUser: user
+        payload: {
+            currentUser: user
+        }
     };
 }
 
@@ -42,11 +46,11 @@ export function clearCurrentUserAction(): ClearCurrentUserAction {
 
 /** Mutation for storing the current user ID into the redux store */
 export function storeCurrentUserMutation(state: CurrentUserState, action: StoreCurrentUserAction) {
-    state.currentUser = action.currentUser;
+    state.currentUser = action.payload.currentUser;
 }
 
 /** Mutation for clearing the current user ID from the redux store */
-export function clearCurrentUserMutation(state: CurrentUserState, action: ClearCurrentUserAction) {
+export function clearCurrentUserMutation(state: CurrentUserState) {
     delete state.currentUser;
 }
 
@@ -83,7 +87,7 @@ export const mutations = {
 /** The sagas for this sub-module */
 export const sagas = {
     [STORE_CURRENT_USER_ACTION]: function*(action: StoreCurrentUserAction): Generator<any, any, any> {
-        yield put(loadUserAction(action.currentUser));
+        yield put(loadUserAction(action.payload.currentUser));
     }
 };
 

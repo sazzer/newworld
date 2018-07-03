@@ -28,26 +28,34 @@ export type UsersState = {
 /** The type that is used for the Load User action */
 type LoadUserAction = {
     type: string,
-    userId: string
+    payload: {
+        userId: string,
+    },
 };
 
 /** The type that is used for the Save User action */
 type SaveUserAction = {
     type: string,
-    user: User
+    payload: {
+        user: User,
+    },
 };
 
 /** the type that is used for the Store User action */
 type StoreUserAction = {
     type: string,
-    user: User
+    payload: {
+        user: User,
+    },
 }
 
 /** Action to indicate that we are loading a user */
 export function loadUserAction(user: string): LoadUserAction {
     return {
         type: LOAD_USER_ACTION,
-        userId: user
+        payload: {
+            userId: user
+        }
     };
 }
 
@@ -55,13 +63,15 @@ export function loadUserAction(user: string): LoadUserAction {
 export function saveUserAction(user: User): SaveUserAction {
     return {
         type: SAVE_USER_ACTION,
-        user: user
+        payload: {
+            user: user
+        }
     };
 }
 
 /** Mutation for updating the state with the user details provided */
 export function storeUserMutation(state: UsersState, action: StoreUserAction) {
-    const user = action.user;
+    const user = action.payload.user;
 
     state.users[user.id] = user;
 }
@@ -91,17 +101,19 @@ export const sagas = {
         const user = yield call(request, {
             url: '/users/{userId}',
             path: {
-                userId: action.userId
+                userId: action.payload.userId
             }
         });
 
         yield put({
             type: STORE_USER_ACTION,
-            user: {
-                id: user.data.id,
-                username: user.data.username,
-                displayName: user.data.display_name,
-                email: user.data.email
+            payload: {
+                user: {
+                    id: user.data.id,
+                    username: user.data.username,
+                    displayName: user.data.display_name,
+                    email: user.data.email
+                }
             }
         });
     },
@@ -110,22 +122,24 @@ export const sagas = {
             method: 'PUT',
             url: '/users/{userId}',
             path: {
-                userId: action.user.id
+                userId: action.payload.user.id
             },
             data: {
-                display_name: action.user.displayName,
-                email: action.user.email,
-                username: action.user.username
+                display_name: action.payload.user.displayName,
+                email: action.payload.user.email,
+                username: action.payload.user.username
             }
         });
 
         yield put({
             type: STORE_USER_ACTION,
-            user: {
-                id: user.data.id,
-                username: user.data.username,
-                displayName: user.data.display_name,
-                email: user.data.email
+            payload: {
+                user: {
+                    id: user.data.id,
+                    username: user.data.username,
+                    displayName: user.data.display_name,
+                    email: user.data.email
+                }
             }
         });
     }

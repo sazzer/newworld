@@ -13,7 +13,7 @@ describe('loadUserAction', () => {
             expect(result.type).toEqual('USERS/LOAD_USER');
         });
         it('Has a current user ID', () => {
-            expect(result.userId).toEqual('someUser');
+            expect(result.payload.userId).toEqual('someUser');
         });
     });
 });
@@ -34,7 +34,7 @@ describe('saveUserAction', () => {
             expect(result.type).toEqual('USERS/SAVE_USER');
         });
         it('Has a current user', () => {
-            expect(result.user).toEqual({
+            expect(result.payload.user).toEqual({
                 id: 'someId',
                 username: 'testUser',
                 email: 'email@example.com',
@@ -50,12 +50,17 @@ describe('storeUserMutation', () => {
             users: {}
         };
 
-        testSubject.storeUserMutation(state, {type: '', user: {
-            id: 'someId',
-            username: 'testUser',
-            email: 'email@example.com',
-            displayName: 'Test User'
-        }});
+        testSubject.storeUserMutation(state, {
+            type: '',
+            payload: {
+                user: {
+                    id: 'someId',
+                    username: 'testUser',
+                    email: 'email@example.com',
+                    displayName: 'Test User'
+                }
+            }
+        });
 
         it('Has 1 key', () => {
             expect(Object.keys(state)).toHaveLength(1);

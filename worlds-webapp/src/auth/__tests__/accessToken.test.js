@@ -13,10 +13,12 @@ describe('storeAccessTokenAction', () => {
             expect(result.type).toEqual('AUTH/STORE_ACCESS_TOKEN');
         });
         it('Has an access token', () => {
-            expect(result.accessToken).toEqual({
-                token: 'accessToken',
-                type: 'Bearer',
-                expires: 3600
+            expect(result.payload).toEqual({
+                accessToken: {
+                    token: 'accessToken',
+                    type: 'Bearer',
+                    expires: 3600
+                }
             });
         });
     });
@@ -38,7 +40,16 @@ describe('clearAccessTokenAction', () => {
 describe('storeAccessTokenMutation', () => {
     describe('Specifying new values', () => {
         const state = {};
-        testSubject.storeAccessTokenMutation(state, {type: '', accessToken: {token: 'accessToken', type: 'Bearer', expires: 3600}});
+        testSubject.storeAccessTokenMutation(state, {
+            type: '',
+            payload: {
+                accessToken: {
+                    token: 'accessToken',
+                    type: 'Bearer',
+                    expires: 3600
+                }
+            }
+        });
 
         it('Has 1 key', () => {
             expect(Object.keys(state)).toHaveLength(1);

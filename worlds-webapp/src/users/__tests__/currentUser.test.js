@@ -1,7 +1,6 @@
 // @flow
 
 import * as testSubject from '../currentUser';
-import {selectCurrentUserId} from "../currentUser";
 
 describe('storeCurrentUserAction', () => {
     describe('Generating the action object', () => {
@@ -14,7 +13,7 @@ describe('storeCurrentUserAction', () => {
             expect(result.type).toEqual('USERS/STORE_CURRENT_USER');
         });
         it('Has a current user ID', () => {
-            expect(result.currentUser).toEqual('someId');
+            expect(result.payload.currentUser).toEqual('someId');
         });
     });
 });
@@ -35,7 +34,12 @@ describe('clearCurrentUserAction', () => {
 describe('storeCurrentUserMutation', () => {
     describe('Specifying new values', () => {
         const state = {};
-        testSubject.storeCurrentUserMutation(state, {type: '', currentUser: 'someId'});
+        testSubject.storeCurrentUserMutation(state, {
+            type: '',
+            payload: {
+                currentUser: 'someId'
+            }
+        });
 
         it('Has 1 key', () => {
             expect(Object.keys(state)).toHaveLength(1);

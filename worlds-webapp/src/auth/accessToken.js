@@ -28,12 +28,15 @@ export type AccessTokenModule = {
     selectHasAccessToken: () => boolean
 }
 
-/** The type that is used for storing the access token action */
+/** The type that is used for the action of storing the access token */
 type StoreAccessTokenAction = {
     type: string,
-    accessToken: AccessToken
+    payload: {
+        accessToken: AccessToken,
+    },
 };
 
+/** The type that is used for the action of clearing the access token */
 type ClearAccessTokenAction = {
     type: string,
 };
@@ -42,10 +45,12 @@ type ClearAccessTokenAction = {
 export function storeAccessTokenAction(accessToken: string, type: string, expiresIn: number): StoreAccessTokenAction {
     return {
         type: STORE_ACCESS_TOKEN_ACTION,
-        accessToken: {
-            token: accessToken,
-            type: type,
-            expires: expiresIn
+        payload: {
+            accessToken: {
+                token: accessToken,
+                type: type,
+                expires: expiresIn
+            }
         }
     };
 }
@@ -59,11 +64,11 @@ export function clearAccessTokenAction(): ClearAccessTokenAction {
 
 /** Mutation for storing the access token into the redux store */
 export function storeAccessTokenMutation(state: AccessTokenModuleState, action: StoreAccessTokenAction) {
-    state.accessToken = action.accessToken;
+    state.accessToken = action.payload.accessToken;
 }
 
 /** Mutation for clearing the access token from the redux store */
-export function clearAccessTokenMutation(state: AccessTokenModuleState, action: ClearAccessTokenAction) {
+export function clearAccessTokenMutation(state: AccessTokenModuleState) {
     delete state.accessToken;
 }
 
@@ -86,7 +91,7 @@ export const mutations = {
 /** The sagas for this sub-module */
 export const sagas = {
     [STORE_ACCESS_TOKEN_ACTION]: function(action: StoreAccessTokenAction) {
-        setAccessToken(action.accessToken.token);
+        setAccessToken(action.payload.accessToken.token);
     },
     [CLEAR_ACCESS_TOKEN_ACTION]: function*(): Generator<any, any, any> {
         setAccessToken(undefined);
