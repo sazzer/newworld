@@ -55,7 +55,7 @@ describe('clearCurrentUserMutation', () => {
         const state = {
             currentUser: 'someId'
         };
-        testSubject.clearCurrentUserMutation(state, {type: ''});
+        testSubject.clearCurrentUserMutation(state);
 
         it('Has 0 keys', () => {
             expect(Object.keys(state)).toHaveLength(0);

@@ -13,7 +13,7 @@ import LoadingScreen from '../LoadingScreen';
 /** The flow type representing the props for the User Breadcrumbs */
 type UserProfileProps = {
     user: ?User,
-    onSaveProfile: (User) => void
+    onSaveProfile: (User, () => void, (string) => void) => void
 };
 
 /**

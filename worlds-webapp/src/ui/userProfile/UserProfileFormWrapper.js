@@ -7,7 +7,7 @@ import UserProfileForm from './UserProfileForm';
 /** The flow type representing the props for the User Profile Form */
 type UserProfileFormProps = {
     user: User,
-    onSave: (User) => void
+    onSave: (User, () => void, (string) => void) => void
 };
 
 type UserProfileFormState = {
@@ -80,6 +80,10 @@ export default class UserProfileFormWrapper extends React.Component<UserProfileF
      */
     _onSave() {
         const { user } = this.state;
-        this.props.onSave(user);
+        this.props.onSave(user, () => {
+            console.log('Saved user');
+        }, (error) => {
+            console.log('Failed to save user: ' + error);
+        });
     }
 }

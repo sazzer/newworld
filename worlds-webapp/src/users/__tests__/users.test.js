@@ -20,15 +20,18 @@ describe('loadUserAction', () => {
 
 describe('saveUserAction', () => {
     describe('Generating the action object', () => {
+        const onSuccess = () => {};
+        const onError = () => {};
+
         const result = testSubject.saveUserAction({
             id: 'someId',
             username: 'testUser',
             email: 'email@example.com',
             displayName: 'Test User'
-        });
+        }, onSuccess, onError);
 
-        it('Has 2 keys', () => {
-            expect(Object.keys(result)).toHaveLength(2);
+        it('Has 3 keys', () => {
+            expect(Object.keys(result)).toHaveLength(3);
         });
         it('Has the right type', () => {
             expect(result.type).toEqual('USERS/SAVE_USER');
@@ -40,6 +43,12 @@ describe('saveUserAction', () => {
                 email: 'email@example.com',
                 displayName: 'Test User'
             });
+        });
+        it('Has the correct success callback', () => {
+            expect(result.meta.onSuccess).toBe(onSuccess);
+        });
+        it('Has the correct error callback', () => {
+            expect(result.meta.onError).toBe(onError);
         });
     });
 });

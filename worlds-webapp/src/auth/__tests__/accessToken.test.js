@@ -73,7 +73,7 @@ describe('clearAccessTokenMutation', () => {
                 expires: 3600
             }
         };
-        testSubject.clearAccessTokenMutation(state, {type: ''});
+        testSubject.clearAccessTokenMutation(state);
 
         it('Has 0 keys', () => {
             expect(Object.keys(state)).toHaveLength(0);

@@ -39,6 +39,10 @@ type SaveUserAction = {
     payload: {
         user: User,
     },
+    meta: {
+        onSuccess: () => void,
+        onError: (string) => void,
+    },
 };
 
 /** the type that is used for the Store User action */
@@ -60,11 +64,15 @@ export function loadUserAction(user: string): LoadUserAction {
 }
 
 /** Action to indicate that we are loading a user */
-export function saveUserAction(user: User): SaveUserAction {
+export function saveUserAction(user: User, onSuccess: () => void, onError: (string) => void): SaveUserAction {
     return {
         type: SAVE_USER_ACTION,
         payload: {
             user: user
+        },
+        meta: {
+            onSuccess: onSuccess,
+            onError: onError
         }
     };
 }
@@ -118,30 +126,36 @@ export const sagas = {
         });
     },
     [SAVE_USER_ACTION]: function*(action: SaveUserAction): Generator<any, any, any> {
-        const user = yield call(request, {
-            method: 'PUT',
-            url: '/users/{userId}',
-            path: {
-                userId: action.payload.user.id
-            },
-            data: {
-                display_name: action.payload.user.displayName,
-                email: action.payload.user.email,
-                username: action.payload.user.username
-            }
-        });
-
-        yield put({
-            type: STORE_USER_ACTION,
-            payload: {
-                user: {
-                    id: user.data.id,
-                    username: user.data.username,
-                    displayName: user.data.display_name,
-                    email: user.data.email
+        try {
+            const user = yield call(request, {
+                method: 'PUT',
+                url: '/users/{userId}',
+                path: {
+                    userId: action.payload.user.id
+                },
+                data: {
+                    display_name: action.payload.user.displayName,
+                    email: action.payload.user.email,
+                    username: action.payload.user.username
                 }
-            }
-        });
+            });
+
+            yield put({
+                type: STORE_USER_ACTION,
+                payload: {
+                    user: {
+                        id: user.data.id,
+                        username: user.data.username,
+                        displayName: user.data.display_name,
+                        email: user.data.email
+                    }
+                }
+            });
+
+            action.meta.onSuccess();
+        } catch (e) {
+            action.meta.onError(e.response.data.type);
+        }
     }
 };
 
@@ -160,5 +174,5 @@ export const selectors = {
 export type UsersModule = {
     selectUsers: () => { [string]: User },
     selectUserById: (string) => ?User,
-    saveUser: (User) => void
+    saveUser: (User, () => void, (string) => void) => void
 };
