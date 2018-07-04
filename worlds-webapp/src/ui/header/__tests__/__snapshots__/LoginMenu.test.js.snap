@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginMenu Renders correctly 1`] = `
-<MenuItem>
+<MenuItem
+  data-test="loginMenu"
+>
   <Interpolate
     className=""
     i18nKey="page.login"

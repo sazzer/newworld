@@ -1,5 +1,6 @@
 package uk.co.grahamcox.worlds.e2e.browser
 
+import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.springframework.beans.factory.annotation.Value
 
@@ -10,6 +11,13 @@ class WebBrowser(
         private val webDriver: WebDriver,
         @Value("\${webapp.url}") private val baseUrl: String
 ) {
+    /** The representation of the main application page */
+    val applicationPage: ApplicationPageModel
+        get() {
+            val appElement = webDriver.waitUntilExists(By.id("App"))
+            return ApplicationPageModel(appElement)
+        }
+
     /**
      * Open the application home
      */
