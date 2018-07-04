@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileFormErrorMessage Renders correctly with a supported error code 1`] = `
+<Message
+  error={true}
+>
+  <Interpolate
+    className=""
+    i18nKey="userProfile.form.messages.error.duplicateUsername"
+  />
+</Message>
+`;
+
+exports[`UserProfileFormErrorMessage Renders correctly with an unrecognized error code 1`] = `
+<Message
+  error={true}
+>
+  <Interpolate
+    className=""
+    i18nKey="userProfile.form.messages.error.unexpected"
+  />
+</Message>
+`;
+
+exports[`UserProfileFormErrorMessage Renders correctly with no error code 1`] = `
+<Message
+  error={true}
+>
+  <Interpolate
+    className=""
+    i18nKey="userProfile.form.messages.error.unexpected"
+  />
+</Message>
+`;

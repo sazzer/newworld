@@ -5,7 +5,7 @@ import {shallow} from 'enzyme';
 import UserProfileForm  from '../UserProfileForm';
 
 /** Create the component to test */
-function setup() {
+function setup({status, errorCode}: {status?: string, errorCode?: string} = {}) {
     const user = {
         id: 'id',
         displayName: 'Test User',
@@ -27,15 +27,34 @@ function setup() {
                                           onUpdateEmail={onUpdateEmail}
                                           onUpdateUsername={onUpdateUsername}
                                           onUpdateDisplayName={onUpdateDisplayName}
-                                          onSave={onSave} />)
+                                          onSave={onSave}
+                                          status={status}
+                                          errorCode={errorCode} />)
     };
 }
 
 describe('UserProfileForm', () => {
-    it('Renders correctly', () => {
-        const { element } = setup();
+    describe('Renders correctly', () => {
+        it('When viewing a profile', () => {
+            const { element } = setup();
 
-        expect(element).toMatchSnapshot();
+            expect(element).toMatchSnapshot();
+        });
+        it('When saving a profile', () => {
+            const { element } = setup({status: 'saving'});
+
+            expect(element).toMatchSnapshot();
+        });
+        it('When successfully saved a profile', () => {
+            const { element } = setup({status: 'success'});
+
+            expect(element).toMatchSnapshot();
+        });
+        it('When failed to save a profile', () => {
+            const { element } = setup({status: 'error', errorCode: 'oops'});
+
+            expect(element).toMatchSnapshot();
+        });
     });
 
     it('Triggers onSave when the save button is clicked', () => {

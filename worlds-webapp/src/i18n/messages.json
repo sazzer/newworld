@@ -23,7 +23,14 @@
       "email": "Email Address",
       "username": "Username",
       "displayName": "Display Name",
-      "save": "Save"
+      "save": "Save",
+      "messages": {
+        "success": "User details updated successfully.",
+        "error": {
+          "duplicateUsername": "That username is already in use.",
+          "unexpected": "An unexpected error occurred saving the changes."
+        }
+      }
     }
   }
 }

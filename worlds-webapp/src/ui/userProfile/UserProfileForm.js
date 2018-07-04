@@ -4,6 +4,8 @@ import React from 'react';
 import {Form, Button} from 'semantic-ui-react'
 import {Interpolate} from 'react-i18next';
 import type {User} from "../../users/users";
+import UserProfileFormSuccessMessage from './UserProfileFormSuccessMessage';
+import UserProfileFormErrorMessage from './UserProfileFormErrorMessage';
 
 /** The flow type representing the props for the User Profile Form */
 type UserProfileFormProps = {
@@ -11,7 +13,9 @@ type UserProfileFormProps = {
     onUpdateUsername: (string) => void,
     onUpdateEmail: (string) => void,
     onUpdateDisplayName: (string) => void,
-    onSave: () => void
+    onSave: () => void,
+    status?: string,
+    errorCode?: string
 };
 
 /**
@@ -27,8 +31,16 @@ function processChange(handler) {
  * The form to display for the user profile
  */
 export default function UserProfileForm(props: UserProfileFormProps) {
+    let message;
+
+    if (props.status === 'success') {
+        message = <UserProfileFormSuccessMessage />;
+    } else if (props.status === 'error') {
+        message = <UserProfileFormErrorMessage errorCode={props.errorCode} />;
+    }
+
     return (
-        <Form>
+        <Form success={props.status === 'success'} error={props.status === 'error'} loading={props.status === 'saving'}>
             <Form.Field>
                 <label><Interpolate i18nKey="userProfile.form.email" /></label>
                 <input value={props.user.email}
@@ -50,6 +62,7 @@ export default function UserProfileForm(props: UserProfileFormProps) {
                        onChange={processChange(props.onUpdateDisplayName)}
                        required />
             </Form.Field>
+            { message }
             <Button primary onClick={props.onSave}><Interpolate i18nKey="userProfile.form.save" /></Button>
         </Form>
     );

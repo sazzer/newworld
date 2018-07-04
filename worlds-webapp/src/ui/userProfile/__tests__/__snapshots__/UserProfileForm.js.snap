@@ -1,8 +1,201 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UserProfileForm Renders correctly 1`] = `
+exports[`UserProfileForm Renders correctly When failed to save a profile 1`] = `
 <Form
   as="form"
+  error={true}
+  loading={false}
+  success={false}
+>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.email"
+      />
+    </label>
+    <input
+      name="email"
+      onChange={[Function]}
+      required={true}
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.username"
+      />
+    </label>
+    <input
+      name="username"
+      onChange={[Function]}
+      required={true}
+      value="testuser"
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.displayName"
+      />
+    </label>
+    <input
+      name="displayName"
+      onChange={[Function]}
+      required={true}
+      value="Test User"
+    />
+  </FormField>
+  <UserProfileFormErrorMessage
+    errorCode="oops"
+  />
+  <Button
+    as="button"
+    onClick={[Function]}
+    primary={true}
+    role="button"
+  >
+    <Interpolate
+      className=""
+      i18nKey="userProfile.form.save"
+    />
+  </Button>
+</Form>
+`;
+
+exports[`UserProfileForm Renders correctly When saving a profile 1`] = `
+<Form
+  as="form"
+  error={false}
+  loading={true}
+  success={false}
+>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.email"
+      />
+    </label>
+    <input
+      name="email"
+      onChange={[Function]}
+      required={true}
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.username"
+      />
+    </label>
+    <input
+      name="username"
+      onChange={[Function]}
+      required={true}
+      value="testuser"
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.displayName"
+      />
+    </label>
+    <input
+      name="displayName"
+      onChange={[Function]}
+      required={true}
+      value="Test User"
+    />
+  </FormField>
+  <Button
+    as="button"
+    onClick={[Function]}
+    primary={true}
+    role="button"
+  >
+    <Interpolate
+      className=""
+      i18nKey="userProfile.form.save"
+    />
+  </Button>
+</Form>
+`;
+
+exports[`UserProfileForm Renders correctly When successfully saved a profile 1`] = `
+<Form
+  as="form"
+  error={false}
+  loading={false}
+  success={true}
+>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.email"
+      />
+    </label>
+    <input
+      name="email"
+      onChange={[Function]}
+      required={true}
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.username"
+      />
+    </label>
+    <input
+      name="username"
+      onChange={[Function]}
+      required={true}
+      value="testuser"
+    />
+  </FormField>
+  <FormField>
+    <label>
+      <Interpolate
+        className=""
+        i18nKey="userProfile.form.displayName"
+      />
+    </label>
+    <input
+      name="displayName"
+      onChange={[Function]}
+      required={true}
+      value="Test User"
+    />
+  </FormField>
+  <UserProfileFormSuccessMessage />
+  <Button
+    as="button"
+    onClick={[Function]}
+    primary={true}
+    role="button"
+  >
+    <Interpolate
+      className=""
+      i18nKey="userProfile.form.save"
+    />
+  </Button>
+</Form>
+`;
+
+exports[`UserProfileForm Renders correctly When viewing a profile 1`] = `
+<Form
+  as="form"
+  error={false}
+  loading={false}
+  success={false}
 >
   <FormField>
     <label>

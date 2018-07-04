@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserProfileFormSuccessMessage Renders correctly 1`] = `
+<Message
+  success={true}
+>
+  <Interpolate
+    className=""
+    i18nKey="userProfile.form.messages.success"
+  />
+</Message>
+`;

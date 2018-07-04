@@ -10,8 +10,11 @@ type UserProfileFormProps = {
     onSave: (User, () => void, (string) => void) => void
 };
 
+/** The flow type representing the state for the User Profile Form */
 type UserProfileFormState = {
     user: User,
+    status?: string,
+    errorCode?: string
 };
 
 /**
@@ -24,7 +27,7 @@ export default class UserProfileFormWrapper extends React.Component<UserProfileF
     handleUpdateDisplayName = this._onUpdateDisplayName.bind(this);
     handleSave = this._onSave.bind(this);
 
-    state = {
+    state: UserProfileFormState = {
         user: {...this.props.user}
     };
 
@@ -37,7 +40,9 @@ export default class UserProfileFormWrapper extends React.Component<UserProfileF
                              onUpdateEmail={this.handleUpdateEmail}
                              onUpdateUsername={this.handleUpdateUsername}
                              onUpdateDisplayName={this.handleUpdateDisplayName}
-                             onSave={this.handleSave} />
+                             onSave={this.handleSave}
+                             status={this.state.status}
+                             errorCode={this.state.errorCode}/>
         )
     }
 
@@ -80,10 +85,22 @@ export default class UserProfileFormWrapper extends React.Component<UserProfileF
      */
     _onSave() {
         const { user } = this.state;
+
+        this.setState({
+            status: 'saving',
+            errorCode: undefined
+        });
+
         this.props.onSave(user, () => {
-            console.log('Saved user');
+            this.setState({
+                status: 'success',
+                errorCode: undefined
+            });
         }, (error) => {
-            console.log('Failed to save user: ' + error);
+            this.setState({
+                status: 'error',
+                errorCode: error
+            });
         });
     }
 }
