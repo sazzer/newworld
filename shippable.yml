@@ -14,8 +14,12 @@ build:
         - CIUSER_BUILD_DIR=/home/ciuser/build
         - cp -r $SHIPPABLE_BUILD_DIR $CIUSER_BUILD_DIR
         - chown -R ciuser:ciuser $CIUSER_BUILD_DIR
+        - curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+        - chmod +x /usr/local/bin/docker-compose
           # Then, build running all tests but as a non-root user because of Postgres 
         - su -c "cd $CIUSER_BUILD_DIR && mvn clean install -B" ciuser
+        - mvn clean install -Pdocker -DskipTests
+        - docker-compose -f docker-compose-e2e.yml up --exit-code-from=worlds-e2e
     post_ci:
           # Finally, if we've built on our master then deploy it to our CD servers 
         - if [ "$BRANCH" == "master-kt" ]; then which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh; fi
