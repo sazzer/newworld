@@ -1,0 +1,39 @@
+version: '3'
+services:
+    worlds-e2e-postgres:
+        image: postgres
+        environment:
+            POSTGRES_DB: worldse2e
+            POSTGRES_USER: worldse2e
+            POSTGRES_PASSWORD: worldse2e
+        networks:
+            - worlds-e2e
+    worlds-e2e-service:
+        image: worlds/service:0.0.1-SNAPSHOT
+        links:
+            - worlds-e2e-postgres:postgres
+        environment:
+            PG_URI: jdbc:postgresql://postgres:5432/worldse2e?user=worldse2e&password=worldse2e
+        networks:
+            - worlds-e2e
+    worlds-e2e-webapp:
+        image: worlds/webapp:0.0.1-SNAPSHOT
+        environment:
+            REACT_APP_AUTH_URL: http://localhost:8080/openid/authorize
+            REACT_APP_AUTH_CLIENT: 4BBBDEB7-4A30-454A-B1BC-A7529204DBCC
+            REACT_APP_AUTH_CALLBACK: http://localhost:8000/auth/callback.html
+            REACT_APP_API_BASE: http://localhost:8080/api
+        networks:
+            - worlds-e2e
+    worlds-e2e:
+        image: worlds/e2e-tests:0.0.1-SNAPSHOT
+        links:
+            - worlds-e2e-postgres:postgres
+            - worlds-e2e-service:api.worlds
+            - worlds-e2e-webapp:www.worlds
+        environment:
+            PG_URI: jdbc:postgresql://postgres:5432/worldse2e?user=worldse2e&password=worldse2e
+        networks:
+            - worlds-e2e
+networks:
+    worlds-e2e:
