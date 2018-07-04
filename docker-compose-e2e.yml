@@ -25,14 +25,26 @@ services:
             REACT_APP_API_BASE: http://localhost:8080/api
         networks:
             - worlds-e2e
+    worlds-e2e-selenium-chrome:
+        image: selenium/standalone-chrome
+        links:
+            - worlds-e2e-service:api.worlds
+            - worlds-e2e-webapp:www.worlds
+        networks:
+            - worlds-e2e
     worlds-e2e:
         image: worlds/e2e-tests:0.0.1-SNAPSHOT
         links:
             - worlds-e2e-postgres:postgres
+            - worlds-e2e-selenium-chrome:selenium
             - worlds-e2e-service:api.worlds
             - worlds-e2e-webapp:www.worlds
         environment:
             PG_URI: jdbc:postgresql://postgres:5432/worldse2e?user=worldse2e&password=worldse2e
+            PG_HOST: postgres
+            WEBAPP_HOST: www.worlds
+            API_HOST: api.worlds
+            SELENIUM_HOST: selenium
         networks:
             - worlds-e2e
 networks:

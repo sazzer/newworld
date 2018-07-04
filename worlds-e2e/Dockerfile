@@ -12,7 +12,11 @@ ARG JAR_FILE
 RUN echo JAR_FILE=${JAR_FILE}
 
 ENV PG_URI=
+ENV PG_HOST=
+ENV WEBAPP_HOST=
+ENV API_HOST=
+ENV SELENIUM_HOST=
 
 ADD ${JAR_FILE} /opt/worlds/tests.jar
 WORKDIR /opt/worlds
-CMD dockerize -wait tcp://postgres:5432 -wait http://www.worlds -wait http://api.worlds:8080/actuator/health -timeout 30s java -Dspring.datasource.url="$PG_URI" -jar tests.jar
+CMD dockerize -wait tcp://${PG_HOST}:5432 -wait http://${WEBAPP_HOST} -wait http://${API_HOST}:8080/actuator/health -wait http://${SELENIUM_HOST}:4444 -timeout 30s java -Dspring.datasource.url="$PG_URI" -Dwebapp.url=http://${WEBAPP_HOST} -Dselenium.url=http://${SELENIUM_HOST}:4444/wd/hub -jar tests.jar

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value
  */
 class WebBrowser(
         private val webDriver: WebDriver,
-        @Value("\${selenium.url}") private val baseUrl: String
+        @Value("\${webapp.url}") private val baseUrl: String
 ) {
     /**
      * Open the application home
