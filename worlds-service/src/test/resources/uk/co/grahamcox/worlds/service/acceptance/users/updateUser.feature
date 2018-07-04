@@ -20,7 +20,7 @@ Feature: Updating a User
       | Username     | updateduser         |
       | Display Name | Updated User        |
     Then I get an Unauthorized response
-    
+
   Scenario: Update a user when authenticated as a different user
     Given I have authenticated as user "00000000-0000-0000-0000-000000000002"
     When I update the user with ID "00000000-0000-0000-0000-000000000001" to have details:
@@ -73,6 +73,19 @@ Feature: Updating a User
       | Type   | tag:grahamcox.co.uk,2018,users/problems/duplicate-username |
       | Title  | The specified username was not unique                      |
       | Status | 409                                                        |
+
+  @wip
+  Scenario: Update a user with a duplicate email
+    Given I have authenticated as user "00000000-0000-0000-0000-000000000001"
+    When I update the user with ID "00000000-0000-0000-0000-000000000001" to have details:
+      | Email        | test2@example.com |
+      | Username     | updated           |
+      | Display Name | Updated User      |
+    Then I get a Conflict response
+    And I get a problem response of:
+      | Type   | tag:grahamcox.co.uk,2018,users/problems/duplicate-email |
+      | Title  | The specified email address was not unique              |
+      | Status | 409                                                     |
 
   Scenario Outline: Successfully update a user: <Comment>
     Given I have authenticated as user "00000000-0000-0000-0000-000000000001"

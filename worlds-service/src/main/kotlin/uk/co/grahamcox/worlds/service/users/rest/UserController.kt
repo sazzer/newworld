@@ -42,6 +42,16 @@ class UserController(
     }
 
     /**
+     * Handle a Duplicate Email error
+     */
+    @ExceptionHandler(DuplicateEmailException::class)
+    fun handleDuplicateEmail(): ResponseEntity<DuplicateEmailProblem> {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .contentType(MediaType.parseMediaType("application/problem+json"))
+                .body(DuplicateEmailProblem())
+    }
+
+    /**
      * Handle an Invalid Password  error
      */
     @ExceptionHandler(InvalidPasswordException::class)

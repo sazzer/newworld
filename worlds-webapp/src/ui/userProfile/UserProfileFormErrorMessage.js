@@ -7,6 +7,7 @@ import {Interpolate} from 'react-i18next';
 /** The message keys for the errors we can support */
 const problemKeys = {
     'tag:grahamcox.co.uk,2018,users/problems/duplicate-username': 'userProfile.form.messages.error.duplicateUsername',
+    'tag:grahamcox.co.uk,2018,users/problems/duplicate-email': 'userProfile.form.messages.error.duplicateEmail',
     'undefined': 'userProfile.form.messages.error.unexpected'
 }
 

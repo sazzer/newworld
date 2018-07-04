@@ -63,7 +63,10 @@ open class UserServiceImpl(
         if (dao.findByUsernameIgnoreCase(user.username).isPresent) {
             throw DuplicateUsernameException()
         }
-        
+        if (dao.findByEmailIgnoreCase(user.email).isPresent) {
+            throw DuplicateEmailException()
+        }
+
         val userEntity = UserEntity(
                 id = UUID.randomUUID(),
                 version = UUID.randomUUID(),
@@ -89,12 +92,15 @@ open class UserServiceImpl(
      */
     @Transactional
     override fun update(userId: UserId, user: UserData): Resource<UserId, UserData> {
+        val userEntity = dao.findById(UUID.fromString(userId.id))
+                .orElseThrow { UserNotFoundException() }
+
         if (dao.findByUsernameIgnoreCase(user.username).filter { it.id != UUID.fromString(userId.id) }.isPresent) {
             throw DuplicateUsernameException()
         }
-
-        val userEntity = dao.findById(UUID.fromString(userId.id))
-                .orElseThrow { UserNotFoundException() }
+        if (dao.findByEmailIgnoreCase(user.email).filter { it.id != UUID.fromString(userId.id) }.isPresent) {
+            throw DuplicateEmailException()
+        }
 
         userEntity.version = UUID.randomUUID()
         userEntity.updated = clock.instant()

@@ -112,6 +112,7 @@ internal class UserServiceImplTest {
 
         val createdEntity = slot<UserEntity>()
 
+        every { dao.findByEmailIgnoreCase("test@example.com") } returns Optional.empty()
         every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.empty()
         every { dao.save(capture(createdEntity)) } returns generateUserEntity()
 
@@ -158,7 +159,6 @@ internal class UserServiceImplTest {
      */
     @Test
     fun updateUnknownUser() {
-        every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.empty()
         every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.empty()
 
         Assertions.assertThrows(UserNotFoundException::class.java) {
@@ -174,12 +174,13 @@ internal class UserServiceImplTest {
         }
     }
 
-
     /**
      * Test updating a user to have a duplicate username
      */
     @Test
-    fun updateUDuplicateUsername() {
+    fun updateDuplicateUsername() {
+        every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.of(generateUserEntity())
+        every { dao.findByEmailIgnoreCase("test@example.com") } returns Optional.empty()
         every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.of(UserEntity(
                 id = UUID.randomUUID(),
                 username = "",
@@ -206,12 +207,45 @@ internal class UserServiceImplTest {
     }
 
     /**
+     * Test updating a user to have a duplicate email
+     */
+    @Test
+    fun updateDuplicateEmail() {
+        every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.of(generateUserEntity())
+        every { dao.findByEmailIgnoreCase("test@example.com") } returns Optional.of(UserEntity(
+                id = UUID.randomUUID(),
+                username = "",
+                displayName = "",
+                email = "",
+                updated = Instant.now(),
+                created = Instant.now(),
+                version = UUID.randomUUID(),
+                paswordSalt = "",
+                passwordHash = ""
+        ))
+        every { dao.findByUsernameIgnoreCase("testuser") } returns Optional.empty()
+
+        Assertions.assertThrows(DuplicateEmailException::class.java) {
+            testSubject.update(UserId(USER_ID), UserData(
+                    email = "test@example.com",
+                    username = "testuser",
+                    displayName = "Test User",
+                    password = Password(
+                            hash = "hash".toByteArray(),
+                            salt = "salt".toByteArray()
+                    )
+            ))
+        }
+    }
+
+    /**
      * Test updating a user that doesn't exist
      */
     @Test
     fun updateKnownUser() {
         val userEntity = generateUserEntity()
         every { dao.findByUsernameIgnoreCase("newuser") } returns Optional.empty()
+        every { dao.findByEmailIgnoreCase("new@example.com") } returns Optional.empty()
         every { dao.findById(UUID.fromString(USER_ID)) } returns Optional.of(userEntity)
 
         val user = testSubject.update(UserId(USER_ID), UserData(

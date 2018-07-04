@@ -21,4 +21,10 @@ storiesOf('UserProfileFormErrorMessage', module)
             <UserProfileFormErrorMessage errorCode='tag:grahamcox.co.uk,2018,users/problems/duplicate-username' />
         );
     })
+    .addWithJSX('Duplicate Email', () => {
+
+        return (
+            <UserProfileFormErrorMessage errorCode='tag:grahamcox.co.uk,2018,users/problems/duplicate-email' />
+        );
+    })
 ;
