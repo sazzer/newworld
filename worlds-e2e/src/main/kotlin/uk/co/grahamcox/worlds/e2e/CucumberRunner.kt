@@ -24,7 +24,7 @@ class CucumberRunner {
     /**
      * Build the Runtime Options to use
      */
-    private fun buildOptions(): RuntimeOptions {
+    private fun buildOptions(tags: List<String>): RuntimeOptions {
         val args = mutableListOf<String>()
 
         args.add("--glue")
@@ -32,6 +32,12 @@ class CucumberRunner {
 
         args.add("--plugin")
         args.add("pretty")
+
+        tags.forEach {tag ->
+            args.add("--tags")
+            args.add(tag)
+        }
+
 
         args.add("classpath:uk/co/grahamcox/worlds/e2e/features")
 
@@ -48,8 +54,8 @@ class CucumberRunner {
      * Run the matching scenarios
      * @return true if the tests were successful. False if not
      */
-    fun run(): Boolean {
-        val runtimeOptions = buildOptions()
+    fun run(tags: List<String> = emptyList()): Boolean {
+        val runtimeOptions = buildOptions(tags)
         val runtime = buildRuntime(runtimeOptions)
 
         runtime.run()
