@@ -11,12 +11,12 @@ class SeleniumSteps(
 ) : En {
 
     init {
-        When("I open the home page") {
+        Given("I opened the home page") {
             webBrowser.openHomePage()
         }
 
-        After { _ ->
-            webBrowser.quit()
+        When("I open the home page") {
+            webBrowser.openHomePage()
         }
     }
 }

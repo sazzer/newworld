@@ -2,6 +2,7 @@ package uk.co.grahamcox.worlds.e2e.browser
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.springframework.beans.factory.DisposableBean
 import org.springframework.beans.factory.annotation.Value
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value
 class WebBrowser(
         private val webDriver: WebDriver,
         @Value("\${webapp.url}") private val baseUrl: String
-) {
+) : DisposableBean {
     /** The representation of the main application page */
     val applicationPage: ApplicationPageModel
         get() {
@@ -28,7 +29,7 @@ class WebBrowser(
     /**
      * Quit the web driver
      */
-    fun quit() {
+    override fun destroy() {
         webDriver.quit()
     }
 }
