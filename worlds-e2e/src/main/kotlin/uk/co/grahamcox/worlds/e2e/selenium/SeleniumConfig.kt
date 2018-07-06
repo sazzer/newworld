@@ -3,7 +3,7 @@ package uk.co.grahamcox.worlds.e2e.selenium
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
-import uk.co.grahamcox.worlds.e2e.browser.WebBrowser
+import uk.co.grahamcox.worlds.e2e.browser.WebDriverBrowser
 
 /**
  * Configure the Selenium system
@@ -13,7 +13,7 @@ class SeleniumConfig(context: GenericApplicationContext) {
     init {
         beans {
             bean<WebDriverFactory>()
-            bean<WebBrowser>()
+            bean<WebDriverBrowser>()
         }.initialize(context)
     }
 }

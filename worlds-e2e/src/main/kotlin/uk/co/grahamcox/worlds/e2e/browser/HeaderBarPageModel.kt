@@ -1,5 +1,6 @@
 package uk.co.grahamcox.worlds.e2e.browser
 
+import org.assertj.core.api.Assertions
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
@@ -24,4 +25,14 @@ class HeaderBarPageModel(element: WebElement) {
         get() {
             return !loginMenuElement.safeIsVisible
         }
+
+    /**
+     * Click the link to start logging in
+     */
+    fun clickLogin() {
+        Assertions.assertThat(loggedIn)
+                .`as`("The user is already logged in")
+                .isFalse()
+        loginMenuElement.click()
+    }
 }

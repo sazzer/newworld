@@ -7,7 +7,7 @@
         <@spring.message "openid.authorize.start.header" />
     </h2>
     <div class="ui segment">
-        <form action="<@spring.url "/openid/authorize/continue" />" method="post" class="ui form">
+        <form action="<@spring.url "/openid/authorize/continue" />" method="post" class="ui form" data-test="startAuth">
             <input type="hidden" name="response_type" value="${parameters.responseType}" />
             <input type="hidden" name="client_id" value="${parameters.clientId}" />
             <input type="hidden" name="scope" value="${parameters.scope}" />

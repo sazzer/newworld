@@ -1,35 +1,24 @@
 package uk.co.grahamcox.worlds.e2e.browser
 
-import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
-import org.springframework.beans.factory.DisposableBean
-import org.springframework.beans.factory.annotation.Value
+import kotlin.reflect.KFunction1
 
 /**
- * The Web Browser interface to use
+ * Interface describing some common interactions with the web browser
  */
-class WebBrowser(
-        private val webDriver: WebDriver,
-        @Value("\${webapp.url}") private val baseUrl: String
-) : DisposableBean {
-    /** The representation of the main application page */
-    val applicationPage: ApplicationPageModel
-        get() {
-            val appElement = webDriver.waitUntilExists(By.id("App"))
-            return ApplicationPageModel(appElement)
-        }
-
+interface WebBrowser {
     /**
      * Open the application home
      */
-    fun openHomePage() {
-        webDriver.get(baseUrl)
-    }
+    fun openHomePage()
 
     /**
-     * Quit the web driver
+     * Build the required page model for the page that the web driver is currently looking at
      */
-    override fun destroy() {
-        webDriver.quit()
-    }
+    fun <T> getPage(constructor: KFunction1<WebDriver, T>): T
+
+    /**
+     * Build the required page model for the page that the web driver is currently looking at
+     */
+    fun <T> getPage(pageName: String, constructor: KFunction1<WebDriver, T>): T
 }

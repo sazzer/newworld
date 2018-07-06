@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.e2e.browser
 
 import org.assertj.core.api.Assertions
+import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory
 /**
  * Page model representing the entire application
  */
-class ApplicationPageModel(element: WebElement) {
+class ApplicationPageModel(element: SearchContext) {
     init {
         PageFactory.initElements(DefaultElementLocatorFactory(element), this)
     }
