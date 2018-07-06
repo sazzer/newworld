@@ -2,20 +2,26 @@ package uk.co.grahamcox.worlds.e2e
 
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
+import org.springframework.context.support.GenericApplicationContext
+import org.springframework.context.support.beans
+import uk.co.grahamcox.worlds.cucumber.database.DatabaseCleaner
 import uk.co.grahamcox.worlds.e2e.selenium.SeleniumConfig
 
 /**
  * The core configuration for the Cucumber tests
  */
 @SpringBootConfiguration
-@EnableAutoConfiguration(exclude=[
-    DataSourceAutoConfiguration::class
-])
+@EnableAutoConfiguration
 @Configuration
 @Import(
         SeleniumConfig::class
 )
-class CucumberConfig
+class CucumberConfig(context: GenericApplicationContext) {
+    init {
+        beans {
+            bean<DatabaseCleaner>()
+        }.initialize(context)
+    }
+}
