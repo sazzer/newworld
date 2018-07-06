@@ -19,10 +19,10 @@ services:
     worlds-e2e-webapp:
         image: worlds/webapp:0.0.1-SNAPSHOT
         environment:
-            REACT_APP_AUTH_URL: http://localhost:8080/openid/authorize
+            REACT_APP_AUTH_URL: http://api.worlds:8080/openid/authorize
             REACT_APP_AUTH_CLIENT: 4BBBDEB7-4A30-454A-B1BC-A7529204DBCC
-            REACT_APP_AUTH_CALLBACK: http://localhost:8000/auth/callback.html
-            REACT_APP_API_BASE: http://localhost:8080/api
+            REACT_APP_AUTH_CALLBACK: http://www.worlds/auth/callback.html
+            REACT_APP_API_BASE: http://api.worlds:8080/api
         networks:
             - worlds-e2e
     worlds-e2e-selenium-chrome:

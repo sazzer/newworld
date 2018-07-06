@@ -5,5 +5,5 @@ package uk.co.grahamcox.worlds.e2e
  */
 fun main(args: Array<String>) {
     val runner = CucumberRunner()
-    runner.run(listOf("@wip"))
+    runner.run(listOf("~@ignore", "~@manual", "@wip"))
 }
