@@ -11,10 +11,14 @@
     <name>worlds-e2e</name>
     <description>End-to-end tests for New Worlds</description>
     <properties>
-        <version.cucumber>3.0.2</version.cucumber>
         <version.selenium>3.13.0</version.selenium>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>worlds-cucumber</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
