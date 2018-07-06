@@ -3,9 +3,8 @@ package uk.co.grahamcox.worlds.service.acceptance.users
 import cucumber.api.java8.En
 import io.cucumber.datatable.DataTable
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
-import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseSeeder
+import uk.co.grahamcox.worlds.cucumber.database.DatabaseSeeder
 import uk.co.grahamcox.worlds.service.acceptance.requester.RequestSubmitter
-import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
 
 /**

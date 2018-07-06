@@ -6,15 +6,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.web.util.UriComponentsBuilder
-import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
-import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseSeeder
-import uk.co.grahamcox.worlds.service.acceptance.database.SeedFieldConfig
-import uk.co.grahamcox.worlds.service.acceptance.requester.Requester
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
-import java.time.Clock
-import java.time.Instant
-import java.util.*
 
 /**
  * Spring Configuration for testing of authorization

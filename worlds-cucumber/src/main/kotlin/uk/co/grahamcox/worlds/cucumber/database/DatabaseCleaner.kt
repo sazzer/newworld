@@ -1,4 +1,4 @@
-package uk.co.grahamcox.worlds.service.acceptance.database
+package uk.co.grahamcox.worlds.cucumber.database
 
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate

@@ -5,8 +5,8 @@ import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.http.HttpMethod
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
-import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseSeeder
-import uk.co.grahamcox.worlds.service.acceptance.database.SeedFieldConfig
+import uk.co.grahamcox.worlds.cucumber.database.DatabaseSeeder
+import uk.co.grahamcox.worlds.cucumber.database.SeedFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.*
 import java.time.Clock
 import java.time.Instant
