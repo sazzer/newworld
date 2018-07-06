@@ -18,11 +18,11 @@ build:
         - chmod +x /usr/local/bin/docker-compose
           # Then, build running all tests but as a non-root user because of Postgres 
         - su -c "cd $CIUSER_BUILD_DIR && mvn clean install -B" ciuser
-        - mvn clean install -Pdocker -DskipTests
+        - mvn clean install -Pdocker -DskipTests -B
         - docker-compose -f docker-compose-e2e.yml up --exit-code-from=worlds-e2e
     post_ci:
           # Finally, if we've built on our master then deploy it to our CD servers 
         - if [ "$BRANCH" == "master-kt" ]; then which heroku || wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh; fi
         - if [ "$BRANCH" == "master-kt" ]; then npm install -g surge; fi
-        - if [ "$BRANCH" == "master-kt" ]; then mvn clean install -DskipTests; fi
+        - if [ "$BRANCH" == "master-kt" ]; then mvn clean install -DskipTests -B; fi
         - if [ "$BRANCH" == "master-kt" ]; then ./deploy.sh; fi
