@@ -58,7 +58,16 @@ class AuthenticationSteps(
             Assertions.assertThat(applicationPageModel.header.loggedIn)
                     .`as`("The user is logged in")
                     .isFalse()
+        }
 
+        Then("""^I am logged in as "(.+)"$""") { user: String ->
+            val applicationPageModel = webBrowser.getPage(::ApplicationPageModel)
+            Assertions.assertThat(applicationPageModel.header.loggedIn)
+                    .`as`("The user is logged in")
+                    .isTrue()
+
+            Assertions.assertThat(applicationPageModel.header.loggedInMenu.username)
+                    .isEqualTo(user)
         }
     }
 }

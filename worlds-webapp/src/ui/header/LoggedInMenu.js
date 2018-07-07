@@ -28,7 +28,7 @@ export function LoggedInMenu(props: LoggedInMenuProps) {
     }
 
     return (
-        <Dropdown item text={username} className="worlds-loggedInMenu">
+        <Dropdown item text={username} className="worlds-loggedInMenu" data-test="loggedInMenu">
             <Dropdown.Menu>
                 <Dropdown.Item>
                     <Link to="/profile">
