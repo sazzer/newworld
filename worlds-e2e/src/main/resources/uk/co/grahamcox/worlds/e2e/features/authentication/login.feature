@@ -12,5 +12,5 @@ Feature: User Registration
   Scenario: Successfully register a new user
     When I log in with details:
       | Email Address    | test@example.com |
-      | Password         | password         |
+      | Password         | MyPassword       |
     Then I am logged in as "Test User"
