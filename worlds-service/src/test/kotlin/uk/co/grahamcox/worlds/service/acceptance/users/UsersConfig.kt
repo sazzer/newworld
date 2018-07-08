@@ -5,12 +5,10 @@ import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.http.HttpMethod
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
-import uk.co.grahamcox.worlds.cucumber.database.DatabaseSeeder
-import uk.co.grahamcox.worlds.cucumber.database.SeedFieldConfig
-import uk.co.grahamcox.worlds.service.acceptance.requester.*
-import java.time.Clock
-import java.time.Instant
-import java.util.*
+import uk.co.grahamcox.worlds.service.acceptance.requester.RequestFieldConfig
+import uk.co.grahamcox.worlds.service.acceptance.requester.RequestSubmitter
+import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseFieldConfig
+import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
 
 /**
  * Spring Configuration for testing of users
@@ -19,57 +17,6 @@ import java.util.*
 class UsersConfig(context: GenericApplicationContext) {
     init {
         beans {
-            bean("userSeeder") {
-                val clock = ref<Clock>()
-
-                DatabaseSeeder(
-                        ref(),
-                        "users",
-                        mapOf(
-                                "ID" to SeedFieldConfig(
-                                        fieldName = "user_id",
-                                        defaultGenerator = { UUID.randomUUID() },
-                                        valueConversion = { UUID.fromString(it) }
-                                ),
-                                "Version" to SeedFieldConfig(
-                                        fieldName = "version",
-                                        defaultGenerator = { UUID.randomUUID() },
-                                        valueConversion = { UUID.fromString(it) }
-                                ),
-                                "Created" to SeedFieldConfig(
-                                        fieldName = "created",
-                                        defaultGenerator = { Date.from(clock.instant()) },
-                                        valueConversion = { Date.from(Instant.parse(it)) }
-                                ),
-                                "Updated" to SeedFieldConfig(
-                                        fieldName = "updated",
-                                        defaultGenerator = { Date.from(clock.instant()) },
-                                        valueConversion = { Date.from(Instant.parse(it)) }
-                                ),
-                                "Email" to SeedFieldConfig(
-                                        fieldName = "email",
-                                        defaultGenerator = { "${UUID.randomUUID()}@example.com" }
-                                ),
-                                "Username" to SeedFieldConfig(
-                                        fieldName = "username",
-                                        defaultGenerator = { UUID.randomUUID().toString() }
-                                ),
-                                "Display Name" to SeedFieldConfig(
-                                        fieldName = "display_name",
-                                        defaultGenerator = { "Test User" }
-                                ),
-                                "Password Hash" to SeedFieldConfig(
-                                        fieldName = "password_hash",
-                                        defaultGenerator = { "" }
-                                ),
-                                "Password Salt" to SeedFieldConfig(
-                                        fieldName = "password_salt",
-                                        defaultGenerator = { "" }
-                                )
-                        )
-                )
-            }
-
             bean("userResponseMatcher") {
                 ResponseMatcher(
                         ref(),
