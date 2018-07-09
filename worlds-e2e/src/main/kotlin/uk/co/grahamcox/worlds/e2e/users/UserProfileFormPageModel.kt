@@ -26,4 +26,11 @@ class UserProfileFormPageModel(element: WebElement) {
     /** The submit button */
     @FindBy(css = "button.primary")
     private lateinit var submit: WebElement
+
+    /**
+     * Save the changes to the form
+     */
+    fun save() {
+        submit.click()
+    }
 }

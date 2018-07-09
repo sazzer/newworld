@@ -9,13 +9,58 @@ Feature: User Profile Management
       | Password Hash | GsZ+KUAgJgW6OYDAVbo8hzeSoWtRW7Q0uPgvk1OrA2Y=                                                                                                                                 |
       | Password Salt | RJMrJIln2gXN2SzZQ0YI3uqZXSLZBfGFj/nn7wTfwMXwfp/BLI7EKufDw7HejLXiSvByLjjpjRMGkrVqPjEyrJswDZa32/RSkWnvtlK4uIbcLMwyivvLWcVSqZP6Oqe+TDEz3HjpiZ6VCxB13QSfe4rYLtglGFr6JgnfFyK7duw= |
     And I opened the home page
-
-  Scenario: Viewing a users profile
-    Given I log in with details:
+    And I log in with details:
       | Email Address | test@example.com |
       | Password      | MyPassword       |
+
+  Scenario: Viewing a users profile
     When I view the users profile
     Then the users profile has details:
       | Email Address | test@example.com |
       | Username      | testuser         |
       | Display Name  | Test User        |
+
+  Scenario Outline: Updating a users profile: <Comment>
+    Given I view the users profile
+    When I update the users profile to:
+      | Email Address | <Email>        |
+      | Username      | <Username>     |
+      | Display Name  | <Display Name> |
+
+    Then the users profile has details:
+      | Email Address | <Email>        |
+      | Username      | <Username>     |
+      | Display Name  | <Display Name> |
+
+    Examples:
+      | Email            | Username | Display Name | Comment              |
+      | test@example.com | testuser | Test User    | No Changes           |
+      | new@example.com  | testuser | Test User    | Changed Email        |
+      | test@eample.com  | newuser  | Test User    | Changed Username     |
+      | test@example.com | testuser | New User     | Changed Display Name |
+      | new@example.com  | newuser  | New User     | Changed Everything   |
+
+  Scenario Outline: Updating a users profile - reload after: <Comment>
+    Given I view the users profile
+    When I update the users profile to:
+      | Email Address | <Email>        |
+      | Username      | <Username>     |
+      | Display Name  | <Display Name> |
+    And I opened the home page
+    And I log in with details:
+      | Email Address | <Email>    |
+      | Password      | MyPassword |
+    And I view the users profile
+
+    Then the users profile has details:
+      | Email Address | <Email>        |
+      | Username      | <Username>     |
+      | Display Name  | <Display Name> |
+
+    Examples:
+      | Email            | Username | Display Name | Comment              |
+      | test@example.com | testuser | Test User    | No Changes           |
+      | new@example.com  | testuser | Test User    | Changed Email        |
+      | test@example.com | newuser  | Test User    | Changed Username     |
+      | test@example.com | testuser | New User     | Changed Display Name |
+      | new@example.com  | newuser  | New User     | Changed Everything   |
