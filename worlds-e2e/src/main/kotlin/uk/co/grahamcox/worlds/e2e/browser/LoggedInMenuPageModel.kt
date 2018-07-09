@@ -17,6 +17,10 @@ class LoggedInMenuPageModel(element: WebElement) {
     @FindBy(css = "div.text")
     private lateinit var usernameElement: WebElement
 
+    /** The Web Element that represents the menu link to view the user profile */
+    @FindBy(css = "[data-test=viewProfile")
+    private lateinit var viewProfileElement: WebElement
+
     /**
      * The name of the user that is logged in
      */
@@ -24,4 +28,12 @@ class LoggedInMenuPageModel(element: WebElement) {
         get() {
             return usernameElement.text
         }
+
+    /**
+     * Navigate to view the user profile
+     */
+    fun viewProfile() {
+        usernameElement.click()
+        viewProfileElement.click()
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.cucumber.database.DatabaseCleaner
 import uk.co.grahamcox.worlds.cucumber.users.UsersSeederConfig
 import uk.co.grahamcox.worlds.e2e.selenium.SeleniumConfig
+import uk.co.grahamcox.worlds.e2e.users.UserProfileConfig
 import java.time.Clock
 
 /**
@@ -19,7 +20,8 @@ import java.time.Clock
 @Configuration
 @Import(
         SeleniumConfig::class,
-        UsersSeederConfig::class
+        UsersSeederConfig::class,
+        UserProfileConfig::class
 )
 class CucumberConfig(context: GenericApplicationContext) {
     init {

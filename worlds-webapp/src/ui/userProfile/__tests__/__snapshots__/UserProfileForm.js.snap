@@ -3,6 +3,7 @@
 exports[`UserProfileForm Renders correctly When failed to save a profile 1`] = `
 <Form
   as="form"
+  data-test="userProfileForm"
   error={true}
   loading={false}
   success={false}
@@ -68,6 +69,7 @@ exports[`UserProfileForm Renders correctly When failed to save a profile 1`] = `
 exports[`UserProfileForm Renders correctly When saving a profile 1`] = `
 <Form
   as="form"
+  data-test="userProfileForm"
   error={false}
   loading={true}
   success={false}
@@ -130,6 +132,7 @@ exports[`UserProfileForm Renders correctly When saving a profile 1`] = `
 exports[`UserProfileForm Renders correctly When successfully saved a profile 1`] = `
 <Form
   as="form"
+  data-test="userProfileForm"
   error={false}
   loading={false}
   success={true}
@@ -193,6 +196,7 @@ exports[`UserProfileForm Renders correctly When successfully saved a profile 1`]
 exports[`UserProfileForm Renders correctly When viewing a profile 1`] = `
 <Form
   as="form"
+  data-test="userProfileForm"
   error={false}
   loading={false}
   success={false}
