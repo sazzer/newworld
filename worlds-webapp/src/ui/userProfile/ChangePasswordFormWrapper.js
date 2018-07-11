@@ -5,13 +5,16 @@ import ChangePasswordForm from './ChangePasswordForm';
 
 /** The flow type representing the props for the Change Password Form */
 type ChangePasswordFormProps = {
+    onSave: (string, string, () => void, (string) => void) => void
 };
 
 /** The flow type representing the state for the Change Password Form */
 type ChangePasswordFormState = {
     oldPassword: string,
     new1Password: string,
-    new2Password: string
+    new2Password: string,
+    status?: string,
+    errorCode?: string
 };
 
 /**
@@ -42,7 +45,9 @@ export default class ChangePasswordFormWrapper extends React.Component<ChangePas
                                 onUpdateOldPassword={this.handleUpdateOldPassword}
                                 onUpdateNew1Password={this.handleUpdateNew1Password}
                                 onUpdateNew2Password={this.handleUpdateNew2Password}
-                                onSave={this.handleSave} />
+                                onSave={this.handleSave}
+                                status={this.state.status}
+                                errorCode={this.state.errorCode} />
         )
     }
 
@@ -84,5 +89,24 @@ export default class ChangePasswordFormWrapper extends React.Component<ChangePas
      * @private
      */
     _onSave() {
+        const {oldPassword, new1Password, new2Password} = this.state;
+        if (oldPassword.length > 0 && new1Password.length > 0 && new2Password.length && new1Password === new2Password) {
+            this.setState({
+                status: 'saving',
+                errorCode: undefined
+            });
+
+            this.props.onSave(oldPassword, new1Password, () => {
+                this.setState({
+                    status: 'success',
+                    errorCode: undefined
+                });
+            }, (error) => {
+                this.setState({
+                    status: 'error',
+                    errorCode: error
+                });
+            })
+        }
     }
 }

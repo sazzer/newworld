@@ -29,4 +29,44 @@ storiesOf('UserProfile/ChangePassword/Form', module)
     }, {
         showFunctions: false
     })
+    .addWithJSX('Saving', () => {
+        return (
+            <ChangePasswordForm
+                onUpdateOldPassword={action('onUpdateOldPassword')}
+                onUpdateNew1Password={action('onUpdateNew1Password')}
+                onUpdateNew2Password={action('onUpdateNew2Password')}
+                onSave={action('onSave')}
+                status="saving"
+            />
+        );
+    }, {
+        showFunctions: false
+    })
+    .addWithJSX('Successfully Saved', () => {
+        return (
+            <ChangePasswordForm
+                onUpdateOldPassword={action('onUpdateOldPassword')}
+                onUpdateNew1Password={action('onUpdateNew1Password')}
+                onUpdateNew2Password={action('onUpdateNew2Password')}
+                onSave={action('onSave')}
+                status="success"
+            />
+        );
+    }, {
+        showFunctions: false
+    })
+    .addWithJSX('Error Saving', () => {
+        return (
+            <ChangePasswordForm
+                onUpdateOldPassword={action('onUpdateOldPassword')}
+                onUpdateNew1Password={action('onUpdateNew1Password')}
+                onUpdateNew2Password={action('onUpdateNew2Password')}
+                onSave={action('onSave')}
+                status="error"
+                errorCode=""
+            />
+        );
+    }, {
+        showFunctions: false
+    })
 ;
