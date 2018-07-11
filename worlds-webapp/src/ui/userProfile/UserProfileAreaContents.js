@@ -35,7 +35,7 @@ export default function UserProfileAreaContents(props: UserProfileAreaContentsPr
     }
 
     return (
-        <Grid>
+        <Grid stackable columns={2}>
             <Grid.Column width={4}>
                 <Menu pointing vertical>
                     <Menu.Item active={props.active === PROFILE} onClick={() => props.onChangeActive(PROFILE)}>
