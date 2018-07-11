@@ -7,10 +7,10 @@ import type {User} from "../../users/users";
 import {module as usersModule} from "../../users";
 import UserProfileBreadcrumbs from './UserProfileBreadcrumbs';
 import UserProfileHeader from './UserProfileHeader';
-import UserProfileForm from './UserProfileFormWrapper';
+import UserProfileAreaContents from './UserProfileAreaContentsWrapper';
 import LoadingScreen from '../LoadingScreen';
 
-/** The flow type representing the props for the User Breadcrumbs */
+/** The flow type representing the props for the User Profile */
 type UserProfileProps = {
     user: ?User,
     onSaveProfile: (User, () => void, (string) => void) => void
@@ -27,7 +27,7 @@ export function UserProfile(props: UserProfileProps) {
             <div>
                 <UserProfileBreadcrumbs user={props.user} />
                 <UserProfileHeader user={props.user} />
-                <UserProfileForm user={props.user} onSave={props.onSaveProfile}/>
+                <UserProfileAreaContents user={props.user} onSaveProfile={props.onSaveProfile}/>
             </div>
         );
     } else {

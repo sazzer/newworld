@@ -19,6 +19,10 @@
       "home": "Home",
       "current": "User Profile: "
     },
+    "menu": {
+      "profile": "Profile",
+      "password": "Change Password"
+    },
     "form": {
       "email": "Email Address",
       "username": "Username",
