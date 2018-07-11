@@ -18,7 +18,8 @@ type UserProfileAreaContentsProps = {
     user: User,
     active: string,
     onChangeActive: (string) => void,
-    onSaveProfile: (User, () => void, (string) => void) => void
+    onSaveProfile: (User, () => void, (string) => void) => void,
+    onSavePassword: (string, string, string, () => void, (string) => void) => void
 };
 
 /**
@@ -30,7 +31,7 @@ export default function UserProfileAreaContents(props: UserProfileAreaContentsPr
     if (props.active === PROFILE) {
         contents = <UserProfileForm user={props.user} onSave={props.onSaveProfile} key={PROFILE} />;
     } else if (props.active === PASSWORD) {
-        contents = <ChangePasswordForm key={PASSWORD} />;
+        contents = <ChangePasswordForm user={props.user} onSave={props.onSavePassword} key={PASSWORD} />;
     }
 
     return (

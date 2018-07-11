@@ -2,10 +2,12 @@
 
 import React from 'react';
 import ChangePasswordForm from './ChangePasswordForm';
+import type {User} from "../../users/users";
 
 /** The flow type representing the props for the Change Password Form */
 type ChangePasswordFormProps = {
-    onSave: (string, string, () => void, (string) => void) => void
+    user: User,
+    onSave: (string, string, string, () => void, (string) => void) => void
 };
 
 /** The flow type representing the state for the Change Password Form */
@@ -90,13 +92,15 @@ export default class ChangePasswordFormWrapper extends React.Component<ChangePas
      */
     _onSave() {
         const {oldPassword, new1Password, new2Password} = this.state;
+        const {user} = this.props;
+
         if (oldPassword.length > 0 && new1Password.length > 0 && new2Password.length && new1Password === new2Password) {
             this.setState({
                 status: 'saving',
                 errorCode: undefined
             });
 
-            this.props.onSave(oldPassword, new1Password, () => {
+            this.props.onSave(user.id, oldPassword, new1Password, () => {
                 this.setState({
                     status: 'success',
                     errorCode: undefined

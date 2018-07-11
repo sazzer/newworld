@@ -19,7 +19,8 @@ storiesOf('UserProfile/UserProfile', module)
                 displayName: displayName,
                 email: email
             }}
-            onSaveProfile={action('onSaveProfile')}/>
+            onSaveProfile={action('onSaveProfile')}
+            onSavePassword={action('onSavePassword')} />
         );
     }, {
         showFunctions: false

@@ -7,7 +7,8 @@ import UserProfileAreaContents from './UserProfileAreaContents';
 /** The flow type representing the props for the User Profile Contents */
 type UserProfileAreaContentsProps = {
     user: User,
-    onSaveProfile: (User, () => void, (string) => void) => void
+    onSaveProfile: (User, () => void, (string) => void) => void,
+    onSavePassword: (string, string, string, () => void, (string) => void) => void
 };
 
 /** The flow type representing the state for the User Profile Contents */
@@ -32,6 +33,7 @@ export default class UserProfileAreaContentsWrapper extends React.Component<User
         return (
             <UserProfileAreaContents user={this.props.user}
                                      onSaveProfile={this.props.onSaveProfile}
+                                     onSavePassword={this.props.onSavePassword}
                                      active={this.state.active}
                                      onChangeActive={this.handleChangeActive} />
         )
