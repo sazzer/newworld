@@ -1,6 +1,7 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
+import {action} from '@storybook/addon-actions';
 import { UserProfile } from '../UserProfile';
 
 storiesOf('UserProfile', module)
@@ -17,7 +18,8 @@ storiesOf('UserProfile', module)
                 username: username,
                 displayName: displayName,
                 email: email
-            }} />
+            }}
+            onSaveProfile={action('onSaveProfile')}/>
         );
     }, {
         showFunctions: false

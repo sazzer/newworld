@@ -1,7 +1,7 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
 import {text, withKnobs} from '@storybook/addon-knobs/react';
-import { action} from '@storybook/addon-actions';
+import {action} from '@storybook/addon-actions';
 import UserProfileForm from '../UserProfileForm';
 
 storiesOf('UserProfileForm', module)
