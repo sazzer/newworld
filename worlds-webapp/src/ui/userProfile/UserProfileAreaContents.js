@@ -4,6 +4,7 @@ import React from 'react';
 import {Grid, Menu} from 'semantic-ui-react';
 import {Interpolate} from 'react-i18next';
 import UserProfileForm from './UserProfileFormWrapper';
+import ChangePasswordForm from './ChangePasswordForm';
 import type {User} from "../../users/users";
 
 /** The tag for the profile pane */
@@ -29,7 +30,7 @@ export default function UserProfileAreaContents(props: UserProfileAreaContentsPr
     if (props.active === PROFILE) {
         contents = <UserProfileForm user={props.user} onSave={props.onSaveProfile} key={PROFILE} />;
     } else if (props.active === PASSWORD) {
-        contents = <UserProfileForm user={props.user} onSave={props.onSaveProfile} key={PASSWORD} />;
+        contents = <ChangePasswordForm key={PASSWORD} />;
     }
 
     return (

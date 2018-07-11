@@ -36,6 +36,12 @@
           "unexpected": "An unexpected error occurred saving the changes."
         }
       }
+    },
+    "password": {
+      "original": "Current Password",
+      "new1": "New Password",
+      "new2": "Repeat New Password",
+      "save": "Change Password"
     }
   }
 }
