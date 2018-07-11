@@ -3,7 +3,7 @@ import {storiesOf} from '@storybook/react';
 import {action} from '@storybook/addon-actions';
 import ChangePasswordForm from '../ChangePasswordForm';
 
-storiesOf('ChangePasswordForm', module)
+storiesOf('UserProfile/ChangePassword/Form', module)
     .addWithJSX('Blank', () => {
         return (
             <ChangePasswordForm

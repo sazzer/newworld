@@ -4,7 +4,7 @@ import { withKnobs, text } from '@storybook/addon-knobs/react';
 import {action} from '@storybook/addon-actions';
 import { UserProfile } from '../UserProfile';
 
-storiesOf('UserProfile', module)
+storiesOf('UserProfile/UserProfile', module)
     .addDecorator(withKnobs)
     .addWithJSX('User Present', () => {
         const userId = text('ID', 'userId');

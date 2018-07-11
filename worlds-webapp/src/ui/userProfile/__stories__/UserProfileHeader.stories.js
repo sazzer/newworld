@@ -1,9 +1,9 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
+import {text, withKnobs} from '@storybook/addon-knobs/react';
 import UserProfileHeader from '../UserProfileHeader';
 
-storiesOf('UserProfileHeader', module)
+storiesOf('UserProfile/Header', module)
     .addDecorator(withKnobs)
     .addWithJSX('UserProfileHeader', () => {
         const displayName = text('Display Name', 'Test User');

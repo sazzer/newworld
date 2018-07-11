@@ -2,7 +2,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import ChangePasswordFormErrorMessage from '../ChangePasswordFormErrorMessage';
 
-storiesOf('ChangePasswordFormErrorMessage', module)
+storiesOf('UserProfile/ChangePassword/ErrorMessage', module)
     .addWithJSX('No error code', () => {
 
         return (

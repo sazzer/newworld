@@ -4,7 +4,7 @@ import {text, withKnobs} from '@storybook/addon-knobs/react';
 import {action} from '@storybook/addon-actions';
 import UserProfileForm from '../UserProfileForm';
 
-storiesOf('UserProfileForm', module)
+storiesOf('UserProfile/UserProfile/Form', module)
     .addDecorator(withKnobs)
     .addWithJSX('View Profile', () => {
         const userId = text('ID', 'userId');

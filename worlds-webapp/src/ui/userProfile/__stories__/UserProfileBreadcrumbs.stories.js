@@ -1,9 +1,9 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
+import {text, withKnobs} from '@storybook/addon-knobs/react';
 import UserProfileBreadcrumbs from '../UserProfileBreadcrumbs';
 
-storiesOf('UserProfileBreadcrumbs', module)
+storiesOf('UserProfile/Breadcrumbs', module)
     .addDecorator(withKnobs)
     .addWithJSX('UserProfileBreadcrumbs', () => {
         const displayName = text('Display Name', 'Test User');

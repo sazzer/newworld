@@ -2,7 +2,7 @@ import React from 'react';
 import {storiesOf} from '@storybook/react';
 import UserProfileFormErrorMessage from '../UserProfileFormErrorMessage';
 
-storiesOf('UserProfileFormErrorMessage', module)
+storiesOf('UserProfile/UserProfile/ErrorMessage', module)
     .addWithJSX('No error code', () => {
 
         return (
