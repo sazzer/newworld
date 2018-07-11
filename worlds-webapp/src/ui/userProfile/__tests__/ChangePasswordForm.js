@@ -5,7 +5,7 @@ import {shallow} from 'enzyme';
 import ChangePasswordForm  from '../ChangePasswordForm';
 
 /** Create the component to test */
-function setup({passwordMismatch, status, errorCode}: {passwordMismatch: boolean, status?: string, errorCode?: string} = {passwordMismatch: false}) {
+function setup({passwordMismatch, status, errorCode}: {passwordMismatch?: boolean, status?: string, errorCode?: string} = {}) {
     const onUpdateOldPassword = jest.fn();
     const onUpdateNew1Password = jest.fn();
     const onUpdateNew2Password = jest.fn();
@@ -16,7 +16,7 @@ function setup({passwordMismatch, status, errorCode}: {passwordMismatch: boolean
         onUpdateNew1Password,
         onUpdateNew2Password,
         onSave,
-        element: shallow(<ChangePasswordForm passwordMismatch={passwordMismatch}
+        element: shallow(<ChangePasswordForm passwordMismatch={passwordMismatch || false}
                                              onUpdateOldPassword={onUpdateOldPassword}
                                              onUpdateNew1Password={onUpdateNew1Password}
                                              onUpdateNew2Password={onUpdateNew2Password}
