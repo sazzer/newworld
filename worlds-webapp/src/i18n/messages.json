@@ -45,7 +45,8 @@
       "messages": {
         "success": "Password updated successfully.",
         "error": {
-          "passwordMismatch": "The new passwords do not match",
+          "invalidPassword": "Incorrect old password.",
+          "passwordMismatch": "The new passwords do not match.",
           "unexpected": "An unexpected error occurred changing your password."
         }
       }

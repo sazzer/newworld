@@ -6,9 +6,10 @@ import {Interpolate} from 'react-i18next';
 
 /** The message keys for the errors we can support */
 const problemKeys = {
+    'tag:grahamcox.co.uk,2018,users/problems/invalid-password': 'userProfile.password.messages.error.invalidPassword',
     'passwordMismatch': 'userProfile.password.messages.error.passwordMismatch',
     'undefined': 'userProfile.password.messages.error.unexpected'
-}
+};
 
 /** The flow type representing the props for the Change Password Form message */
 type ChangePasswordFormErrorMessageProps = {

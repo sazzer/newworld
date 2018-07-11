@@ -27,4 +27,9 @@ describe('ChangePasswordFormErrorMessage', () => {
 
         expect(element).toMatchSnapshot();
     });
+    it('Renders correctly with an expected code', () => {
+        const { element } = setup({errorCode: 'tag:grahamcox.co.uk,2018,users/problems/invalid-password'});
+
+        expect(element).toMatchSnapshot();
+    });
 });

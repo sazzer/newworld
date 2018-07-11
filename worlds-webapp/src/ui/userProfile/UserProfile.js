@@ -43,7 +43,9 @@ export function UserProfile(props: UserProfileProps) {
  */
 export function ConnectedUserProfile({users}: {users: UserModule}) {
     return (
-        <UserProfile user={users.selectCurrentUser()} onSaveProfile={users.saveUser} onSavePassword={() => {}} />
+        <UserProfile user={users.selectCurrentUser()}
+                     onSaveProfile={users.saveUser}
+                     onSavePassword={users.changePassword} />
     )
 }
 
