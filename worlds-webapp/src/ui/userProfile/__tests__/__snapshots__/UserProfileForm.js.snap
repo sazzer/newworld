@@ -8,7 +8,9 @@ exports[`UserProfileForm Renders correctly When failed to save a profile 1`] = `
   loading={false}
   success={false}
 >
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -21,7 +23,9 @@ exports[`UserProfileForm Renders correctly When failed to save a profile 1`] = `
       required={true}
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -35,7 +39,9 @@ exports[`UserProfileForm Renders correctly When failed to save a profile 1`] = `
       value="testuser"
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -74,7 +80,9 @@ exports[`UserProfileForm Renders correctly When saving a profile 1`] = `
   loading={true}
   success={false}
 >
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -87,7 +95,9 @@ exports[`UserProfileForm Renders correctly When saving a profile 1`] = `
       required={true}
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -101,7 +111,9 @@ exports[`UserProfileForm Renders correctly When saving a profile 1`] = `
       value="testuser"
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -137,7 +149,9 @@ exports[`UserProfileForm Renders correctly When successfully saved a profile 1`]
   loading={false}
   success={true}
 >
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -150,7 +164,9 @@ exports[`UserProfileForm Renders correctly When successfully saved a profile 1`]
       required={true}
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -164,7 +180,9 @@ exports[`UserProfileForm Renders correctly When successfully saved a profile 1`]
       value="testuser"
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -201,7 +219,9 @@ exports[`UserProfileForm Renders correctly When viewing a profile 1`] = `
   loading={false}
   success={false}
 >
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -214,7 +234,9 @@ exports[`UserProfileForm Renders correctly When viewing a profile 1`] = `
       required={true}
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""
@@ -228,7 +250,9 @@ exports[`UserProfileForm Renders correctly When viewing a profile 1`] = `
       value="testuser"
     />
   </FormField>
-  <FormField>
+  <FormField
+    required={true}
+  >
     <label>
       <Interpolate
         className=""

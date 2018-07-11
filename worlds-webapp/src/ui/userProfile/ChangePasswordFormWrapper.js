@@ -34,8 +34,12 @@ export default class ChangePasswordFormWrapper extends React.Component<ChangePas
      * Render the form
      */
     render() {
+        const {new1Password, new2Password} = this.state;
+        const passwordMismatch = new1Password.length > 0 && new2Password.length > 0 && new1Password !== new2Password;
+
         return (
-            <ChangePasswordForm onUpdateOldPassword={this.handleUpdateOldPassword}
+            <ChangePasswordForm passwordMismatch={passwordMismatch}
+                                onUpdateOldPassword={this.handleUpdateOldPassword}
                                 onUpdateNew1Password={this.handleUpdateNew1Password}
                                 onUpdateNew2Password={this.handleUpdateNew2Password}
                                 onSave={this.handleSave} />

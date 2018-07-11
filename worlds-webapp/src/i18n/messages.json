@@ -41,7 +41,14 @@
       "original": "Current Password",
       "new1": "New Password",
       "new2": "Repeat New Password",
-      "save": "Change Password"
+      "save": "Change Password",
+      "messages": {
+        "success": "User details updated successfully.",
+        "error": {
+          "passwordMismatch": "The new passwords do not match",
+          "unexpected": "An unexpected error occurred changing your password."
+        }
+      }
     }
   }
 }

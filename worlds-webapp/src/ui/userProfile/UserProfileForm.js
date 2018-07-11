@@ -41,21 +41,21 @@ export default function UserProfileForm(props: UserProfileFormProps) {
 
     return (
         <Form success={props.status === 'success'} error={props.status === 'error'} loading={props.status === 'saving'} data-test="userProfileForm">
-            <Form.Field>
+            <Form.Field required>
                 <label><Interpolate i18nKey="userProfile.form.email" /></label>
                 <input value={props.user.email}
                        name="email"
                        onChange={processChange(props.onUpdateEmail)}
                        required />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
                 <label><Interpolate i18nKey="userProfile.form.username" /></label>
                 <input value={props.user.username}
                        name="username"
                        onChange={processChange(props.onUpdateUsername)}
                        required />
             </Form.Field>
-            <Form.Field>
+            <Form.Field required>
                 <label><Interpolate i18nKey="userProfile.form.displayName" /></label>
                 <input value={props.user.displayName}
                        name="displayName"
