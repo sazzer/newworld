@@ -4,7 +4,7 @@ import React from 'react';
 import {Grid, Menu} from 'semantic-ui-react';
 import {Interpolate} from 'react-i18next';
 import UserProfileForm from './UserProfileFormWrapper';
-import ChangePasswordForm from './ChangePasswordForm';
+import ChangePasswordForm from './ChangePasswordFormWrapper';
 import type {User} from "../../users/users";
 
 /** The tag for the profile pane */
