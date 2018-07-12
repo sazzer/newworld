@@ -1,5 +1,5 @@
 {
-    "$id": "/schemas/user.schema.json",
+    "$id": "/schemas/users/user.json",
     "$schema": "http://json-schema.org/draft-07/hyper-schema#",
     "type": "object",
     "properties": {
