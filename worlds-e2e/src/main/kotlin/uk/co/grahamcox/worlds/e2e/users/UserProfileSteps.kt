@@ -22,7 +22,7 @@ class UserProfileSteps(
             applicationPageModel.header.loggedInMenu.viewProfile()
 
             val userProfilePage = webBrowser.getPage(::UserProfilePageModel)
-            val userProfileForm = userProfilePage.userProfileForm
+            val userProfileForm = userProfilePage.viewUserProfileForm()
 
             Awaitility.await()
                     .atMost(5, TimeUnit.SECONDS)
@@ -31,7 +31,7 @@ class UserProfileSteps(
 
         Then("^I update the users profile to:$") { details: DataTable ->
             val userProfilePage = webBrowser.getPage(::UserProfilePageModel)
-            val userProfileForm = userProfilePage.userProfileForm
+            val userProfileForm = userProfilePage.viewUserProfileForm()
 
             userProfileFormWrapper.update(userProfileForm,
                     details.asMap(String::class.java, String::class.java))
@@ -44,13 +44,13 @@ class UserProfileSteps(
 
         Then("^the users profile has details:$") { details: DataTable ->
             val userProfilePage = webBrowser.getPage(::UserProfilePageModel)
-            userProfileFormWrapper.match(userProfilePage.userProfileForm,
+            userProfileFormWrapper.match(userProfilePage.viewUserProfileForm(),
                     details.asMap(String::class.java, String::class.java))
         }
 
         Then("""^updating the users profile failed with "(.+)"$""") { error: String ->
             val userProfilePage = webBrowser.getPage(::UserProfilePageModel)
-            val userProfileForm = userProfilePage.userProfileForm
+            val userProfileForm = userProfilePage.viewUserProfileForm()
 
             Assertions.assertThat(userProfileForm.errorVisible)
                     .`as`("No error message was visible")

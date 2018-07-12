@@ -38,10 +38,10 @@ export default function UserProfileAreaContents(props: UserProfileAreaContentsPr
         <Grid stackable columns={2}>
             <Grid.Column width={4}>
                 <Menu pointing vertical>
-                    <Menu.Item active={props.active === PROFILE} onClick={() => props.onChangeActive(PROFILE)}>
+                    <Menu.Item active={props.active === PROFILE} onClick={() => props.onChangeActive(PROFILE)} data-test="userProfileMenuProfile">
                         <Interpolate i18nKey="userProfile.menu.profile" />
                     </Menu.Item>
-                    <Menu.Item active={props.active === PASSWORD} onClick={() => props.onChangeActive(PASSWORD)}>
+                    <Menu.Item active={props.active === PASSWORD} onClick={() => props.onChangeActive(PASSWORD)} data-test="userProfileMenuPassword">
                         <Interpolate i18nKey="userProfile.menu.password" />
                     </Menu.Item>
                 </Menu>

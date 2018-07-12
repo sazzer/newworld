@@ -14,14 +14,35 @@ class UserProfilePageModel(element: SearchContext) {
         PageFactory.initElements(DefaultElementLocatorFactory(element), this)
     }
 
+    /** The user profile menu */
+    @FindBy(css = "[data-test=userProfileMenuProfile]")
+    private lateinit var userProfileFormMenu: WebElement
+
     /** The user profile form */
     @FindBy(css = "form[data-test=userProfileForm]")
     private lateinit var userProfileFormElement: WebElement
 
-    /** The user profile form */
-    val userProfileForm: UserProfileFormPageModel
-        get() {
-            return UserProfileFormPageModel(userProfileFormElement)
-        }
+    /** The change password menu */
+    @FindBy(css = "[data-test=userProfileMenuPassword]")
+    private lateinit var changePasswordMenu: WebElement
 
+    /** The change password form */
+    @FindBy(css = "form[data-test=changePasswordForm]")
+    private lateinit var changePasswordFormElement: WebElement
+
+    /**
+     * View the user profile form
+     */
+    fun viewUserProfileForm(): UserProfileFormPageModel {
+        userProfileFormMenu.click()
+        return UserProfileFormPageModel(userProfileFormElement)
+    }
+
+    /**
+     * View the Change Password form
+     */
+    fun viewChangePasswordForm(): ChangePasswordFormPageModel {
+        changePasswordMenu.click()
+        return ChangePasswordFormPageModel(changePasswordFormElement)
+    }
 }

@@ -13,7 +13,7 @@ import uk.co.grahamcox.worlds.e2e.form.FormField
 class UserProfileConfig(context: GenericApplicationContext) {
     init {
         beans {
-            bean {
+            bean("userProfileFormWrapper") {
                 FormWrapper(
                         mapOf(
                                 "Email Address" to FormField(
@@ -24,6 +24,21 @@ class UserProfileConfig(context: GenericApplicationContext) {
                                 ),
                                 "Display Name" to FormField(
                                         property = UserProfileFormPageModel::displayName
+                                )
+                        )
+                )
+            }
+            bean("changePasswordFormWrapper") {
+                FormWrapper(
+                        mapOf(
+                                "Old Password" to FormField(
+                                        property = ChangePasswordFormPageModel::oldPassword
+                                ),
+                                "New Password" to FormField(
+                                        property = ChangePasswordFormPageModel::newPassword
+                                ),
+                                "Repeat Password" to FormField(
+                                        property = ChangePasswordFormPageModel::repeatPassword
                                 )
                         )
                 )
