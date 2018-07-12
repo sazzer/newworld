@@ -9,12 +9,14 @@ import uk.co.grahamcox.worlds.service.database.DatabaseConfig
 import uk.co.grahamcox.worlds.service.openid.OpenIdConfig
 import uk.co.grahamcox.worlds.service.rest.ValidationControllerAdvice
 import uk.co.grahamcox.worlds.service.users.UsersConfig
+import uk.co.grahamcox.worlds.service.worlds.WorldsConfig
 import java.time.Clock
 
 @Configuration
 @Import(
         DatabaseConfig::class,
         UsersConfig::class,
+        WorldsConfig::class,
         OpenIdConfig::class,
         WebMvcConfig::class
 )
