@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.openid.authorization.Authorizer
-import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
-import uk.co.grahamcox.worlds.service.openid.token.AccessToken
+import uk.co.grahamcox.worlds.service.rest.ModelBuilder
 import uk.co.grahamcox.worlds.service.rest.schemaLink
 import uk.co.grahamcox.worlds.service.users.*
 
@@ -18,8 +17,8 @@ import uk.co.grahamcox.worlds.service.users.*
 @RequestMapping("/api/users")
 class UserController(
         private val userService: UserService,
-        private val accessTokenHolder: AccessTokenHolder,
-        private val passwordChanger: PasswordChanger
+        private val passwordChanger: PasswordChanger,
+        private val userModelBuilder: ModelBuilder<UserId, UserData, UserModel>
 ) {
     /**
      * Handle a User Not Found error
@@ -130,20 +129,6 @@ class UserController(
                 .eTag(user.identity.version)
                 .lastModified(user.identity.updated.toEpochMilli())
                 .schemaLink("/schema/users/user.json")
-                .body(translateUser(user))
-    }
-
-    /**
-     * Translate a User resource into the REST version
-     */
-    private fun translateUser(user: Resource<UserId, UserData>): UserModel {
-        val currentUser = accessTokenHolder.accessToken?.user
-
-        return UserModel(
-                id = user.identity.id.id,
-                displayName = user.data.displayName,
-                email = if (currentUser == user.identity.id) user.data.email else null,
-                username = user.data.username
-        )
+                .body(userModelBuilder.build(user))
     }
 }
