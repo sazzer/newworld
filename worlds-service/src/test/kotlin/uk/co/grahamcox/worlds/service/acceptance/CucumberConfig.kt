@@ -6,9 +6,11 @@ import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import uk.co.grahamcox.worlds.cucumber.database.DatabaseCleaner
 import uk.co.grahamcox.worlds.cucumber.users.UsersSeederConfig
+import uk.co.grahamcox.worlds.cucumber.worlds.WorldsSeederConfig
 import uk.co.grahamcox.worlds.service.acceptance.openid.AuthorizeConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.RequesterConfig
 import uk.co.grahamcox.worlds.service.acceptance.users.UsersConfig
+import uk.co.grahamcox.worlds.service.acceptance.worlds.WorldsConfig
 
 /**
  * Base spring configuration for all of the acceptance tests
@@ -17,8 +19,10 @@ import uk.co.grahamcox.worlds.service.acceptance.users.UsersConfig
 @Import(
         RequesterConfig::class,
         UsersSeederConfig::class,
+        WorldsSeederConfig::class,
         UsersConfig::class,
-        AuthorizeConfig::class
+        AuthorizeConfig::class,
+        WorldsConfig::class
 )
 class CucumberConfig(context: GenericApplicationContext) {
     init {

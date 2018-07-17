@@ -74,7 +74,6 @@ Feature: Updating a User
       | Title  | The specified username was not unique                      |
       | Status | 409                                                        |
 
-  @wip
   Scenario: Update a user with a duplicate email
     Given I have authenticated as user "00000000-0000-0000-0000-000000000001"
     When I update the user with ID "00000000-0000-0000-0000-000000000001" to have details:
