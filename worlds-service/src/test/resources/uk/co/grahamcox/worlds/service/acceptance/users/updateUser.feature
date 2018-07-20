@@ -94,10 +94,12 @@ Feature: Updating a User
       | Display Name | <Display Name> |
     Then I get an OK response
     And I get a user with details:
-      | ID           | 00000000-0000-0000-0000-000000000001 |
-      | Email        | <Email>                              |
-      | Username     | <Username>                           |
-      | Display Name | <Display Name>                       |
+      | ID                   | 00000000-0000-0000-0000-000000000001                     |
+      | Email                | <Email>                                                  |
+      | Username             | <Username>                                               |
+      | Display Name         | <Display Name>                                           |
+      | Self Link            | /api/users/00000000-0000-0000-0000-000000000001          |
+      | Change Password Link | /api/users/00000000-0000-0000-0000-000000000001/password |
 
     Examples:
       | Email               | Username    | Display Name | Comment             |
@@ -116,7 +118,9 @@ Feature: Updating a User
     And I get the user with ID "00000000-0000-0000-0000-000000000001"
     Then I get an OK response
     And I get a user with details:
-      | ID           | 00000000-0000-0000-0000-000000000001 |
-      | Email        | updated@example.com                  |
-      | Username     | updateduser                          |
-      | Display Name | Updated User                         |
+      | ID                   | 00000000-0000-0000-0000-000000000001                     |
+      | Email                | updated@example.com                                      |
+      | Username             | updateduser                                              |
+      | Display Name         | Updated User                                             |
+      | Self Link            | /api/users/00000000-0000-0000-0000-000000000001          |
+      | Change Password Link | /api/users/00000000-0000-0000-0000-000000000001/password |

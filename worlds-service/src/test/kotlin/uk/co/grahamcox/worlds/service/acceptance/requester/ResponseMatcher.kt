@@ -1,6 +1,7 @@
 package uk.co.grahamcox.worlds.service.acceptance.requester
 
 import io.cucumber.datatable.DataTable
+import org.apache.commons.jxpath.JXPathNotFoundException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.function.Executable
 
@@ -39,7 +40,11 @@ class ResponseMatcher(
                 .mapKeys { matchers[it.key]!! }
                 .toList()
                 .map { (field, expected) ->
-                    val value = lastResponse.context.getValue(field.fieldPath)
+                    val value = try {
+                        lastResponse.context.getValue(field.fieldPath)
+                    } catch (e: JXPathNotFoundException) {
+                        null
+                    }
                     val realValue = field.actualConversion(value)
                     val realExpected = field.expectedConversion(expected)
 

@@ -6,9 +6,11 @@ import org.springframework.web.util.UriComponentsBuilder
  * Strip bits from the URI to only leave the path, query and fragment components
  */
 fun stripUri(uri: Any?) =
-        UriComponentsBuilder.fromUriString(uri as String)
-                .scheme(null)
-                .host(null)
-                .port(null)
-                .build()
-                .toUriString()
+        uri?.let {
+            UriComponentsBuilder.fromUriString(uri as String)
+                    .scheme(null)
+                    .host(null)
+                    .port(null)
+                    .build()
+                    .toUriString()
+        }

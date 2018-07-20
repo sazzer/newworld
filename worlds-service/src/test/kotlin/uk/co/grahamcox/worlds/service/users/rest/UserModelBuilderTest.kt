@@ -10,9 +10,12 @@ import uk.co.grahamcox.worlds.service.model.Resource
 import uk.co.grahamcox.worlds.service.openid.rest.AccessTokenHolder
 import uk.co.grahamcox.worlds.service.openid.token.AccessToken
 import uk.co.grahamcox.worlds.service.openid.token.AccessTokenId
+import uk.co.grahamcox.worlds.service.rest.hal.Link
+import uk.co.grahamcox.worlds.service.rest.hal.LinkBuilder
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserId
 import uk.co.grahamcox.worlds.service.users.password.Password
+import java.net.URI
 import java.time.Instant
 import java.util.*
 
@@ -23,6 +26,12 @@ internal class UserModelBuilderTest {
     companion object {
         /** The ID of the user */
         private val USER_ID = UUID.randomUUID().toString()
+
+        /** The self link for the user */
+        private val SELF_LINK = Link(href = URI("/api/users/$USER_ID"))
+
+        /** The change password link for the user */
+        private val PASSWORD_LINK = Link(href = URI("/api/users/$USER_ID/password"))
 
         /** The User Model to use */
         private val USER = Resource(
@@ -47,8 +56,14 @@ internal class UserModelBuilderTest {
     /** The mock Access Token Holder */
     private val accessTokenHolder: AccessTokenHolder = mockk()
 
+    /** The mock user link builder */
+    private val userLinkBuilder: LinkBuilder<String> = mockk()
+
+    /** The mock change password link builder */
+    private val changePasswordLinkBuilder: LinkBuilder<String> = mockk()
+
     /** The test subject */
-    private val testSubject = UserModelBuilder(accessTokenHolder)
+    private val testSubject = UserModelBuilder(accessTokenHolder, userLinkBuilder, changePasswordLinkBuilder)
 
     /**
      * Test building the model when there is no current user
@@ -56,6 +71,7 @@ internal class UserModelBuilderTest {
     @Test
     fun testBuildNoCurrentUser() {
         every { accessTokenHolder.accessToken } returns null
+        every { userLinkBuilder.buildLink(USER_ID) } returns SELF_LINK
 
         val model = testSubject.build(USER)
 
@@ -63,7 +79,9 @@ internal class UserModelBuilderTest {
                 Executable { Assertions.assertEquals(USER_ID, model.id) },
                 Executable { Assertions.assertEquals(null, model.email) },
                 Executable { Assertions.assertEquals("testuser", model.username) },
-                Executable { Assertions.assertEquals("Test User", model.displayName) }
+                Executable { Assertions.assertEquals("Test User", model.displayName) },
+                Executable { Assertions.assertEquals(SELF_LINK, model.links.self) },
+                Executable { Assertions.assertEquals(null, model.links.changePassword) }
         )
     }
 
@@ -80,6 +98,7 @@ internal class UserModelBuilderTest {
                 id = AccessTokenId(UUID.randomUUID().toString())
         )
         every { accessTokenHolder.accessToken } returns accessToken
+        every { userLinkBuilder.buildLink(USER_ID) } returns SELF_LINK
 
         val model = testSubject.build(USER)
 
@@ -87,7 +106,9 @@ internal class UserModelBuilderTest {
                 Executable { Assertions.assertEquals(USER_ID, model.id) },
                 Executable { Assertions.assertEquals(null, model.email) },
                 Executable { Assertions.assertEquals("testuser", model.username) },
-                Executable { Assertions.assertEquals("Test User", model.displayName) }
+                Executable { Assertions.assertEquals("Test User", model.displayName) },
+                Executable { Assertions.assertEquals(SELF_LINK, model.links.self) },
+                Executable { Assertions.assertEquals(null, model.links.changePassword) }
         )
     }
 
@@ -104,6 +125,8 @@ internal class UserModelBuilderTest {
                 id = AccessTokenId(UUID.randomUUID().toString())
         )
         every { accessTokenHolder.accessToken } returns accessToken
+        every { userLinkBuilder.buildLink(USER_ID) } returns SELF_LINK
+        every { changePasswordLinkBuilder.buildLink(USER_ID) } returns PASSWORD_LINK
 
         val model = testSubject.build(USER)
 
@@ -111,7 +134,9 @@ internal class UserModelBuilderTest {
                 Executable { Assertions.assertEquals(USER_ID, model.id) },
                 Executable { Assertions.assertEquals("test@example.com", model.email) },
                 Executable { Assertions.assertEquals("testuser", model.username) },
-                Executable { Assertions.assertEquals("Test User", model.displayName) }
+                Executable { Assertions.assertEquals("Test User", model.displayName) },
+                Executable { Assertions.assertEquals(SELF_LINK, model.links.self) },
+                Executable { Assertions.assertEquals(PASSWORD_LINK, model.links.changePassword) }
         )
     }
 }

@@ -23,33 +23,39 @@ Feature: Getting a User by ID
     When I get the user with ID "00000000-0000-0000-0000-000000000001"
     Then I get an OK response
     And I get a user with details:
-      | ID            | 00000000-0000-0000-0000-000000000001   |
-      | ETag          | "00000000-0000-0000-0000-000000000002" |
-      | Last Modified | Wed, 23 May 2018 09:34:00 GMT          |
-      | Email         | [null]                                 |
-      | Username      | testuser                               |
-      | Display Name  | Test User                              |
+      | ID                   | 00000000-0000-0000-0000-000000000001            |
+      | ETag                 | "00000000-0000-0000-0000-000000000002"          |
+      | Last Modified        | Wed, 23 May 2018 09:34:00 GMT                   |
+      | Email                | [null]                                          |
+      | Username             | testuser                                        |
+      | Display Name         | Test User                                       |
+      | Self Link            | /api/users/00000000-0000-0000-0000-000000000001 |
+      | Change Password Link | [null]                                          |
 
   Scenario: Get a known user when authenticated as a different user
     Given I have authenticated as user "00000000-0000-0000-0000-000000000002"
     When I get the user with ID "00000000-0000-0000-0000-000000000001"
     Then I get an OK response
     And I get a user with details:
-      | ID            | 00000000-0000-0000-0000-000000000001   |
-      | ETag          | "00000000-0000-0000-0000-000000000002" |
-      | Last Modified | Wed, 23 May 2018 09:34:00 GMT          |
-      | Email         | [null]                                 |
-      | Username      | testuser                               |
-      | Display Name  | Test User                              |
+      | ID                   | 00000000-0000-0000-0000-000000000001            |
+      | ETag                 | "00000000-0000-0000-0000-000000000002"          |
+      | Last Modified        | Wed, 23 May 2018 09:34:00 GMT                   |
+      | Email                | [null]                                          |
+      | Username             | testuser                                        |
+      | Display Name         | Test User                                       |
+      | Self Link            | /api/users/00000000-0000-0000-0000-000000000001 |
+      | Change Password Link | [null]                                          |
 
   Scenario: Get a known user when authenticated
     Given I have authenticated as user "00000000-0000-0000-0000-000000000001"
     When I get the user with ID "00000000-0000-0000-0000-000000000001"
     Then I get an OK response
     And I get a user with details:
-      | ID            | 00000000-0000-0000-0000-000000000001   |
-      | ETag          | "00000000-0000-0000-0000-000000000002" |
-      | Last Modified | Wed, 23 May 2018 09:34:00 GMT          |
-      | Email         | test@example.com                       |
-      | Username      | testuser                               |
-      | Display Name  | Test User                              |
+      | ID                   | 00000000-0000-0000-0000-000000000001                     |
+      | ETag                 | "00000000-0000-0000-0000-000000000002"                   |
+      | Last Modified        | Wed, 23 May 2018 09:34:00 GMT                            |
+      | Email                | test@example.com                                         |
+      | Username             | testuser                                                 |
+      | Display Name         | Test User                                                |
+      | Self Link            | /api/users/00000000-0000-0000-0000-000000000001          |
+      | Change Password Link | /api/users/00000000-0000-0000-0000-000000000001/password |

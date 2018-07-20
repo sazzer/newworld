@@ -9,7 +9,6 @@ import uk.co.grahamcox.worlds.service.users.password.PasswordHasher
 import uk.co.grahamcox.worlds.service.users.password.PbePasswordHasherImpl
 import uk.co.grahamcox.worlds.service.users.rest.UserController
 import uk.co.grahamcox.worlds.service.users.rest.UserModelBuilder
-import uk.co.grahamcox.worlds.service.worlds.rest.WorldsController
 
 /**
  * Configuration for working with users
@@ -20,6 +19,9 @@ class UsersConfig(context: GenericApplicationContext) {
         beans {
             bean("userLinkBuilder") {
                 MvcLinkBuilder<String>(UserController::getUser)
+            }
+            bean("changePasswordLinkBuilder") {
+                MvcLinkBuilder<String>(UserController::changePassword)
             }
             bean<UserServiceImpl>()
             bean<UserModelBuilder>()

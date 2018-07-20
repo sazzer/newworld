@@ -9,6 +9,7 @@ import uk.co.grahamcox.worlds.service.acceptance.requester.RequestFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.RequestSubmitter
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
+import uk.co.grahamcox.worlds.service.acceptance.stripUri
 
 /**
  * Spring Configuration for testing of users
@@ -46,6 +47,20 @@ class UsersConfig(context: GenericApplicationContext) {
                                 ),
                                 "Display Name" to ResponseFieldConfig(
                                         fieldPath = "body/display_name"
+                                ),
+                                "Self Link" to ResponseFieldConfig(
+                                        fieldPath = "body/_links/self/href",
+                                        actualConversion = ::stripUri
+                                ),
+                                "Change Password Link" to ResponseFieldConfig(
+                                        fieldPath = "body/_links[@name='tag:grahamcox.co.uk,2018,links/user/password']/href",
+                                        expectedConversion = {
+                                            when (it) {
+                                                "[null]" -> null
+                                                else -> it
+                                            }
+                                        },
+                                        actualConversion = ::stripUri
                                 )
                         ))
             }
