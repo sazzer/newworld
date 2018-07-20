@@ -1,4 +1,3 @@
-@wip
 Feature: Getting a World by ID
 
   Background:
@@ -32,10 +31,12 @@ Feature: Getting a World by ID
     When I get the world with ID "00000000-0000-0000-0001-000000000001"
     Then I get an OK response
     And I get a world with details:
-      | ID            | 00000000-0000-0000-0001-000000000001   |
-      | ETag          | "00000000-0000-0000-0001-000000000002" |
-      | Last Modified | Wed, 23 May 2018 09:34:00 GMT          |
-      | Name          | testworld                              |
-      | Display Name  | Test World                             |
-      | Description   | This is a test work                    |
-      | Owner         | 00000000-0000-0000-0000-000000000001   |
+      | ID            | 00000000-0000-0000-0001-000000000001             |
+      | ETag          | "00000000-0000-0000-0001-000000000002"           |
+      | Last Modified | Wed, 23 May 2018 09:34:00 GMT                    |
+      | Name          | testworld                                        |
+      | Display Name  | Test World                                       |
+      | Description   | This is a test work                              |
+      | Owner         | 00000000-0000-0000-0000-000000000001             |
+      | Self Link     | /api/worlds/00000000-0000-0000-0001-000000000001 |
+      | Owner Link    | /api/users/00000000-0000-0000-0000-000000000001  |

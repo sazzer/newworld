@@ -4,11 +4,13 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.GenericApplicationContext
 import org.springframework.context.support.beans
 import org.springframework.http.HttpMethod
+import org.springframework.web.util.UriComponentsBuilder
 import uk.co.grahamcox.worlds.service.acceptance.database.DatabaseExistsVerifier
 import uk.co.grahamcox.worlds.service.acceptance.requester.RequestFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.RequestSubmitter
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseFieldConfig
 import uk.co.grahamcox.worlds.service.acceptance.requester.ResponseMatcher
+import uk.co.grahamcox.worlds.service.acceptance.stripUri
 
 /**
  * Spring Configuration for testing of worlds
@@ -43,6 +45,14 @@ class WorldsConfig(context: GenericApplicationContext) {
                                 ),
                                 "Owner" to ResponseFieldConfig(
                                         fieldPath = "body/owner"
+                                ),
+                                "Self Link" to ResponseFieldConfig(
+                                        fieldPath = "body/_links/self/href",
+                                        actualConversion = ::stripUri
+                                ),
+                                "Owner Link" to ResponseFieldConfig(
+                                        fieldPath = "body/_links[@name='tag:grahamcox.co.uk,2018,links/world/owner']/href",
+                                        actualConversion = ::stripUri
                                 )
                         ))
             }
