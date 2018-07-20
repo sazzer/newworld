@@ -1,4 +1,4 @@
-Feature: User Registration
+Feature: User Login
 
   Background:
     Given a user exists with details:
@@ -9,7 +9,7 @@ Feature: User Registration
       | Password Salt | RJMrJIln2gXN2SzZQ0YI3uqZXSLZBfGFj/nn7wTfwMXwfp/BLI7EKufDw7HejLXiSvByLjjpjRMGkrVqPjEyrJswDZa32/RSkWnvtlK4uIbcLMwyivvLWcVSqZP6Oqe+TDEz3HjpiZ6VCxB13QSfe4rYLtglGFr6JgnfFyK7duw= |
     And I opened the home page
 
-  Scenario: Successfully register a new user
+  Scenario: Successfully log in as an existing user
     When I log in with details:
       | Email Address    | test@example.com |
       | Password         | MyPassword       |
