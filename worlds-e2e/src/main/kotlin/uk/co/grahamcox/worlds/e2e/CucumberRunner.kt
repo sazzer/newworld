@@ -4,6 +4,7 @@ import cucumber.runtime.Runtime
 import cucumber.runtime.RuntimeOptions
 import cucumber.runtime.io.MultiLoader
 import cucumber.runtime.io.ResourceLoaderClassFinder
+import org.assertj.core.api.Assertions
 import org.slf4j.LoggerFactory
 
 /**
@@ -54,12 +55,14 @@ class CucumberRunner {
      * Run the matching scenarios
      * @return true if the tests were successful. False if not
      */
-    fun run(tags: List<String> = emptyList()): Boolean {
+    fun run(tags: List<String> = emptyList()) {
         val runtimeOptions = buildOptions(tags)
         val runtime = buildRuntime(runtimeOptions)
 
         runtime.run()
 
-        return runtime.exitStatus().toInt() == 0
+        Assertions.assertThat(runtime.exitStatus())
+                .`as`("All tests ran successfully")
+                .isEqualTo(0)
     }
 }
