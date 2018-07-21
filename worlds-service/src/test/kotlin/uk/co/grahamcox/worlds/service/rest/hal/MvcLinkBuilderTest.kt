@@ -22,7 +22,7 @@ internal class MvcLinkBuilderTest {
         val link = testSubject.buildLink("123")
 
         Assertions.assertAll(
-                Executable { Assertions.assertEquals(URI("http://localhost/api/users/123"), link.href) },
+                Executable { Assertions.assertEquals("http://localhost/api/users/123", link.href) },
                 Executable { Assertions.assertFalse(link.templated) },
                 Executable { Assertions.assertEquals("application/hal+json", link.type) }
         )
@@ -38,7 +38,7 @@ internal class MvcLinkBuilderTest {
         val link = testSubject.buildLink("123")
 
         Assertions.assertAll(
-                Executable { Assertions.assertEquals(URI("http://localhost/api/users/123/password"), link.href) },
+                Executable { Assertions.assertEquals("http://localhost/api/users/123/password", link.href) },
                 Executable { Assertions.assertFalse(link.templated) },
                 Executable { Assertions.assertNull(link.type) }
         )
@@ -60,7 +60,7 @@ internal class MvcLinkBuilderTest {
         })
 
         Assertions.assertAll(
-                Executable { Assertions.assertEquals(URI("http://localhost/api/users/123/password"), link.href) },
+                Executable { Assertions.assertEquals("http://localhost/api/users/123/password", link.href) },
                 Executable { Assertions.assertFalse(link.templated) },
                 Executable { Assertions.assertNull(link.type) }
         )
