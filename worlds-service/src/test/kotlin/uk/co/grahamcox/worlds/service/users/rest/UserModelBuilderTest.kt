@@ -15,7 +15,6 @@ import uk.co.grahamcox.worlds.service.rest.hal.LinkBuilder
 import uk.co.grahamcox.worlds.service.users.UserData
 import uk.co.grahamcox.worlds.service.users.UserId
 import uk.co.grahamcox.worlds.service.users.password.Password
-import java.net.URI
 import java.time.Instant
 import java.util.*
 
@@ -28,10 +27,10 @@ internal class UserModelBuilderTest {
         private val USER_ID = UUID.randomUUID().toString()
 
         /** The self link for the user */
-        private val SELF_LINK = Link(href = URI("/api/users/$USER_ID"))
+        private val SELF_LINK = Link(href = "/api/users/$USER_ID")
 
         /** The change password link for the user */
-        private val PASSWORD_LINK = Link(href = URI("/api/users/$USER_ID/password"))
+        private val PASSWORD_LINK = Link(href = "/api/users/$USER_ID/password")
 
         /** The User Model to use */
         private val USER = Resource(

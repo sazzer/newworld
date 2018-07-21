@@ -36,7 +36,7 @@ class MvcLinkBuilder<in DATA>(
             else -> {
                 val actual: List<Any?> = listOf(data)
                 val remainder = if (javaMethod.parameterCount == 1) {
-                    emptyArray<Any?>()
+                    emptyArray()
                 } else {
                     Array<Any?>(javaMethod.parameterCount - 1) { null }
                 }.toList()
@@ -47,7 +47,7 @@ class MvcLinkBuilder<in DATA>(
 
         val uri = MvcUriComponentsBuilder.fromMethod(javaClass, javaMethod, *params)
                 .build()
-                .toUri()
+                .toUriString()
         LOG.debug("Built URI {} for target method {} and params {}", uri, javaMethod, params)
 
         return Link(

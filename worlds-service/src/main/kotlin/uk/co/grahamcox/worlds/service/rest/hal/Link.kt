@@ -1,12 +1,10 @@
 package uk.co.grahamcox.worlds.service.rest.hal
 
-import java.net.URI
-
 /**
  * Representation of a Link to another resource
  */
 data class Link(
-        val href: URI,
+        val href: String,
         val templated: Boolean = false,
         val type: String? = "application/hal+json",
         val deprecation: String? = null,
