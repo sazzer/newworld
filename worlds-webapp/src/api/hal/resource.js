@@ -1,6 +1,6 @@
 // @flow
 
-import type Link from './link';
+import type { Link } from './link';
 
 /** Representation of a single link in a HAL resource */
 export type HalLink = {
